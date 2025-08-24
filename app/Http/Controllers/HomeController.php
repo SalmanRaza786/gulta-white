@@ -32,7 +32,7 @@ class HomeController extends Controller
     {
         try {
 
-          return view('index');
+          return view('web.index');
 
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -103,6 +103,57 @@ class HomeController extends Controller
             return redirect()->route('admin.login.view');
 
 
+
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function gallery()
+    {
+        try {
+
+            return view('web.index');
+
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+    public function blogs()
+    {
+        try {
+
+            return view('web.index');
+
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+    public function contactUs()
+    {
+        try {
+
+            return view('web.index');
+
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+    public function aboutUs()
+    {
+        try {
+
+            return view('web.index');
+
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+    public function faqs()
+    {
+        try {
+
+            return view('web.index');
 
         } catch (\Exception $e) {
             return $e->getMessage();
