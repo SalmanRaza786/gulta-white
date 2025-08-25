@@ -11,11 +11,10 @@ use Spatie\Permission\Models\Role;
 
 class AdminSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
+
     public function run(): void
     {
+        $role = Role::updateOrCreate(['name' =>'Admin'],['name' =>'Admin','guard_name'=>'admin','created_at'=>now()]);
         $user = Admin::updateOrCreate(
             ['email' =>'admin@gmail.com'],
             [
@@ -23,9 +22,12 @@ class AdminSeeder extends Seeder
                 'email' => 'admin@gmail.com',
                 'password' =>Hash::make('iub12345678'),
                 'created_at' => now(),
-
+                'role_id' =>$role->id,
             ]);
+        $user->syncRoles($role->id);
 
+        $permissions= Permission::pluck('id');
+        $role->syncPermissions($permissions);
 
     }
 }

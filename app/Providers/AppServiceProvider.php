@@ -22,6 +22,8 @@ use App\Repositries\customField\CustomFieldInterface;
 use App\Repositries\customField\CustomFieldRepositry;
 use App\Repositries\dock\DockInterface;
 use App\Repositries\dock\DockRepositry;
+use App\Repositries\faqs\FaqInterface;
+use App\Repositries\faqs\FaqRepositry;
 use App\Repositries\generator\GeneratorInterface;
 use App\Repositries\generator\GeneratorRepositry;
 use App\Repositries\inventory\InventoryInterface;
@@ -94,6 +96,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CustomerInterface::class,CustomerRepositry::class);
         $this->app->bind(OrderInterface::class,OrderRepositry::class);
         $this->app->bind(GeneratorInterface::class,GeneratorRepositry::class);
+        $this->app->bind(FaqInterface::class,FaqRepositry::class);
+        $this->app->bind(PermissionInterface::class,PermissionRepositry::class);
 
     }
 }

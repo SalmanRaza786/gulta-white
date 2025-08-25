@@ -55,6 +55,24 @@
                         <i class="ri-message-2-fill"></i> <span>Messages</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ Request::is('admin/faqs*') ? 'active' : '' }}" href="{{route('admin.faqs.index')}}">
+                        <i class="ri-question-answer-line"></i> <span data-key="t-users">FAQs</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{route('admin.roles.index')}}">
+                        <i class="ri-question-answer-line"></i> <span data-key="t-users">Roles</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{route('admin.user.index')}}">
+                        <i class="ri-question-answer-line"></i> <span data-key="t-users">Users</span>
+                    </a>
+                </li>
+
+
+
 
 
             </ul>

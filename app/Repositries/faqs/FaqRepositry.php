@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Repositries\roles;
+namespace App\Repositries\faqs;
 
 use App\Http\Helpers\Helper;
+use App\Models\Faq;
+use App\Models\Role as CustomRole;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -10,7 +12,8 @@ use Spatie\Permission\Models\Role;
 use DataTables;
 
 
-class RoleRepositry implements RoleInterface
+
+class FaqRepositry implements FaqInterface
 {
     public function updateOrCreate($request,$id)
     {
@@ -18,19 +21,20 @@ class RoleRepositry implements RoleInterface
         try {
             DB::beginTransaction();
             $validator = Validator::make($request->all(), [
-                'title' => 'required|string|max:255',
+                'question' => 'required|string|max:255',
+                'ans' => 'required|string|max:255',
             ]);
             if ($validator->fails())
                 return Helper::errorWithData($validator->errors()->first(), $validator->errors());
 
-            $role = Role::updateOrCreate(
+            $role = Faq::updateOrCreate(
                 [
                     'id' => $id
                 ],
                 [
-                    'name' => $request->title,
-                    'status' => $request->status,
-                    'guard_name ' => 'web'
+                    'questions' => $request->question,
+                    'ans' => $request->ans,
+
                 ]
             );
 
@@ -49,35 +53,23 @@ class RoleRepositry implements RoleInterface
     }
 
 
-    public function getRole($request)
+    public function getFaqsList($request)
     {
         try {
-            $data['totalRecords'] = Role::count();
-            $qry= Role::query();
-            $qry=$qry->with('users');
+            $data['totalRecords'] = Faq::count();
+            $qry= Faq::query();
 
-            $qry=$qry->when($request->s_title, function ($query, $title) {
-                return $query->where('name',$title);
+
+            $qry=$qry->when($request->s_name, function ($query, $name) {
+                return $query->where('questions', 'LIKE', "%{$name}%");
             });
-            $qry=$qry->when($request->s_status, function ($query, $s_status) {
-                return $query->where('status',$s_status);
-            });
+
 
             $qry=$qry->when($request->start, fn($q)=>$q->offset($request->start));
             $qry=$qry->when($request->length, fn($q)=>$q->limit($request->length));
             $data['data'] =$qry->orderByDesc('id')->get();
 
-            if (!empty($request->get('s_title')) OR !empty($request->get('s_status')) ) {
 
-                $qry= Role::query();
-                $qry=$qry->when($request->s_title, function ($query, $title) {
-                    return $query->where('name',$title);
-                });
-                $qry=$qry->when($request->s_status, function ($query, $s_status) {
-                    return $query->where('status',$s_status);
-                });
-                $data['totalRecords']=$qry->count();
-            }
             return Helper::success($data, $message="Record found");
 
         } catch (ValidationException $validationException) {
@@ -87,10 +79,10 @@ class RoleRepositry implements RoleInterface
         }
 
     }
-    public function deleteRole($id)
+    public function deleteFaqs($id)
     {
         try {
-            $role = Role::find($id);
+            $role = Faq::find($id);
             $role->delete();
             return Helper::success($role, $message=__('translation.record_deleted'));
         } catch (ValidationException $validationException) {
@@ -99,29 +91,19 @@ class RoleRepositry implements RoleInterface
         }
 
     }
-    public function findRoleById($id)
-    {
-        try {
-             $res = Role::find($id);
-            return Helper::success($res, $message='Record found');
-            } catch (ValidationException $validationException) {
-            return Helper::errorWithData($validationException->errors()->first(), $validationException->errors());
-             }
-    }
-    public function getAllRoles()
+
+    public function getAllFaqs()
     {
         try {
 
-            $qry= Role::query();
-            $qry= $qry->select('id','name');
-            $data['data'] =$qry->get();
+            $qry= Faq::query();
+            $data =$qry->orderByDesc('id')->get();
             return Helper::success($data, $message="Record found");
 
-        } catch (ValidationException $validationException) {
-            return Helper::errorWithData($validationException->errors()->first(), $validationException->errors());
-        } catch (\Exception $e) {
+        }catch (\Exception $e) {
             return Helper::errorWithData($e->getMessage(),[]);
         }
 
     }
+
 }

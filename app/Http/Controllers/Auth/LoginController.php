@@ -87,9 +87,7 @@ class LoginController extends Controller
             return redirect()->route('admin.login.view')->with('error', 'Invalid email!');
 
         }
-
-
-
+        
         if (\Auth::guard('admin')->attempt($request->only(['email','password']), $request->get('remember'))){
             return redirect()->route('admin.dashboard');
         }

@@ -5,6 +5,11 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\AdminHomeController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\FAQsController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\PermissionController;
+
 
 
 
@@ -37,6 +42,30 @@ use App\Http\Controllers\Admin\ProductController;
         Route::any('/update-message',[ProductController::class,'updateTextMessage'])->name('text.message.update');
 
 
+        //FAQS
+        Route::get('/faqs', [FAQsController::class, 'index'])->name('faqs.index');
+        Route::get('/faqs-list', [FAQsController::class, 'faqsList'])->name('faqs.list');
+        Route::any('/delete-faqs', [FAQsController::class, 'deleteFaqs'])->name('faqs.delete');
+        Route::post('store-faqs', [FAQsController::class, 'updateOrCreateRecord'])->name('faqs.store');
+
+
+        //roles
+        Route::get('roles', [RoleController::class, 'index'])->name('roles.index');
+        Route::any('get-roles', [RoleController::class, 'getRoles'])->name('roles.get');
+        Route::get('edit-role', [RoleController::class, 'editRole'])->name('roles.edit');
+        Route::post('add-role', [RoleController::class, 'updateOrCreateRecord'])->name('roles.add');
+        Route::any('/delete-role', [RoleController::class, 'deleteRole'])->name('roles.delete');
+
+        //users
+        Route::any('/user', [UserController::class, 'index'])->name('user.index')->middleware(['can:admin-user-view']);
+        Route::any('/user-list', [UserController::class, 'userList'])->name('user.list')->middleware(['can:admin-user-view']);
+        Route::any('/save-update-user', [UserController::class, 'userCreateOrUpdate'])->name('user.store')->middleware(['can:admin-user-create']);
+        Route::any('/edit-user/{id}', [UserController::class, 'edit'])->name('user.edit')->middleware(['can:admin-user-edit']);
+        Route::any('/delete-user/{id}', [UserController::class, 'destroy'])->name('user.delete')->middleware(['can:admin-user-delete']);
+
+        //permissions
+        Route::any('/get-role-has-permissions/{role_id}', [PermissionController::class, 'getRoleHasPermissions'])->name('roles.permissions');
+        Route::post('assign-permissions', [PermissionController::class, 'assignPermissions'])->name('permissions.assign');
 
 
 

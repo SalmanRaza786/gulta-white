@@ -35,6 +35,7 @@ class UserController extends Controller
               $data['roles']= $response->get('data');
             return view('admin.user.index')->with(compact('data'));
         }catch (\Exception $e) {
+
             return redirect()->back()->with('error',$e->getMessage());
 
         }
