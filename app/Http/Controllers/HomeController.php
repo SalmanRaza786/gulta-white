@@ -113,7 +113,7 @@ class HomeController extends Controller
     {
         try {
 
-            return view('web.index');
+            return view('web.gallery');
 
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -123,7 +123,7 @@ class HomeController extends Controller
     {
         try {
 
-            return view('web.index');
+            return view('web.blogs');
 
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -133,7 +133,7 @@ class HomeController extends Controller
     {
         try {
 
-            return view('web.index');
+            return view('web.contact-us');
 
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -153,7 +153,7 @@ class HomeController extends Controller
     {
         try {
 
-            return view('web.index');
+            return view('web.faqs');
 
         } catch (\Exception $e) {
             return $e->getMessage();
