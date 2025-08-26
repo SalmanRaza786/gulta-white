@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\FAQsController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\PagesController;
 
 
 
@@ -66,6 +67,9 @@ use App\Http\Controllers\Admin\PermissionController;
         //permissions
         Route::any('/get-role-has-permissions/{role_id}', [PermissionController::class, 'getRoleHasPermissions'])->name('roles.permissions');
         Route::post('assign-permissions', [PermissionController::class, 'assignPermissions'])->name('permissions.assign');
+
+        Route::get('/pages', [PagesController::class, 'index'])->name('pages.index');
+        Route::get('/create-pages', [PagesController::class, 'create'])->name('pages.create');
 
 
 

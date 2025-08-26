@@ -52,6 +52,8 @@ use App\Repositries\orderStatus\OrderStatusInterface;
 use App\Repositries\orderStatus\OrderStatusRepositry;
 use App\Repositries\packagingList\PackagingListInterface;
 use App\Repositries\packagingList\PackagingListRepositry;
+use App\Repositries\pages\PagesInterface;
+use App\Repositries\pages\PagesRepositry;
 use App\Repositries\permissions\PermissionInterface;
 use App\Repositries\permissions\PermissionRepositry;
 use App\Repositries\picking\PickingInterface;
@@ -98,6 +100,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(GeneratorInterface::class,GeneratorRepositry::class);
         $this->app->bind(FaqInterface::class,FaqRepositry::class);
         $this->app->bind(PermissionInterface::class,PermissionRepositry::class);
+        $this->app->bind(PagesInterface::class,PagesRepositry::class);
 
     }
 }
