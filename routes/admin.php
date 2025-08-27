@@ -70,6 +70,7 @@ use App\Http\Controllers\Admin\PagesController;
 
         Route::get('/pages', [PagesController::class, 'index'])->name('pages.index');
         Route::get('/create-pages', [PagesController::class, 'create'])->name('pages.create');
+        Route::post('/store-pages', [PagesController::class, 'storePages'])->name('pages.store');
 
 
 

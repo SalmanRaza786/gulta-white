@@ -6,10 +6,12 @@ use App\Events\ClientNotificationEvent;
 use App\Events\NotificationEvent;
 use App\Models\Admin;
 use App\Models\Attempt;
+use App\Models\EventMedia;
 use App\Models\FileContent;
 use App\Models\MissedItem;
 use App\Models\OperationalHour;
 use App\Models\OrderBookedSlot;
+use App\Models\PagesContentMedia;
 use App\Models\Question;
 use App\Models\QuestionSection;
 use App\Models\QuestionSolved;
@@ -559,6 +561,25 @@ class Helper
         // You can add logic here to check if this number is already used in your database
 
         return $uniqueNumber;
+    }
+
+    public static function storeMedia($mediaAbleType,$mediaAbleId,$filePath,$fileType)
+    {
+        try {
+            $media = PagesContentMedia::updateOrCreate(
+                [
+                    'id' => 0
+                ],
+                [
+                    'mediable_type' => $mediaAbleType,
+                    'mediable_id' => $mediaAbleId,
+                    'file_path' => $filePath,
+                    'file_type' => $fileType,
+                ]
+            );
+        } catch (\Exception $exception) {
+            return response()->json(collect(['status' => false, 'message' => $exception->getMessage()]), 400);
+        }
     }
 
 

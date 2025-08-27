@@ -39,9 +39,6 @@
 
 
                 @yield('content')
-
-
-
                 <div id="myCustomPreLoader" >
                     <div id="status">
                         <div class="spinner-border text-primary avatar-sm" role="status">

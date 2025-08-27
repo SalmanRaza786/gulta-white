@@ -4,6 +4,7 @@ namespace App\Repositries\pages;
 
 use App\Http\Helpers\Helper;
 use App\Models\Category;
+use App\Models\PagesContent;
 use App\Models\Product;
 use App\Traits\HandleFiles;
 use Illuminate\Support\Facades\DB;
@@ -15,49 +16,39 @@ use DataTables;
 
 class PagesRepositry implements PagesInterface
 {
-    protected $categoryFilePath = 'product-media/';
-    protected $categoryFileName = "";
+    protected $mediaPath = 'pages-media/';
+    protected $mediaName = "";
     use HandleFiles;
     public function updateOrCreatePage($request,$id)
     {
 
         try {
             DB::beginTransaction();
-            $validator = Validator::make($request->all(), [
-                'cat_id' => 'required|string|max:255',
-                'title' => 'required|string|max:255',
-                'price' => 'required|string|max:255',
-                'description' => 'required|string|max:255',
-            ]);
-            if ($validator->fails())
-                return Helper::errorWithData($validator->errors()->first(), $validator->errors());
 
-            if($request->file('product_image')){
-                $this->categoryFileName = $this->handleFiles($request->file('product_image'), $this->categoryFilePath);
-            }
-
-            $role = Product::updateOrCreate(
+            $page = PagesContent::updateOrCreate(
                 [
                     'id' => $id
                 ],
                 [
-                    'cat_id' => $request->cat_id,
                     'title' => $request->title,
-                    'price' => $request->price,
+                    'page_type' => $request->page_type,
                     'description' => $request->description,
-                    'thumbnail' => $this->categoryFileName,
 
                 ]
             );
+            if ($request->hasFile('images')) {
+
+                foreach ($request->file('images') as $file) {
+                    $this->mediaName = $this->handleFiles($file, $this->mediaPath.'/');
+                    $res = Helper::storeMedia('App\Models\PagesContent',$page->id,$this->mediaPath,'image');
+                }
+            }
 
             ($id==0)?$message = __('translation.record_created'): $message =__('translation.record_updated');
             DB::commit();
 
 
-            return Helper::success($role, $message);
-        } catch (ValidationException $validationException) {
-            DB::rollBack();
-            return Helper::errorWithData($validationException->errors()->first(), $validationException->errors());
+            return Helper::success($page, $message);
         } catch (\Exception $e) {
             DB::rollBack();
             return Helper::errorWithData($e->getMessage(),[]);

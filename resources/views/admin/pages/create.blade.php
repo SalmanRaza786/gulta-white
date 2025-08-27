@@ -1,151 +1,125 @@
 @extends('layouts.master')
-@section('title') @lang('translation.users') @endsection
-@section('css')
+@section('title') @lang('translation.pages') @endsection
 
-@endsection
 @section('content')
     @component('components.breadcrumb')
         @slot('routeUrl') {{url('/')}} @endslot
         @slot('li_1') Dashboard @endslot
         @slot('title') Pages @endslot
     @endcomponent
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header d-flex ">
-                    <div class="col">
-                        <h4 class="card-title mb-0">Pages List</h4>
 
+    <form action="{{ route('admin.pages.store') }}" method="POST" enctype="multipart/form-data" id="PagesForm">
+        @csrf
+        <div class="row">
+
+            <!-- Page Info -->
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header align-items-center d-flex">
+                        <h4 class="card-title mb-0">Create Page</h4>
                     </div>
-                    @canany('admin-user-create')
-                    <div class="col-auto justify-content-sm-end">
-                        <a href="{{route('admin.pages.create')}}" class="btn btn-success"><i class="ri-add-line align-bottom me-1"></i> Add New Page</a>
-                    </div>
-                    @endcanany
+                    <div class="card-body">
+                        <input type="hidden" name="id" value="0">
+                        <!-- Title -->
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Page Title</label>
+                            <input type="text" name="title" id="title" class="form-control" placeholder="Enter title" required>
 
-                </div>
-
-                <div class="card-body border border-dashed border-end-0 border-start-0">
-
-                    <form>
-                        <div class="row g-3">
-                            <div class="col-xxl-7 col-sm-6">
-                                <div class="search-box">
-                                    <input type="text" class="form-control search" placeholder=" {{__('translation.search')}}" name="s_name">
-                                    <i class="ri-search-line search-icon"></i>
-                                </div>
-                            </div>
-                            <!--end col-->
-                            <div class="col-xxl-3 col-sm-4">
-                                <div>
-                                    <select class="form-control"  name="s_status">
-                                        <option value="">Status</option>
-                                        <option value="" selected>{{__('translation.all')}}</option>
-                                        <option value="1">Active</option>
-                                        <option value="2">In-Active</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <!--end col-->
-
-                            <div class="col-xxl-2 col-sm-4">
-                                <div>
-                                    <button type="button" class="btn btn-primary w-100" id="filter"> <i class="ri-equalizer-fill me-1 align-bottom"></i>
-                                        {{__('translation.filter')}}
-                                    </button>
-                                </div>
-                            </div>
-                            <!--end col-->
                         </div>
-                        <!--end row-->
-                    </form>
-                </div>
 
-                <div class="card-body pt-0">
-                        <table class="table table-nowrap align-middle" id="roleTable">
-                            <thead class="text-muted table-light">
-                            <tr class="text-uppercase">
-                                <th class="sort" data-sort="id">@lang('translation.user')</th>
-                                <th class="sort" data-sort="customer_name">@lang('translation.email')</th>
-                                <th class="sort" data-sort="customer_name">Phone</th>
-                                <th class="sort" data-sort="customer_name">@lang('translation.joining_date')</th>
-                                <th class="sort" data-sort="product_name">@lang('translation.status')</th>
-                                <th class="sort" data-sort="date">@lang('translation.action')</th>
+                        <!-- Page Type -->
+                        <div class="mb-3">
+                            <label for="page_type" class="form-label">Page Type</label>
+                            <select class="form-select" name="page_type" id="page_type" required>
+                                <option value="">-- Select Type --</option>
+                                <option value="about">About Us</option>
+                                <option value="gallery">Gallery</option>
+                                <option value="blog">Blogs</option>
+                            </select>
+                        </div>
 
-                            </tr>
-                            </thead>
+                        <!-- Description -->
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea name="description" id="description" class="form-control ckeditor-classic" rows="6"></textarea>
+                        </div>
 
-                    </table>
+                        <!-- Multiple Images -->
+                        <div class="mb-3">
+                            <label for="images" class="form-label">Upload Images</label>
+                            <input type="file" name="images[]" id="images" class="form-control" multiple>
+                            <small class="text-muted">You can select multiple images at once.</small>
+                        </div>
+
+                        <!-- Preview Container -->
+                        <div id="preview-container" class="row g-3"></div>
+
+                        <!-- Submit -->
+                        <div class="text-end mt-3">
+                            <button type="submit" class="btn btn-primary btn-submit">Save Page</button>
+                        </div>
+
+                    </div>
                 </div>
             </div>
+
         </div>
-        <!--end col-->
-    </div>
-    <!--end row-->
-
-    @include('admin.user.user-modals')
-    @include('admin.components.comon-modals.common-modal')
-
-
+    </form>
 @endsection
+
 @section('script')
-    <script src="{{ URL::asset('build/js/custom-js/user/user.js') }}"></script>
+    <script src="{{ URL::asset('build/libs/@ckeditor/ckeditor5-build-classic/build/ckeditor.js')}}"></script>
+    <script src="{{ URL::asset('build/js/custom-js/pages/pages.js') }}" type="module"></script>
     <script>
-        $(document).ready(function(){
-            $('#roleTable').DataTable({
-                processing: true,
-                serverSide: true,
-                searching: false,
-                info: true,
-                bFilter: false,
-                ordering: false,
-                bLengthChange: false,
-                order: [[ 0, "desc" ]],
-                ajax: {
-                    url: "user-list",
-                    data: function (d) {
-                        d.name = $('input[name=s_name]').val(),
-                            d.status = $('select[name=s_status]').val()
-
-                    }
-                },
-
-                columns: [
-                    { data: 'name' },
-                    { data: 'email' },
-                    { data: 'phone' },
-                    { data: 'created_at'},
-                    { data: 'status' },
-                    { data: null, orderable: false },
-                ],
-                columnDefs: [
-
-                    {
-                        targets: 4,
-                        render: function(data, type, row, meta) {
-
-                            if (data === 'Active') {
-                                return '<span class="badge badge-soft-success text-uppercase">'+data+'</span>';
-                            } else  {
-                                return '<span class="badge badge-soft-danger text-uppercase">'+data+'</span>';
-                            }
-                        }
-                    },
-                    {
-                        targets: 5,
-                        render: function(data, type, row, meta) {
-                            const rowId = data.id;
-
-                            return `@canany('admin-user-edit')<a href="#" class="btn-edit" data="${rowId}" data-bs-toggle="modal" data-bs-target="#showModal"><i class="ri-pencil-fill text-primary fs-4"></i></a>@endcanany
-                                    @canany('admin-user-delete')<a href="#" class="btn-delete"  data="${rowId}"  data-bs-toggle="modal" data-bs-target="#deleteRecordModal"><i class="ri-delete-bin-fill text-danger fs-4"></i></a>@endcanany`;
-
-
-                        }
-                    }
-                ]
+        // CKEditor Init
+        ClassicEditor
+            .create(document.querySelector('.ckeditor-classic'))
+            .catch(error => {
+                console.error(error);
             });
 
+        // Image Preview with Remove
+        let input = document.getElementById('images');
+        let previewContainer = document.getElementById('preview-container');
+
+        input.addEventListener('change', function() {
+            previewContainer.innerHTML = ""; // clear previous previews
+            Array.from(this.files).forEach((file, index) => {
+                if (!file.type.startsWith('image/')) return;
+
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    let col = document.createElement('div');
+                    col.classList.add('col-md-3');
+
+                    col.innerHTML = `
+                        <div class="card shadow-sm border">
+                            <img src="${e.target.result}" class="card-img-top" style="height:150px;object-fit:cover;">
+                            <div class="card-body p-2 text-center">
+                                <button type="button" class="btn btn-sm btn-danger remove-image" data-index="${index}">Remove</button>
+                            </div>
+                        </div>
+                    `;
+                    previewContainer.appendChild(col);
+                };
+                reader.readAsDataURL(file);
+            });
+        });
+
+        // Remove image from preview & input
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('remove-image')) {
+                let index = e.target.getAttribute('data-index');
+                let dt = new DataTransfer();
+
+                let { files } = input;
+                Array.from(files).forEach((file, i) => {
+                    if (i != index) dt.items.add(file); // keep only non-removed
+                });
+
+                input.files = dt.files; // update FileList
+                e.target.closest('.col-md-3').remove(); // remove preview card
+            }
         });
     </script>
-
 @endsection
