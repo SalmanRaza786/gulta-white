@@ -42,7 +42,7 @@ $(document).ready(function(){
 
 
     $('#roleTable').on('click', '.btn-delete', function() {
-        var id = $(this).attr('data');
+        var id = $(this).attr('data-id');
         $('.confirm-delete').val(id);
     });
 
@@ -50,7 +50,7 @@ $(document).ready(function(){
     $('.confirm-delete').click(function() {
         var id = $(this).val();
         $.ajax({
-            url: "delete-product",
+            url: route('admin.page.delete'),
             type: 'get',
             async: false,
             dataType: 'json',
@@ -66,6 +66,31 @@ $(document).ready(function(){
             }
         });
     });
+
+
+
+    // Remove Existing Images (AJAX with jQuery)
+    $(document).on('click', '.remove-existing', function () {
+        var imageId = $(this).data('id');
+        $.ajax({
+            url: route('admin.pages.deleteMedia'),
+            type: 'get',
+            async: false,
+            dataType: 'json',
+            data: { id: imageId},
+            success: function(response) {
+            if(response.status){
+                window.location.reload();
+            }
+            },
+            error: function(xhr, status, error) {
+                var errors = xhr.responseJSON.errors;
+                toastr.success(error);
+            }
+        });
+
+    });
+
 
 
 

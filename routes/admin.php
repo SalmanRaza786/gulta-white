@@ -71,8 +71,10 @@ use App\Http\Controllers\Admin\PagesController;
         Route::get('/pages', [PagesController::class, 'index'])->name('pages.index');
         Route::get('/create-pages', [PagesController::class, 'create'])->name('pages.create');
         Route::post('/store-pages', [PagesController::class, 'storePages'])->name('pages.store');
-
-
+        Route::get('/pages-list', [PagesController::class, 'pagesList'])->name('pages.list');
+        Route::any('/delete-page', [PagesController::class, 'deletePage'])->name('page.delete');
+        Route::get('/edit-page', [PagesController::class, 'editPage'])->name('page.edit');
+        Route::any('/delete-media', [PagesController::class, 'deleteMedia'])->name('pages.deleteMedia');
 
     });
 

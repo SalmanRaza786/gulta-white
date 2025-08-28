@@ -62,15 +62,13 @@
                 </div>
 
                 <div class="card-body pt-0">
-                        <table class="table table-nowrap align-middle" id="roleTable">
+                        <table class="table align-middle" id="roleTable">
                             <thead class="text-muted table-light">
                             <tr class="text-uppercase">
-                                <th class="sort" data-sort="id">@lang('translation.user')</th>
-                                <th class="sort" data-sort="customer_name">@lang('translation.email')</th>
-                                <th class="sort" data-sort="customer_name">Phone</th>
-                                <th class="sort" data-sort="customer_name">@lang('translation.joining_date')</th>
-                                <th class="sort" data-sort="product_name">@lang('translation.status')</th>
-                                <th class="sort" data-sort="date">@lang('translation.action')</th>
+                                <th class="sort" data-sort="id">Title</th>
+                                <th class="sort" data-sort="customer_name">Description</th>
+                                <th class="sort" data-sort="customer_name">Page Type</th>
+                                <th class="sort" data-sort="date">Action</th>
 
                             </tr>
                             </thead>
@@ -89,7 +87,7 @@
 
 @endsection
 @section('script')
-    <script src="{{ URL::asset('build/js/custom-js/user/user.js') }}"></script>
+    <script src="{{ URL::asset('build/js/custom-js/pages/pages.js') }}"></script>
     <script>
         $(document).ready(function(){
             $('#roleTable').DataTable({
@@ -102,7 +100,7 @@
                 bLengthChange: false,
                 order: [[ 0, "desc" ]],
                 ajax: {
-                    url: "user-list",
+                    url: route('admin.pages.list'),
                     data: function (d) {
                         d.name = $('input[name=s_name]').val(),
                             d.status = $('select[name=s_status]').val()
@@ -111,37 +109,29 @@
                 },
 
                 columns: [
-                    { data: 'name' },
-                    { data: 'email' },
-                    { data: 'phone' },
-                    { data: 'created_at'},
-                    { data: 'status' },
+                    { data: 'title' },
+                    { data: 'description' },
+                    { data: 'page_type' },
                     { data: null, orderable: false },
                 ],
                 columnDefs: [
-
                     {
-                        targets: 4,
+                        targets: 3,
                         render: function(data, type, row, meta) {
+                            const rowId = row.id;
+                            var url = "{{ route('admin.page.edit') }}"; // no ':id'
 
-                            if (data === 'Active') {
-                                return '<span class="badge badge-soft-success text-uppercase">'+data+'</span>';
-                            } else  {
-                                return '<span class="badge badge-soft-danger text-uppercase">'+data+'</span>';
-                            }
-                        }
-                    },
-                    {
-                        targets: 5,
-                        render: function(data, type, row, meta) {
-                            const rowId = data.id;
-
-                            return `@canany('admin-user-edit')<a href="#" class="btn-edit" data="${rowId}" data-bs-toggle="modal" data-bs-target="#showModal"><i class="ri-pencil-fill text-primary fs-4"></i></a>@endcanany
-                                    @canany('admin-user-delete')<a href="#" class="btn-delete"  data="${rowId}"  data-bs-toggle="modal" data-bs-target="#deleteRecordModal"><i class="ri-delete-bin-fill text-danger fs-4"></i></a>@endcanany`;
-
-
+                            return `
+            <a href="${url}?id=${rowId}">
+                <i class="ri-pencil-fill text-primary fs-4"></i>
+            </a>
+            <a href="#" class="btn-delete" data="${rowId}" data-bs-toggle="modal" data-bs-target="#deleteRecordModal">
+                <i class="ri-delete-bin-fill text-danger fs-4"></i>
+            </a>
+        `;
                         }
                     }
+
                 ]
             });
 

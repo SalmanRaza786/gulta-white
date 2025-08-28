@@ -5,6 +5,7 @@ namespace App\Repositries\pages;
 use App\Http\Helpers\Helper;
 use App\Models\Category;
 use App\Models\PagesContent;
+use App\Models\PagesContentMedia;
 use App\Models\Product;
 use App\Traits\HandleFiles;
 use Illuminate\Support\Facades\DB;
@@ -40,7 +41,7 @@ class PagesRepositry implements PagesInterface
 
                 foreach ($request->file('images') as $file) {
                     $this->mediaName = $this->handleFiles($file, $this->mediaPath.'/');
-                    $res = Helper::storeMedia('App\Models\PagesContent',$page->id,$this->mediaPath,'image');
+                    $res = Helper::storeMedia('App\Models\PagesContent',$page->id,$this->mediaName,'image');
                 }
             }
 
@@ -57,9 +58,8 @@ class PagesRepositry implements PagesInterface
     public function getPagesList($request)
     {
         try {
-            $data['totalRecords'] = Product::count();
-            $qry= Product::query();
-            $qry=$qry->with('category');
+            $data['totalRecords'] = PagesContent::count();
+            $qry= PagesContent::query();
             $qry=$qry->when($request->s_title, function ($query, $title) {
                 return $query->where('name',$title);
             });
@@ -94,7 +94,7 @@ class PagesRepositry implements PagesInterface
     public function deletePage($id)
     {
         try {
-            $role = Product::find($id);
+            $role = PagesContent::find($id);
             $role->delete();
             return Helper::success($role, $message=__('translation.record_deleted'));
         } catch (ValidationException $validationException) {
@@ -106,7 +106,7 @@ class PagesRepositry implements PagesInterface
     public function findPageById($id)
     {
         try {
-             $res = Product::with('category.products')->find($id);
+             $res = PagesContent::with('pageMedia')->find($id);
             return Helper::success($res, $message='Record found');
             } catch (ValidationException $validationException) {
             return Helper::errorWithData($validationException->errors()->first(), $validationException->errors());
