@@ -1,140 +1,59 @@
 
-
-@extends('layouts.master-without-nav')
+@extends('layouts.web-master-layouts')
 @section('title') Home @endsection
 @section('content')
 
-  @include('layouts.navbar')
-  <section class="section" id="blog">
-      <div class="container">
-          <div class="row justify-content-center">
-              <div class="col-lg-8">
-                  <div class="text-center mb-5">
-                      <h1 class="mb-3 ff-secondary fw-semibold text-capitalize lh-base">Latest <span class="text-primary">Gallery</span></h1>
-                      <p class="text-muted mb-4">We thrive when coming up with innovative ideas but also understand that a smart concept should be supported with faucibus sapien odio measurable results.</p>
-                  </div>
-              </div>
-          </div>
-          <!-- end row -->
+    <section id="portfolio" class="portfolio section">
 
-          <div class="row">
-              <div class="col-lg-4 col-md-6">
-                  <div class="gallery-box card">
-                      <div class="gallery-container">
-                          <a class="image-popup" href="{{ URL::asset('build/images/small/img-1.jpg')}}" title="">
-                              <img class="gallery-img img-fluid mx-auto" src="{{ URL::asset('build/images/small/img-1.jpg')}}" alt="" />
-                              <div class="gallery-overlay">
-                                  <h5 class="overlay-caption">Glasses and laptop from above</h5>
-                              </div>
-                          </a>
-                      </div>
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+            <span>Gallery</span>
+            <h2>Gallery</h2>
+            <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+        </div><!-- End Section Title -->
 
-                      <div class="box-content">
-                          <div class="d-flex align-items-center mt-1">
-                              <div class="flex-grow-1 text-muted">by <a href="" class="text-body text-truncate">Ron Mackie</a></div>
-                              <div class="flex-shrink-0">
-                                  <div class="d-flex gap-3">
-                                      <button type="button" class="btn btn-sm fs-12 btn-link text-body text-decoration-none px-0">
-                                          <i class="ri-thumb-up-fill text-muted align-bottom me-1"></i> 2.2K
-                                      </button>
-                                      <button type="button" class="btn btn-sm fs-12 btn-link text-body text-decoration-none px-0">
-                                          <i class="ri-question-answer-fill text-muted align-bottom me-1"></i> 1.3K
-                                      </button>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-lg-4 col-md-6">
-                  <div class="gallery-box card">
-                      <div class="gallery-container">
-                          <a class="image-popup" href="{{ URL::asset('build/images/small/img-1.jpg')}}" title="">
-                              <img class="gallery-img img-fluid mx-auto" src="{{ URL::asset('build/images/small/img-1.jpg')}}" alt="" />
-                              <div class="gallery-overlay">
-                                  <h5 class="overlay-caption">Glasses and laptop from above</h5>
-                              </div>
-                          </a>
-                      </div>
+        <div class="container">
 
-                      <div class="box-content">
-                          <div class="d-flex align-items-center mt-1">
-                              <div class="flex-grow-1 text-muted">by <a href="" class="text-body text-truncate">Ron Mackie</a></div>
-                              <div class="flex-shrink-0">
-                                  <div class="d-flex gap-3">
-                                      <button type="button" class="btn btn-sm fs-12 btn-link text-body text-decoration-none px-0">
-                                          <i class="ri-thumb-up-fill text-muted align-bottom me-1"></i> 2.2K
-                                      </button>
-                                      <button type="button" class="btn btn-sm fs-12 btn-link text-body text-decoration-none px-0">
-                                          <i class="ri-question-answer-fill text-muted align-bottom me-1"></i> 1.3K
-                                      </button>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-lg-4 col-md-6">
-                  <div class="gallery-box card">
-                      <div class="gallery-container">
-                          <a class="image-popup" href="{{ URL::asset('build/images/small/img-1.jpg')}}" title="">
-                              <img class="gallery-img img-fluid mx-auto" src="{{ URL::asset('build/images/small/img-1.jpg')}}" alt="" />
-                              <div class="gallery-overlay">
-                                  <h5 class="overlay-caption">Glasses and laptop from above</h5>
-                              </div>
-                          </a>
-                      </div>
-
-                      <div class="box-content">
-                          <div class="d-flex align-items-center mt-1">
-                              <div class="flex-grow-1 text-muted">by <a href="" class="text-body text-truncate">Ron Mackie</a></div>
-                              <div class="flex-shrink-0">
-                                  <div class="d-flex gap-3">
-                                      <button type="button" class="btn btn-sm fs-12 btn-link text-body text-decoration-none px-0">
-                                          <i class="ri-thumb-up-fill text-muted align-bottom me-1"></i> 2.2K
-                                      </button>
-                                      <button type="button" class="btn btn-sm fs-12 btn-link text-body text-decoration-none px-0">
-                                          <i class="ri-question-answer-fill text-muted align-bottom me-1"></i> 1.3K
-                                      </button>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-lg-4 col-md-6">
-                  <div class="gallery-box card">
-                      <div class="gallery-container">
-                          <a class="image-popup" href="{{ URL::asset('build/images/small/img-1.jpg')}}" title="">
-                              <img class="gallery-img img-fluid mx-auto" src="{{ URL::asset('build/images/small/img-1.jpg')}}" alt="" />
-                              <div class="gallery-overlay">
-                                  <h5 class="overlay-caption">Glasses and laptop from above</h5>
-                              </div>
-                          </a>
-                      </div>
-
-                      <div class="box-content">
-                          <div class="d-flex align-items-center mt-1">
-                              <div class="flex-grow-1 text-muted">by <a href="" class="text-body text-truncate">Ron Mackie</a></div>
-                              <div class="flex-shrink-0">
-                                  <div class="d-flex gap-3">
-                                      <button type="button" class="btn btn-sm fs-12 btn-link text-body text-decoration-none px-0">
-                                          <i class="ri-thumb-up-fill text-muted align-bottom me-1"></i> 2.2K
-                                      </button>
-                                      <button type="button" class="btn btn-sm fs-12 btn-link text-body text-decoration-none px-0">
-                                          <i class="ri-question-answer-fill text-muted align-bottom me-1"></i> 1.3K
-                                      </button>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
+            <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
 
 
-          </div>
-      </div>
-      <!-- end container -->
-  </section>
+                <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+
+                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+                        <img src="{{ URL::asset('build/web/assets/img/gallery/app-1.jpg')}}" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>App 1</h4>
+                            <p>Lorem ipsum, dolor sit amet consectetur</p>
+                            <a href="{{ URL::asset('build/web/assets/img/gallery/app-1.jpg')}}" title="App 1"
+                               data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i
+                                    class="bi bi-zoom-in"></i></a>
+                            <a href="{{ URL::asset('build/web/product-details.html')}}" title="More Details" class="details-link"><i
+                                    class="bi bi-link-45deg"></i></a>
+                        </div>
+                    </div><!-- End Gallery Item -->
+
+                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
+                        <img src="{{ URL::asset('build/web/assets/img/gallery/product-1.jpg')}}" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>Product 1</h4>
+                            <p>Lorem ipsum, dolor sit amet consectetur</p>
+                            <a href="{{ URL::asset('build/web/assets/img/gallery/product-1.jpg')}}" title="Product 1"
+                               data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i
+                                    class="bi bi-zoom-in"></i></a>
+                            <a href="product-details.html" title="More Details" class="details-link"><i
+                                    class="bi bi-link-45deg"></i></a>
+                        </div>
+                    </div><!-- End Gallery Item -->
+
+
+
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
 @endsection
-

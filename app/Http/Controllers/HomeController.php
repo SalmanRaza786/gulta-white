@@ -36,6 +36,8 @@ class HomeController extends Controller
     {
         try {
 
+            $data['totalAttempts']=3;
+            $data['homeImage']=TextMessage::pluck('home_image')->first();
             $data['testimonials']=Helper::fetchOnlyData($this->testimonials->getAllTestimonials());
           return view('web.index')->with(compact('data'));
 
@@ -86,6 +88,7 @@ class HomeController extends Controller
                     'p_id' => $pCode->p_id,
                 ]
             );
+
 
             ProductCode::where('p_codes',$request->p_code)->update(['is_verify'=>1]);
             $client= AttemptCode::with('pCode.product')->where('p_code',$request->p_code)->first();

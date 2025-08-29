@@ -1,92 +1,107 @@
 
 
-@extends('layouts.master-without-nav')
-@section('title') Home @endsection
+
+@extends('layouts.web-master-layouts')
+@section('title') Contact Us @endsection
 @section('content')
 
-    @include('layouts.navbar')
+ <section id="contact" class="contact section">
 
-    <section class="section" id="contact">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="text-center mb-5">
-                        <h3 class="mb-3 fw-semibold">Get In Touch</h3>
-                        <p class="text-muted mb-4 ff-secondary">We thrive when coming up with innovative ideas but also understand that a smart concept should be supported with faucibus sapien odio measurable results.</p>
-                    </div>
-                </div>
-            </div>
-            <!-- end row -->
+            <!-- Section Title -->
+            <div class="container section-title" data-aos="fade-up">
+                <span>Get In Touch</span>
+                <h2>Contact US</h2>
+                <p class="text-muted fs-5">
+                    We’d love to hear from you! 💬
+                    Feel free to reach out to us with any questions, feedback, or product verification support.
+                    Our team is here to help you.
+                </p>
+            </div><!-- End Section Title -->
 
-            <div class="row gy-4">
-                <div class="col-lg-4">
-                    <div>
-                        <div class="mt-4">
-                            <h5 class="fs-13 text-muted text-uppercase">Office Address 1:</h5>
-                            <div class="ff-secondary fw-semibold">4461 Cedar Street Moro, <br />AR 72368</div>
-                        </div>
-                        <div class="mt-4">
-                            <h5 class="fs-13 text-muted text-uppercase">Office Address 2:</h5>
-                            <div class="ff-secondary fw-semibold">2467 Swick Hill Street <br />New Orleans, LA</div>
-                        </div>
-                        <div class="mt-4">
-                            <h5 class="fs-13 text-muted text-uppercase">Working Hours:</h5>
-                            <div class="ff-secondary fw-semibold">9:00am to 6:00pm</div>
+
+
+
+     <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+                <div class="row gy-4">
+
+                    <div class="col-lg-5">
+
+                        <div class="info-wrap">
+                            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
+                                <i class="bi bi-geo-alt flex-shrink-0"></i>
+                                <div>
+                                    <h3>Address</h3>
+                                    <p>A108 Adam Street, New York, NY 535022</p>
+                                </div>
+                            </div><!-- End Info Item -->
+
+                            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
+                                <i class="bi bi-telephone flex-shrink-0"></i>
+                                <div>
+                                    <h3>Call Us</h3>
+                                    <p>+1 5589 55488 55</p>
+                                </div>
+                            </div><!-- End Info Item -->
+
+                            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
+                                <i class="bi bi-envelope flex-shrink-0"></i>
+                                <div>
+                                    <h3>Email Us</h3>
+                                    <p>info@example.com</p>
+                                </div>
+                            </div><!-- End Info Item -->
+
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d48389.78314118045!2d-74.006138!3d40.710059!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a22a3bda30d%3A0xb89d1fe6bc499443!2sDowntown%20Conference%20Center!5e0!3m2!1sen!2sus!4v1676961268712!5m2!1sen!2sus"
+                                frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen=""
+                                loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         </div>
                     </div>
-                </div>
-                <!-- end col -->
-                <div class="col-lg-8">
-                    <div>
-                        <div class="card">
-                            <div class="card body">
-                                <form>
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="mb-4">
-                                                <label for="name" class="form-label fs-13">Name</label>
-                                                <input name="name" id="name" type="text" class="form-control bg-light border-light" placeholder="Your name*">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="mb-4">
-                                                <label for="email" class="form-label fs-13">Email</label>
-                                                <input name="email" id="email" type="email" class="form-control bg-light border-light" placeholder="Your email*">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="mb-4">
-                                                <label for="subject" class="form-label fs-13">Subject</label>
-                                                <input type="text" class="form-control bg-light border-light" id="subject" name="subject" placeholder="Your Subject.." />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="mb-3">
-                                                <label for="comments" class="form-label fs-13">Message</label>
-                                                <textarea name="comments" id="comments" rows="3" class="form-control bg-light border-light" placeholder="Your message..."></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-12 text-end">
-                                            <input type="submit" id="submit" name="send" class="submitBnt btn btn-primary" value="Send Message">
-                                        </div>
-                                    </div>
-                                </form>
+
+                    <div class="col-lg-7">
+                        <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up"
+                              data-aos-delay="200">
+                            <div class="row gy-4">
+
+                                <div class="col-md-6">
+                                    <label for="name-field" class="pb-2">Your Name</label>
+                                    <input type="text" name="name" id="name-field" class="form-control" required="">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="email-field" class="pb-2">Your Email</label>
+                                    <input type="email" class="form-control" name="email" id="email-field" required="">
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label for="subject-field" class="pb-2">Subject</label>
+                                    <input type="text" class="form-control" name="subject" id="subject-field"
+                                           required="">
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label for="message-field" class="pb-2">Message</label>
+                                    <textarea class="form-control" name="message" rows="10" id="message-field"
+                                              required=""></textarea>
+                                </div>
+
+                                <div class="col-md-12 text-center">
+                                    <div class="loading">Loading</div>
+                                    <div class="error-message"></div>
+                                    <div class="sent-message">Your message has been sent. Thank you!</div>
+
+                                    <button type="submit">Send Message</button>
+                                </div>
+
                             </div>
-                        </div>
+                        </form>
+                    </div><!-- End Contact Form -->
 
-                    </div>
                 </div>
-            </div>
-            <!-- end row -->
-        </div>
-        <!-- end container -->
-    </section>
 
+            </div>
+
+        </section>
 @endsection
 

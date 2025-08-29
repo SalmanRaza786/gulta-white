@@ -18,11 +18,12 @@ class TextMessageSeeder extends Seeder
                 'valid_message' => 'Your code is valid',
                 'in_valid_message' => 'Your code is invalid',
                 'verified_message' => 'This code is already verified by',
+                'home_image' => 'home-image/hero-img.png',
             ],
             [
                 'valid_message' => 'Your code is valid',
                 'in_valid_message' => 'Your code is invalid',
-                'verified_message' => 'This code is already verified by',
+                'home_image' => 'home-image/hero-img.png',
 
 
             ]);

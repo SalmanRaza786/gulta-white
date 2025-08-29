@@ -1,102 +1,68 @@
 
 
-@extends('layouts.master-without-nav')
-@section('title') Home @endsection
+@extends('layouts.web-master-layouts')
+@section('title') Contact Us @endsection
 @section('content')
+    <section id="portfolio" class="portfolio section">
 
-    @include('layouts.navbar')
-    <section class="section" id="blog">
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+            <span>Blogs</span>
+            <h2>Blogs</h2>
+            <p>Explore our collection of articles, resources, and guides designed to help you stay ahead with valuable knowledge and fresh perspectives.</p>
+
+        </div><!-- End Section Title -->
+
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="text-center mb-5">
-                        <h1 class="mb-3 ff-secondary fw-semibold text-capitalize lh-base">Our Latest <span class="text-primary">News</span></h1>
-                        <p class="text-muted mb-4">We thrive when coming up with innovative ideas but also understand that a smart concept should be supported with faucibus sapien odio measurable results.</p>
-                    </div>
-                </div>
-            </div>
-            <!-- end row -->
+            <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+                <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
 
-            <div class="row">
-                <div class="col-lg-4 col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <img src="{{ URL::asset('build/images/small/img-8.jpg')}}" alt="" class="img-fluid rounded" />
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline fs-14 text-muted">
-                                <li class="list-inline-item">
-                                    <i class="ri-calendar-line align-bottom me-1"></i> 30 Oct, 2021
-                                </li>
-                                <li class="list-inline-item">
-                                    <i class="ri-message-2-line align-bottom me-1"></i> 364 Comment
-                                </li>
-                            </ul>
-                            <a href="javascript:void(0);">
-                                <h5>Design your apps in your own way ?</h5>
-                            </a>
-                            <p class="text-muted fs-14">One disadvantage of Lorum Ipsum is that in Latin certain letters appear more frequently than others.</p>
-
-                            <div>
-                                <a href="#!" class="link-success">Learn More <i class="ri-arrow-right-line align-bottom ms-1"></i></a>
-                            </div>
+                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+                        <img src="{{ URL::asset('build/web/assets/img/gallery/app-1.jpg')}}" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>App 1</h4>
+                            <p>Lorem ipsum, dolor sit amet consectetur</p>
+                            <a href="{{ URL::asset('build/web/assets/img/gallery/app-1.jpg')}}" title="App 1"
+                               data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i
+                                    class="bi bi-zoom-in"></i></a>
+                            <a href="product-details.html" title="More Details" class="details-link"><i
+                                    class="bi bi-link-45deg"></i></a>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <img src="{{ URL::asset('build/images/small/img-6.jpg')}}" alt="" class="img-fluid rounded" />
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline fs-14 text-muted">
-                                <li class="list-inline-item">
-                                    <i class="ri-calendar-line align-bottom me-1"></i> 02 Oct, 2021
-                                </li>
-                                <li class="list-inline-item">
-                                    <i class="ri-message-2-line align-bottom me-1"></i> 245 Comment
-                                </li>
-                            </ul>
-                            <a href="javascript:void(0);">
-                                <h5>Smartest Applications for Business ?</h5>
-                            </a>
-                            <p class="text-muted fs-14">Due to its widespread use as filler text for layouts, non-readability is of great importance: human perception.</p>
 
-                            <div>
-                                <a href="#!" class="link-success">Learn More <i class="ri-arrow-right-line align-bottom ms-1"></i></a>
-                            </div>
+                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
+                        <img src="{{ URL::asset('build/web/assets/img/gallery/product-1.jpg')}}'" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>Product 1</h4>
+                            <p>Lorem ipsum, dolor sit amet consectetur</p>
+                            <a href="{{ URL::asset('build/web/assets/img/gallery/product-1.jpg')}}" title="Product 1"
+                               data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i
+                                    class="bi bi-zoom-in"></i></a>
+                            <a href="product-details.html" title="More Details" class="details-link"><i
+                                    class="bi bi-link-45deg"></i></a>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <img src="{{ URL::asset('build/images/small/img-9.jpg')}}" alt="" class="img-fluid rounded" />
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline fs-14 text-muted">
-                                <li class="list-inline-item">
-                                    <i class="ri-calendar-line align-bottom me-1"></i> 23 Sept, 2021
-                                </li>
-                                <li class="list-inline-item">
-                                    <i class="ri-message-2-line align-bottom me-1"></i> 354 Comment
-                                </li>
-                            </ul>
-                            <a href="javascript:void(0);">
-                                <h5>How apps is changing the IT world</h5>
-                            </a>
-                            <p class="text-muted fs-14">Intrinsically incubate intuitive opportunities and real-time potentialities Appropriately communicate one-to-one technology.</p>
 
-                            <div>
-                                <a href="#!" class="link-success">Learn More <i class="ri-arrow-right-line align-bottom ms-1"></i></a>
-                            </div>
+                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-branding">
+                        <img src="{{ URL::asset('build/web/assets/img/gallery/branding-1.jpg')}}" class="img-fluid" alt="">
+                        <div class="portfolio-info">
+                            <h4>Branding 1</h4>
+                            <p>Lorem ipsum, dolor sit amet consectetur</p>
+                            <a href="{{ URL::asset('build/web/assets/img/gallery/branding-1.jpg')}}" title="Branding 1"
+                               data-gallery="portfolio-gallery-branding" class="glightbox preview-link"><i
+                                    class="bi bi-zoom-in"></i></a>
+                            <a href="product-details.html" title="More Details" class="details-link"><i
+                                    class="bi bi-link-45deg"></i></a>
                         </div>
                     </div>
+
+
                 </div>
 
             </div>
+
         </div>
-        <!-- end container -->
-    </section>
-@endsection
 
+    </section>
+
+@endsection

@@ -61,7 +61,7 @@
                             </div>
                         </div>
                     @endif
-                    
+
                     <div class="d-flex">
 
                         <form action="{{ route('code.verify') }}" class="job-panel-filter" method="post">
@@ -88,27 +88,42 @@
                                 </div>
                             </div>
                         </form>
+
                     </div>
+                    @if($data['totalAttempts'] >= 3)
+                        <div class="col-md-6 col-12">
+                            <label class="form-label fw-bold">Captcha Verification</label>
+                            <div class="input-group">
+                                <span id="captchaQuestion" class="input-group-text bg-dark text-white fw-bold"></span>
+                                <input type="number" id="captchaInput" class="form-control" placeholder="Enter Answer">
+                            </div>
+                            <div id="captchaMessage" class="text-danger small mt-1" style="display:none;"></div>
+                        </div>
+                        <div class="mt-3" id="contactUsSection" style="display:none;">
+                            <a href="{{ route('user.contact.us') }}" class="btn btn-primary w-100">Contact Us</a>
+                        </div>
+                    @endif
                 </div>
                 <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="100">
-                    <img src="{{ URL::asset('build/web/assets/img/hero-img.png')}}" class="img-fluid animated" alt="">
+                    @isset($data['homeImage'])
+                    <img src="{{ URL::asset('storage/uploads/'.'/'.$data['homeImage'])}}" class="img-fluid animated" alt="">
+                    @else
+                        <img src="{{ URL::asset('build/web/assets/img/hero-img.png')}}" class="img-fluid animated" alt="">
+                    @endisset
                 </div>
             </div>
         </div>
     </section>
+
     <section id="testimonials" class="testimonials section light-background">
 
         <!-- Section Title -->
         <div class="container section-title position-relative" data-aos="fade-up">
             <span>Testimonials</span>
             <h2>Testimonials</h2>
-            <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-
+            <p>Our clients’ feedback inspires us every day. Here are some of their stories.</p>
             <!-- Right Side Button -->
-            <button type="button" class="btn btn-success position-absolute top-0 end-0 z-3" data-bs-toggle="modal"
-                    data-bs-target="#contactModal">
-                Contact Us
-            </button>
+
         </div><!-- End Section Title -->
 
         <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -209,13 +224,11 @@
             <div class="row justify-content-center" data-aos="zoom-in" data-aos-delay="100">
                 <div class="col-xl-10">
                     <div class="text-center">
-                        <h3>Call To Action</h3>
-                        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                            nulla pariatur.
-                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-                            mollit anim id est
-                            laborum.</p>
-                        <a class="cta-btn" href="#">Call To Action</a>
+                        <h3>Share Your Experience</h3>
+                        <p>Your feedback helps us grow and improve. We’d love to hear your thoughts about our products and services</p>
+                        <a class="cta-btn" href="#"  data-bs-target="#contactModal" data-bs-toggle="modal">Add Your Review</a>
+
+
                     </div>
                 </div>
             </div>
@@ -225,3 +238,43 @@
 
 
 @endsection
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let captchaQuestion = document.getElementById("captchaQuestion");
+        let captchaInput = document.getElementById("captchaInput");
+        let captchaMessage = document.getElementById("captchaMessage");
+        let contactUsSection = document.getElementById("contactUsSection");
+
+        let correctAnswer = null;
+
+        // Generate random captcha (like 2+2, 5+5, 3+3)
+        function generateCaptcha() {
+            let num1 = Math.floor(Math.random() * 9) + 1; // 1–9
+            let num2 = Math.floor(Math.random() * 9) + 1; // 1–9
+            correctAnswer = num1 + num2;
+            captchaQuestion.innerText = `${num1} + ${num2} = ?`;
+        }
+
+        if (captchaQuestion) {
+            generateCaptcha(); // show first captcha
+
+            captchaInput.addEventListener("keyup", function () {
+                let val = captchaInput.value.trim();
+                if (val !== "") {
+                    if (parseInt(val) === correctAnswer) {
+                        captchaMessage.style.display = "none";
+                        contactUsSection.style.display = "block";
+                    } else {
+                        contactUsSection.style.display = "none";
+                        captchaMessage.innerText = "❌ Wrong answer, try again.";
+                        captchaMessage.style.display = "block";
+                    }
+                } else {
+                    contactUsSection.style.display = "none";
+                    captchaMessage.style.display = "none";
+                }
+            });
+        }
+    });
+</script>
