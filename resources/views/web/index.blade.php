@@ -1,311 +1,159 @@
 
 
-@extends('layouts.master-without-nav')
+
+@extends('layouts.web-master-layouts')
 @section('title') Home @endsection
 @section('content')
 
-    @include('layouts.navbar')
 
-    <section class="section job-hero-section bg-light pb-0" id="hero">
+    <section id="hero" class="hero section">
+
         <div class="container">
-            <div class="row justify-content-between align-items-center">
-                <div class="col-lg-6">
-                    <div>
-                        <h1 class="display-6 fw-semibold text-capitalize mb-3 lh-base">Find your product code and verify here</h1>
-                        <p class="lead text-muted lh-base mb-4">Find codes, create trackable codes and enrich your products. Carefully crafted after analyzing the needs of different industries.</p>
-                        @if (session('error'))
-                            <div class="alert alert-danger">
-                                {{ session('error') }}
-                            </div>
-                        @endif
-
-                        @if (session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
-                            </div>
-                        @endif
-
-                        @if (session('client'))
-                            <table class="table table-warning">
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Product</th>
-                                    <th>Code</th>
-                                    <th>Verify Date</th>
-                                </tr>
-                                <tr>
-                                    <td>{{ session('client')->name }}</td>
-                                    <td><img src="{{ asset('storage/uploads/' . session('client')->pCode->product->image) }}" class="img-thumbnail avatar-lg" alt=""></td>
-                                    <td>{{ session('client')->p_code }}</td>
-                                    <td>{{ date('d M,Y,H:i:s', strtotime(session('client')->created_at)) }}</td>
-                                </tr>
-                            </table>
-                        @endif
-
-
-{{--                        <form action="#" class="job-panel-filter">--}}
-{{--                            <div class="row g-md-0 g-2">--}}
-{{--                                <div class="col-md-4">--}}
-{{--                                    <div>--}}
-{{--                                        <input type="search" id="job-title" class="form-control filter-input-box" placeholder="Job, Company name...">--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <!--end col-->--}}
-{{--                                <div class="col-md-4">--}}
-{{--                                    <div>--}}
-{{--                                        <select class="form-control" data-choices>--}}
-{{--                                            <option value="">Select job type</option>--}}
-{{--                                            <option value="Full Time">Full Time</option>--}}
-{{--                                            <option value="Part Time">Part Time</option>--}}
-{{--                                            <option value="Freelance">Freelance</option>--}}
-{{--                                            <option value="Intership">Intership</option>--}}
-{{--                                        </select>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <!--end col-->--}}
-{{--                                <div class="col-md-4">--}}
-{{--                                    <div class="h-100">--}}
-{{--                                        <button class="btn btn-primary submit-btn w-100 h-100" type="submit"><i class="ri-search-2-line align-bottom me-1"></i> Find Job</button>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <!--end col-->--}}
-{{--                            </div>--}}
-{{--                            <!--end row-->--}}
-{{--                        </form>--}}
-
-
-                        <form action="{{ route('code.verify') }}" class="job-panel-filter" method="post">
-                            @csrf
-                            <div class="row g-3">
-                                <div class="col-md-4 col-12">
-                                    <div>
-                                        <input type="search" id="job-title" class="form-control" placeholder="Your Name" name="name">
-                                    </div>
-                                </div>
-                                <div class="col-md-4 col-12">
-                                    <div>
-                                        <input type="search" id="job-title" class="form-control" placeholder="Your Contact Number" name="phone">
-                                    </div>
-                                </div>
-                                <div class="col-md-4 col-12">
-                                    <div>
-                                        <input type="search" id="job-title" class="form-control" placeholder="Your Product Code" name="p_code">
-                                    </div>
-                                </div>
-                                <!-- Submit Button -->
-                                <div class="col-12">
-                                    <button class="btn btn-primary w-100 mt-2" type="submit"><i class="ri-search-2-line align-bottom me-1"></i> Verify</button>
-                                </div>
-                            </div>
-                        </form>
-
-{{--                        <ul class="treding-keywords list-inline mb-0 mt-3 fs-13">--}}
-{{--                            <li class="list-inline-item text-danger fw-semibold"><i class="mdi mdi-tag-multiple-outline align-middle"></i> Trending Keywords:</li>--}}
-{{--                            <li class="list-inline-item"><a href="javascript:void(0)">Design,</a></li>--}}
-{{--                            <li class="list-inline-item"><a href="javascript:void(0)">Development,</a></li>--}}
-{{--                            <li class="list-inline-item"><a href="javascript:void(0)">Manager,</a></li>--}}
-{{--                            <li class="list-inline-item"><a href="javascript:void(0)">Senior</a></li>--}}
-{{--                        </ul>--}}
+            <div class="row gy-4">
+                <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center"
+                     data-aos="fade-up">
+                    <h1>Elegant and creative solutions</h1>
+                    <p>We are team of talented designers making websites with Bootstrap</p>
+                    <div class="d-flex">
+                        <a href="About.html" class="btn-get-started">Get Started</a>
+                        <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8"
+                           class="glightbox btn-watch-video d-flex align-items-center"><i
+                                class="bi bi-play-circle"></i><span>Watch
+                                    Video</span></a>
                     </div>
                 </div>
-                <!--end col-->
-                <div class="col-lg-4">
-                    <div class="position-relative home-img text-center mt-5 mt-lg-0">
-                        <div class="card p-3 rounded shadow-lg inquiry-box">
-                            <div class="d-flex align-items-center">
-                                <div class="avatar-sm flex-shrink-0 me-3">
-                                    <div class="avatar-title bg-soft-warning text-warning rounded fs-18">
-                                        <i class="ri-mail-send-line"></i>
-                                    </div>
-                                </div>
-                                <h5 class="fs-15 lh-base mb-0">Product Inquiry from here</h5>
-                            </div>
+                <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="100">
+                    <img src="{{ URL::asset('build/web/assets/img/hero-img.png')}}" class="img-fluid animated" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="testimonials" class="testimonials section light-background">
+
+        <!-- Section Title -->
+        <div class="container section-title position-relative" data-aos="fade-up">
+            <span>Testimonials</span>
+            <h2>Testimonials</h2>
+            <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+
+            <!-- Right Side Button -->
+            <button type="button" class="btn btn-success position-absolute top-0 end-0 z-3" data-bs-toggle="modal"
+                    data-bs-target="#contactModal">
+                Contact Us
+            </button>
+        </div><!-- End Section Title -->
+
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+            <div class="swiper init-swiper" data-speed="600" data-delay="5000"
+                 data-breakpoints="{ &quot;320&quot;: { &quot;slidesPerView&quot;: 1, &quot;spaceBetween&quot;: 40 }, &quot;1200&quot;: { &quot;slidesPerView&quot;: 3, &quot;spaceBetween&quot;: 40 } }">
+                <script type="application/json" class="swiper-config">
+                    {
+                      "loop": true,
+                      "speed": 600,
+                      "autoplay": { "delay": 5000 },
+                      "slidesPerView": "auto",
+                      "pagination": {
+                        "el": ".swiper-pagination",
+                        "type": "bullets",
+                        "clickable": true
+                      },
+                      "breakpoints": {
+                        "320": { "slidesPerView": 1, "spaceBetween": 40 },
+                        "1200": { "slidesPerView": 3, "spaceBetween": 20 }
+                      }
+                    }
+                </script>
+
+                <div class="swiper-wrapper">
+
+                    @isset($data['testimonials'])
+                        @foreach($data['testimonials'] as $row)
+                    <div class="swiper-slide">
+                        <div class="testimonial-item">
+                            <p>
+                                <i class="bi bi-quote quote-icon-left"></i>
+                                <span>{{$row->review_message}}</span>
+                                <i class="bi bi-quote quote-icon-right"></i>
+                            </p>
+                            <img src="{{ URL::asset('build/web/assets/img/testimonials/dummy.png')}}" class="testimonial-img" alt="">
+                            <h3>{{$row->name}}</h3>
+{{--                            <h4>Ceo &amp; Founder</h4>--}}
+                        </div>
+                    </div>
+                        @endforeach
+                    @endisset
+
+
+
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+
+        </div>
+    </section>
+    <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title text-white" id="contactModalLabel">Contact Form</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" placeholder="Enter your name">
                         </div>
 
-                        <div class="card p-3 rounded shadow-lg application-box">
-{{--                            <h5 class="fs-15 lh-base mb-3">Applications</h5>--}}
-{{--                            <div class="avatar-group">--}}
-{{--                                <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Brent Gonzalez">--}}
-{{--                                    <div class="avatar-xs">--}}
-{{--                                        <img src="{{ URL::asset('build/images/users/avatar-3.jpg')}}" alt="" class="rounded-circle img-fluid">--}}
-{{--                                    </div>--}}
-{{--                                </a>--}}
-{{--                                <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Ellen Smith">--}}
-{{--                                    <div class="avatar-xs">--}}
-{{--                                        <div class="avatar-title rounded-circle bg-danger">--}}
-{{--                                            S--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </a>--}}
-{{--                                <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Ellen Smith">--}}
-{{--                                    <div class="avatar-xs">--}}
-{{--                                        <img src="{{ URL::asset('build/images/users/avatar-10.jpg')}}" alt="" class="rounded-circle img-fluid">--}}
-{{--                                    </div>--}}
-{{--                                </a>--}}
-{{--                                <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top">--}}
-{{--                                    <div class="avatar-xs">--}}
-{{--                                        <div class="avatar-title rounded-circle bg-success">--}}
-{{--                                            Z--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </a>--}}
-{{--                                <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Brent Gonzalez">--}}
-{{--                                    <div class="avatar-xs">--}}
-{{--                                        <img src="{{ URL::asset('build/images/users/avatar-9.jpg')}}" alt="" class="rounded-circle img-fluid">--}}
-{{--                                    </div>--}}
-{{--                                </a>--}}
-{{--                                <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="More Appliances">--}}
-{{--                                    <div class="avatar-xs">--}}
-{{--                                        <div class="avatar-title fs-13 rounded-circle bg-light border-dashed border text-primary">--}}
-{{--                                            2k+--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </a>--}}
-{{--                            </div>--}}
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" placeholder="Enter your email">
                         </div>
-                        <img src="{{ URL::asset('build/images/job-profile2.png')}}" alt="" class="user-img">
 
-                        <div class="circle-effect">
-                            <div class="circle"></div>
-                            <div class="circle2"></div>
-                            <div class="circle3"></div>
-                            <div class="circle4"></div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone</label>
+                            <input type="tel" class="form-control" id="phone" placeholder="Enter your phone">
                         </div>
+
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea class="form-control" id="message" rows="3"
+                                      placeholder="Write your message"></textarea>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success">Send Message</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <section id="call-to-action" class="call-to-action section accent-background">
+
+        <div class="container">
+            <div class="row justify-content-center" data-aos="zoom-in" data-aos-delay="100">
+                <div class="col-xl-10">
+                    <div class="text-center">
+                        <h3>Call To Action</h3>
+                        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                            nulla pariatur.
+                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+                            mollit anim id est
+                            laborum.</p>
+                        <a class="cta-btn" href="#">Call To Action</a>
                     </div>
                 </div>
             </div>
-            <!-- end row -->
         </div>
-        <!-- end container -->
+
     </section>
 
-
-    <section class="section" id="blog">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="text-center mb-5">
-                        <h1 class="mb-3 ff-secondary fw-semibold text-capitalize lh-base">Our Latest <span class="text-primary">News</span></h1>
-                        <p class="text-muted mb-4">We thrive when coming up with innovative ideas but also understand that a smart concept should be supported with faucibus sapien odio measurable results.</p>
-                    </div>
-                </div>
-            </div>
-            <!-- end row -->
-
-            <div class="row">
-                <div class="col-lg-4 col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <img src="{{ URL::asset('build/images/small/img-8.jpg')}}" alt="" class="img-fluid rounded" />
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline fs-14 text-muted">
-                                <li class="list-inline-item">
-                                    <i class="ri-calendar-line align-bottom me-1"></i> 30 Oct, 2021
-                                </li>
-                                <li class="list-inline-item">
-                                    <i class="ri-message-2-line align-bottom me-1"></i> 364 Comment
-                                </li>
-                            </ul>
-                            <a href="javascript:void(0);">
-                                <h5>Design your apps in your own way ?</h5>
-                            </a>
-                            <p class="text-muted fs-14">One disadvantage of Lorum Ipsum is that in Latin certain letters appear more frequently than others.</p>
-
-                            <div>
-                                <a href="#!" class="link-success">Learn More <i class="ri-arrow-right-line align-bottom ms-1"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <img src="{{ URL::asset('build/images/small/img-6.jpg')}}" alt="" class="img-fluid rounded" />
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline fs-14 text-muted">
-                                <li class="list-inline-item">
-                                    <i class="ri-calendar-line align-bottom me-1"></i> 02 Oct, 2021
-                                </li>
-                                <li class="list-inline-item">
-                                    <i class="ri-message-2-line align-bottom me-1"></i> 245 Comment
-                                </li>
-                            </ul>
-                            <a href="javascript:void(0);">
-                                <h5>Smartest Applications for Business ?</h5>
-                            </a>
-                            <p class="text-muted fs-14">Due to its widespread use as filler text for layouts, non-readability is of great importance: human perception.</p>
-
-                            <div>
-                                <a href="#!" class="link-success">Learn More <i class="ri-arrow-right-line align-bottom ms-1"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <img src="{{ URL::asset('build/images/small/img-9.jpg')}}" alt="" class="img-fluid rounded" />
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline fs-14 text-muted">
-                                <li class="list-inline-item">
-                                    <i class="ri-calendar-line align-bottom me-1"></i> 23 Sept, 2021
-                                </li>
-                                <li class="list-inline-item">
-                                    <i class="ri-message-2-line align-bottom me-1"></i> 354 Comment
-                                </li>
-                            </ul>
-                            <a href="javascript:void(0);">
-                                <h5>How apps is changing the IT world</h5>
-                            </a>
-                            <p class="text-muted fs-14">Intrinsically incubate intuitive opportunities and real-time potentialities Appropriately communicate one-to-one technology.</p>
-
-                            <div>
-                                <a href="#!" class="link-success">Learn More <i class="ri-arrow-right-line align-bottom ms-1"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        <!-- end container -->
-    </section>
-
-
-
-    <footer class="custom-footer bg-dark py-5 position-relative">
-        <div class="container">
-
-
-            <div class="row text-center text-sm-start align-items-center mt-5">
-                <div class="col-sm-6">
-                    <div>
-                        <p class="copy-rights mb-0">
-                            <script> document.write(new Date().getFullYear()) </script> © Velzon - Themesbrand
-                        </p>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="text-sm-end mt-3 mt-sm-0">
-                        <ul class="list-inline mb-0 footer-list gap-4 fs-13">
-                            <li class="list-inline-item">
-                                <a href="pages-privacy-policy.html">Privacy Policy</a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="pages-term-conditions.html">Terms & Conditions</a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="pages-privacy-policy.html">Security</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
 
 @endsection
-

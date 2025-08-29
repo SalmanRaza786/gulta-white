@@ -1,34 +1,20 @@
-<nav class="navbar navbar-expand-lg navbar-landing fixed-top job-navbar" id="navbar">
-    <div class="container-fluid custom-container">
+<header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-        <button class="navbar-toggler py-0 fs-20 text-body" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="mdi mdi-menu"></i>
-        </button>
+        <a href="index.html" class="logo d-flex align-items-center me-auto">
+            <img src="{{ URL::asset('build/web/assets/img/logo.jpg')}}" alt="">
+        </a>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mx-auto mt-2 mt-lg-0" id="navbar-example">
-                <li class="nav-item">
-                    <a class="nav-link active" href="{{route('user.index')}}">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('user.gallery')}}">Gallery</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('user.blogs')}}">Blogs</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('user.about.us')}}">Abouts Us</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('user.contact.us')}}">Contact Us</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('user.faq')}}">FAQs</a>
-                </li>
+        <nav id="navmenu" class="navmenu">
+            <ul>
+                <li><a href="Home.html" class="active">Home</a></li>
+                <li><a href="Gallery.html">Gallery</a></li>
+                <li><a href="#services">Blogs</a></li>
+                <li><a href="About.html">About Us</a></li>
+                <li><a href="FAQs.html">FAQs</a></li>
+                <li><a href="Contact.html">Contact</a></li>
             </ul>
-
-        </div>
-
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
     </div>
-</nav>
-
+</header>

@@ -66,6 +66,8 @@ use App\Repositries\qc\QcInterface;
 use App\Repositries\qc\QcRepositry;
 use App\Repositries\roles\RoleInterface;
 use App\Repositries\roles\RoleRepositry;
+use App\Repositries\testimonials\TestimonialsInterface;
+use App\Repositries\testimonials\TestimonialsRepositry;
 use App\Repositries\user\UserInterface;
 use App\Repositries\user\UserRepositry;
 use App\Repositries\wh\WhInterface;
@@ -101,6 +103,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(FaqInterface::class,FaqRepositry::class);
         $this->app->bind(PermissionInterface::class,PermissionRepositry::class);
         $this->app->bind(PagesInterface::class,PagesRepositry::class);
+        $this->app->bind(TestimonialsInterface::class,TestimonialsRepositry::class);
 
     }
 }

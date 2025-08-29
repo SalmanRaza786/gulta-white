@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 use App\Http\Helpers\Helper;
 use App\Models\AttemptCode;
 use App\Models\ProductCode;
+use App\Models\Testimonial;
 use App\Models\TextMessage;
 use App\Models\User;
 use App\Repositries\category\CategoryInterface;
 use App\Repositries\product\ProductInterface;
+use App\Repositries\testimonials\TestimonialsInterface;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,11 +22,13 @@ class HomeController extends Controller
 {
     private $cat;
     private $product;
+    private $testimonials;
 
-    public function __construct(CategoryInterface $cat,ProductInterface $product)
+    public function __construct(CategoryInterface $cat,ProductInterface $product,TestimonialsInterface $testimonials)
     {
         $this->cat = $cat;
         $this->product = $product;
+        $this->testimonials = $testimonials;
     }
 
 
@@ -32,7 +36,8 @@ class HomeController extends Controller
     {
         try {
 
-          return view('web.index');
+            $data['testimonials']=Helper::fetchOnlyData($this->testimonials->getAllTestimonials());
+          return view('web.index')->with(compact('data'));
 
         } catch (\Exception $e) {
             return $e->getMessage();
