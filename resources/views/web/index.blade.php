@@ -12,14 +12,82 @@
             <div class="row gy-4">
                 <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center"
                      data-aos="fade-up">
-                    <h1>Elegant and creative solutions</h1>
-                    <p>We are team of talented designers making websites with Bootstrap</p>
+                    <h2>Find your product code and verify here</h2>
+                    <p>Find codes, create trackable codes and enrich your products. Carefully crafted after analyzing the needs of different industries.</p>
+                    @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    @if (session('client'))
+                        <div class="card shadow-sm border-0">
+                            <div class="card-header  text-white">
+                                <h5 class="mb-0">Product Verification</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered align-middle text-center">
+                                        <thead class="table-success">
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Product</th>
+                                            <th>Code</th>
+                                            <th>Verify Date</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>{{ session('client')->name }}</td>
+                                            <td>
+                                                <img src="{{ asset('storage/uploads/' . session('client')->pCode->product->image) }}"
+                                                     class="img-thumbnail rounded shadow-sm"
+                                                     style="width: 80px; height: auto;"
+                                                     alt="Product">
+                                            </td>
+                                            <td>
+                            <span class="badge bg-success fs-6">  {{ session('client')->p_code }}</span></td>
+
+                                            <td>{{ date('d M,Y,H:i:s', strtotime(session('client')->created_at)) }}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                    
                     <div class="d-flex">
-                        <a href="About.html" class="btn-get-started">Get Started</a>
-                        <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8"
-                           class="glightbox btn-watch-video d-flex align-items-center"><i
-                                class="bi bi-play-circle"></i><span>Watch
-                                    Video</span></a>
+
+                        <form action="{{ route('code.verify') }}" class="job-panel-filter" method="post">
+                            @csrf
+                            <div class="row g-3">
+                                <div class="col-md-4 col-12">
+                                    <div>
+                                        <input type="search" id="job-title" class="form-control" placeholder="Your Name" name="name" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-12">
+                                    <div>
+                                        <input type="search" id="job-title" class="form-control" placeholder="Your Contact Number" name="phone" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-12">
+                                    <div>
+                                        <input type="search" id="job-title" class="form-control" placeholder="Your Product Code" name="p_code" required>
+                                    </div>
+                                </div>
+                                <!-- Submit Button -->
+                                <div class="col-12">
+                                    <button class="btn btn-success w-100 mt-2" type="submit"><i class="ri-search-2-line align-bottom me-1"></i> Verify</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="100">
