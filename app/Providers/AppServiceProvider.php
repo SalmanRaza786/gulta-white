@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Events\SendEmailEvent;
 use App\Listeners\SendEmailListener;
+use App\Models\ContactUs;
 use App\Repositries\appointment\AppointmentInterface;
 use App\Repositries\appointment\AppointmentRepositry;
 use App\Repositries\appSettings\AppSettingsInterface;
@@ -16,6 +17,8 @@ use App\Repositries\checkIn\CheckInInterface;
 use App\Repositries\checkIn\CheckInRepositry;
 use App\Repositries\companies\CompaniesInterface;
 use App\Repositries\companies\CompaniesRepositry;
+use App\Repositries\contact\ContactInterface;
+use App\Repositries\contact\ContactRepositry;
 use App\Repositries\customer\CustomerInterface;
 use App\Repositries\customer\CustomerRepositry;
 use App\Repositries\customField\CustomFieldInterface;
@@ -104,6 +107,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(PermissionInterface::class,PermissionRepositry::class);
         $this->app->bind(PagesInterface::class,PagesRepositry::class);
         $this->app->bind(TestimonialsInterface::class,TestimonialsRepositry::class);
+        $this->app->bind(ContactInterface::class,ContactRepositry::class);
 
     }
 }

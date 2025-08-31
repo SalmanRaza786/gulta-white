@@ -8,6 +8,8 @@ use App\Models\Testimonial;
 use App\Models\TextMessage;
 use App\Models\User;
 use App\Repositries\category\CategoryInterface;
+use App\Repositries\faqs\FaqInterface;
+use App\Repositries\pages\PagesInterface;
 use App\Repositries\product\ProductInterface;
 use App\Repositries\testimonials\TestimonialsInterface;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
@@ -23,12 +25,16 @@ class HomeController extends Controller
     private $cat;
     private $product;
     private $testimonials;
+    private $pages;
+    private $faqs;
 
-    public function __construct(CategoryInterface $cat,ProductInterface $product,TestimonialsInterface $testimonials)
+    public function __construct(CategoryInterface $cat,ProductInterface $product,TestimonialsInterface $testimonials,PagesInterface $pages,FaqInterface $faqs)
     {
         $this->cat = $cat;
         $this->product = $product;
         $this->testimonials = $testimonials;
+        $this->pages= $pages;
+        $this->faqs= $faqs;
     }
 
 
@@ -36,15 +42,12 @@ class HomeController extends Controller
     {
         try {
 
-
             $data['homeImage']=TextMessage::pluck('home_image')->first();
             $data['testimonials']=Helper::fetchOnlyData($this->testimonials->getAllTestimonials());
             $data['totalAttempts']=0;
             if($request->isMethod('post')) {
 
                     $textMessage = TextMessage::first();
-
-
 
 
                     if (!$pCode = ProductCode::where('p_codes', $request->p_code)->first()) {
@@ -152,8 +155,21 @@ class HomeController extends Controller
     public function gallery()
     {
         try {
+        $data['gallery']=Helper::fetchOnlyData($this->pages->findPageByType('gallery'));
+            return view('web.gallery')->with(compact('data'));
 
-            return view('web.gallery');
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    //userPageDetail
+    public function userPageDetail(Request $request)
+    {
+        try {
+            $id=decrypt($request->id);
+            $data['pageDetail']=Helper::fetchOnlyData($this->pages->findPageById($id));
+            return view('web.page-detail')->with(compact('data'));
 
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -162,8 +178,8 @@ class HomeController extends Controller
     public function blogs()
     {
         try {
-
-            return view('web.blogs');
+            $data['blogs']=Helper::fetchOnlyData($this->pages->findPageByType('blog'));
+            return view('web.blogs')->with(compact('data'));
 
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -182,8 +198,8 @@ class HomeController extends Controller
     public function aboutUs()
     {
         try {
-
-            return view('web.index');
+            $data['aboutUs']=Helper::fetchOnlyData($this->pages->findPageByType('about'));
+            return view('web.about-us')->with(compact('data'));
 
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -192,8 +208,8 @@ class HomeController extends Controller
     public function faqs()
     {
         try {
-
-            return view('web.faqs');
+            $data['faqs']=Helper::fetchOnlyData($this->faqs->getAllFaqs());
+            return view('web.faqs')->with(compact('data'));
 
         } catch (\Exception $e) {
             return $e->getMessage();

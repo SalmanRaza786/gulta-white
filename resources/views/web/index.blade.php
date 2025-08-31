@@ -79,7 +79,7 @@
                                         <tr>
                                             <td>{{ $data['client']->name }}</td>
                                             <td>
-                                                <img src="{{ asset('storage/uploads/' .$data['client']->pCode->product->image) }}"
+                                                <img src="{{ URL::asset('storage/uploads/' .$data['client']->pCode->product->image) }}"
                                                      class="img-thumbnail rounded shadow-sm"
                                                      style="width: 80px; height: auto;"
                                                      alt="Product">

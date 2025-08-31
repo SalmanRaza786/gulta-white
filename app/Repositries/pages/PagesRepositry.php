@@ -25,10 +25,10 @@ class PagesRepositry implements PagesInterface
 
         try {
             DB::beginTransaction();
-
             $page = PagesContent::updateOrCreate(
                 [
-                    'id' => $id
+                    'id' => $id,
+                     'page_type' => $request->page_type
                 ],
                 [
                     'title' => $request->title,
@@ -44,7 +44,6 @@ class PagesRepositry implements PagesInterface
                     $res = Helper::storeMedia('App\Models\PagesContent',$page->id,$this->mediaName,'image');
                 }
             }
-
             ($id==0)?$message = __('translation.record_created'): $message =__('translation.record_updated');
             DB::commit();
 
@@ -112,5 +111,15 @@ class PagesRepositry implements PagesInterface
             return Helper::errorWithData($validationException->errors()->first(), $validationException->errors());
              }
     }
+    public function findPageByType($pageType)
+    {
+        try {
+            $res = PagesContent::with('pageMedia')->where('page_type',$pageType)->latest('id')->get();
+            return Helper::success($res, $message='Record found');
+        } catch (ValidationException $validationException) {
+            return Helper::errorWithData($validationException->errors()->first(), $validationException->errors());
+        }
+    }
+
 
 }

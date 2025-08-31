@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\Admin\ContactUsController;
 
 use App\Http\Controllers\CustomerController;
 
@@ -16,6 +17,8 @@ use App\Http\Controllers\CustomerController;
     Route::get('/about-us', [HomeController::class, 'aboutUs'])->name('user.about.us');
     Route::get('/faqs', [HomeController::class, 'faqs'])->name('user.faq');
     Route::post('/review-store', [TestimonialController::class, 'updateOrCreateRecord'])->name('user.review.store');
+    Route::get('/page-detail', [HomeController::class, 'userPageDetail'])->name('user.page.detail');
+    Route::post('/store-contact-us', [ContactUsController::class, 'storeContactUs'])->name('user.store.contact.us');
 
 
 

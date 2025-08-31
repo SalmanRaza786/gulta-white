@@ -79,11 +79,12 @@ class PagesController extends Controller
                     'id' => $row->id,
                     'title' => $row->title,
                     'description' =>strip_tags($row->description),
-                    'page_type' =>$row->page_type,
+                    'page_type' =>strtoupper($row->page_type),
                 );
                 $acStatement->push($array);
-                return Helper::ajaxDatatable($acStatement, $res['data']['totalRecords'], $request);
+
             }
+            return Helper::ajaxDatatable($acStatement, $res['data']['totalRecords'], $request);
         }
         catch(\Exception $e) {
                 return Helper::ajaxError($e->getMessage());

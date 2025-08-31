@@ -21,6 +21,7 @@ $(document).ready(function(){
 
                 if (response.status) {
                     toastr.success(response.message);
+                    window.location.href=route('admin.pages.index');
                 }
                 if (!response.status) {
                     toastr.error(response.message);

@@ -1,6 +1,6 @@
 
 @extends('layouts.web-master-layouts')
-@section('title') Home @endsection
+@section('title') Gallery @endsection
 @section('content')
 
     <section id="portfolio" class="portfolio section">
@@ -9,7 +9,7 @@
         <div class="container section-title" data-aos="fade-up">
             <span>Gallery</span>
             <h2>Gallery</h2>
-            <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+            <p>Browse through our collection of images showcasing our work, events, and experiences</p>
         </div><!-- End Section Title -->
 
         <div class="container">
@@ -18,34 +18,27 @@
 
 
                 <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+                    @isset($data['gallery'])
+                        @foreach($data['gallery'] as $row)
 
                     <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
-                        <img src="{{ URL::asset('build/web/assets/img/gallery/app-1.jpg')}}" class="img-fluid" alt="">
+                        <img src="{{ URL::asset('storage/uploads/' .$row->pageMedia[0]->file_path) }}" class="img-fluid" alt="">
                         <div class="portfolio-info">
-                            <h4>App 1</h4>
-                            <p>Lorem ipsum, dolor sit amet consectetur</p>
-                            <a href="{{ URL::asset('build/web/assets/img/gallery/app-1.jpg')}}" title="App 1"
+                            <h4>{{$row->title}}</h4>
+                            @isset($row->pageMedia)
+                                @foreach($row->pageMedia as $media)
+                            <a href="{{ URL::asset('storage/uploads/' .$media->file_path)}}" title="App 1"
                                data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i
                                     class="bi bi-zoom-in"></i></a>
-                            <a href="{{ URL::asset('build/web/product-details.html')}}" title="More Details" class="details-link"><i
-                                    class="bi bi-link-45deg"></i></a>
+                                @endforeach
+                            @endisset
+
+                            <a href="{{route('user.page.detail',['id'=>encrypt($row->id)])}}" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+
                         </div>
-                    </div><!-- End Gallery Item -->
-
-                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
-                        <img src="{{ URL::asset('build/web/assets/img/gallery/product-1.jpg')}}" class="img-fluid" alt="">
-                        <div class="portfolio-info">
-                            <h4>Product 1</h4>
-                            <p>Lorem ipsum, dolor sit amet consectetur</p>
-                            <a href="{{ URL::asset('build/web/assets/img/gallery/product-1.jpg')}}" title="Product 1"
-                               data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i
-                                    class="bi bi-zoom-in"></i></a>
-                            <a href="product-details.html" title="More Details" class="details-link"><i
-                                    class="bi bi-link-45deg"></i></a>
-                        </div>
-                    </div><!-- End Gallery Item -->
-
-
+                    </div>
+                        @endforeach
+                    @endisset
 
 
 

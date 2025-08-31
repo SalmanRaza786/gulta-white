@@ -12,7 +12,7 @@
                 <span>Get In Touch</span>
                 <h2>Contact US</h2>
                 <p class="text-muted fs-5">
-                    We’d love to hear from you! 💬
+                    We’d love to hear from you!
                     Feel free to reach out to us with any questions, feedback, or product verification support.
                     Our team is here to help you.
                 </p>
@@ -22,6 +22,17 @@
 
 
      <div class="container" data-aos="fade-up" data-aos-delay="100">
+         @if (session('error'))
+             <div class="alert alert-danger">
+                 {{ session('error') }}
+             </div>
+         @endif
+
+         @if (session('success'))
+             <div class="alert alert-success">
+                 {{ session('success') }}
+             </div>
+         @endif
 
                 <div class="row gy-4">
 
@@ -60,8 +71,9 @@
                     </div>
 
                     <div class="col-lg-7">
-                        <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up"
+                        <form action="{{route('user.store.contact.us')}}" method="post" class="php-email-form" data-aos="fade-up"
                               data-aos-delay="200">
+                            @csrf
                             <div class="row gy-4">
 
                                 <div class="col-md-6">

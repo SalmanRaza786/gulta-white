@@ -41,6 +41,7 @@
                                 <option value="about" {{ isset($page) && $page['page_type']=='about' ? 'selected' : '' }}>About Us</option>
                                 <option value="gallery" {{ isset($page) && $page['page_type']=='gallery' ? 'selected' : '' }}>Gallery</option>
                                 <option value="blog" {{ isset($page) && $page['page_type']=='blog' ? 'selected' : '' }}>Blogs</option>
+                                <option value="about" {{ isset($page) && $page['page_type']=='about' ? 'selected' : '' }}>About Us</option>
                             </select>
                         </div>
 
