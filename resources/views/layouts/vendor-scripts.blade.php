@@ -33,7 +33,7 @@
     <script src="{{ URL::asset('build/libs/glightbox/js/glightbox.min.js')}}"></script>
     <script src="{{ URL::asset('build/libs/isotope-layout/isotope.pkgd.min.js')}}"></script>
     <script src="{{ URL::asset('build/js/pages/gallery.init.js')}}"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     @vite(['resources/js/app.js'])
     @yield('script')
     @yield('script-bottom')

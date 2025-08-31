@@ -6,6 +6,7 @@ use App\Events\ClientNotificationEvent;
 use App\Events\NotificationEvent;
 use App\Models\Admin;
 use App\Models\Attempt;
+use App\Models\AttemptCode;
 use App\Models\EventMedia;
 use App\Models\FileContent;
 use App\Models\MissedItem;
@@ -580,6 +581,23 @@ class Helper
         } catch (\Exception $exception) {
             return response()->json(collect(['status' => false, 'message' => $exception->getMessage()]), 400);
         }
+    }
+
+    public static function saveAttemptCode($name,$phone,$pCode,$isValid,$pId=null)
+    {
+        $attempt = AttemptCode::updateOrCreate(
+            [
+                'id' => 0
+            ],
+            [
+                'name' =>$name,
+                'phone' => $phone,
+                'p_code' =>$pCode,
+                'p_id' =>$pId,
+                'is_valid' =>$isValid,
+
+            ]
+        );
     }
 
 

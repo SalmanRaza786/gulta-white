@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\PagesController;
+use App\Http\Controllers\Admin\TestimonialController;
 
 
 
@@ -75,6 +76,12 @@ use App\Http\Controllers\Admin\PagesController;
         Route::any('/delete-page', [PagesController::class, 'deletePage'])->name('page.delete');
         Route::get('/edit-page', [PagesController::class, 'editPage'])->name('page.edit');
         Route::any('/delete-media', [PagesController::class, 'deleteMedia'])->name('pages.deleteMedia');
+
+        Route::get('/reviews', [TestimonialController::class, 'index'])->name('reviews.index');
+        Route::get('/review-list', [TestimonialController::class, 'reviewsList'])->name('review.list');
+        Route::get('/publish-review', [TestimonialController::class, 'publishReview'])->name('publish.review');
+        Route::any('/delete-review', [TestimonialController::class, 'deleteReview'])->name('review.delete');
+
 
     });
 

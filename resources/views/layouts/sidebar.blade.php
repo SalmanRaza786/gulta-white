@@ -76,6 +76,11 @@
                         <i class="ri-question-answer-line"></i> <span data-key="t-users">Pages</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{route('admin.reviews.index')}}">
+                        <i class="ri-question-answer-line"></i> <span data-key="t-users">Reviews</span>
+                    </a>
+                </li>
 
 
 

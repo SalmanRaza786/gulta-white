@@ -4,6 +4,29 @@
 @extends('layouts.web-master-layouts')
 @section('title') Home @endsection
 @section('content')
+    <style>
+        /* Equal height for testimonial items */
+        .testimonial-item {
+            min-height: 280px; /* adjust value to fit your tallest review */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Make review message area flexible */
+        .testimonial-item p {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+    </style>
 
 
     <section id="hero" class="hero section">
@@ -14,6 +37,17 @@
                      data-aos="fade-up">
                     <h2>Find your product code and verify here</h2>
                     <p>Find codes, create trackable codes and enrich your products. Carefully crafted after analyzing the needs of different industries.</p>
+                    @isset($data['error'])
+                        <div class="alert alert-danger">
+                            {{$data['error']}}
+                        </div>
+                    @endisset
+                    @isset($data['success'])
+                        <div class="alert alert-success">
+                            {{$data['success']}}
+                        </div>
+                    @endisset
+
                     @if (session('error'))
                         <div class="alert alert-danger">
                             {{ session('error') }}
@@ -25,7 +59,7 @@
                             {{ session('success') }}
                         </div>
                     @endif
-                    @if (session('client'))
+                    @isset($data['client'])
                         <div class="card shadow-sm border-0">
                             <div class="card-header  text-white">
                                 <h5 class="mb-0">Product Verification</h5>
@@ -43,28 +77,27 @@
                                         </thead>
                                         <tbody>
                                         <tr>
-                                            <td>{{ session('client')->name }}</td>
+                                            <td>{{ $data['client']->name }}</td>
                                             <td>
-                                                <img src="{{ asset('storage/uploads/' . session('client')->pCode->product->image) }}"
+                                                <img src="{{ asset('storage/uploads/' .$data['client']->pCode->product->image) }}"
                                                      class="img-thumbnail rounded shadow-sm"
                                                      style="width: 80px; height: auto;"
                                                      alt="Product">
                                             </td>
                                             <td>
-                            <span class="badge bg-success fs-6">  {{ session('client')->p_code }}</span></td>
+                            <span class="badge bg-success fs-6">  {{ $data['client']->p_code }}</span></td>
 
-                                            <td>{{ date('d M,Y,H:i:s', strtotime(session('client')->created_at)) }}</td>
+                                            <td>{{ date('d M,Y,H:i:s', strtotime($data['client']->created_at)) }}</td>
                                         </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
-                    @endif
+                    @endisset
 
                     <div class="d-flex">
-
-                        <form action="{{ route('code.verify') }}" class="job-panel-filter" method="post">
+                        <form action="{{ route('user.index') }}" class="job-panel-filter" method="post">
                             @csrf
                             <div class="row g-3">
                                 <div class="col-md-4 col-12">
@@ -83,12 +116,13 @@
                                     </div>
                                 </div>
                                 <!-- Submit Button -->
+                                @if($data['totalAttempts'] < 3)
                                 <div class="col-12">
                                     <button class="btn btn-success w-100 mt-2" type="submit"><i class="ri-search-2-line align-bottom me-1"></i> Verify</button>
                                 </div>
+                                @endif
                             </div>
                         </form>
-
                     </div>
                     @if($data['totalAttempts'] >= 3)
                         <div class="col-md-6 col-12">
@@ -100,7 +134,7 @@
                             <div id="captchaMessage" class="text-danger small mt-1" style="display:none;"></div>
                         </div>
                         <div class="mt-3" id="contactUsSection" style="display:none;">
-                            <a href="{{ route('user.contact.us') }}" class="btn btn-primary w-100">Contact Us</a>
+                            <a href="{{ route('user.contact.us') }}" class="btn btn-success w-100">Contact Us</a>
                         </div>
                     @endif
                 </div>
@@ -150,6 +184,7 @@
 
                 <div class="swiper-wrapper">
 
+
                     @isset($data['testimonials'])
                         @foreach($data['testimonials'] as $row)
                     <div class="swiper-slide">
@@ -180,40 +215,40 @@
             <div class="modal-content">
 
                 <div class="modal-header bg-success text-white">
-                    <h5 class="modal-title text-white" id="contactModalLabel">Contact Form</h5>
+                    <h5 class="modal-title text-white" id="contactModalLabel">Add Your Review</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                 </div>
-
+                <form method="post" action="{{route('user.review.store')}}" id="ReviewForm">
+                    @csrf
                 <div class="modal-body">
-                    <form>
+
+
                         <div class="mb-3">
                             <label for="name" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="name" placeholder="Enter your name">
+                            <input type="text" class="form-control" id="name" placeholder="Enter your name" name="name" required>
                         </div>
 
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="Enter your email">
+                            <input type="email" class="form-control" id="email" placeholder="Enter your email" name="email" required>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="phone" class="form-label">Phone</label>
-                            <input type="tel" class="form-control" id="phone" placeholder="Enter your phone">
-                        </div>
+
 
                         <div class="mb-3">
-                            <label for="message" class="form-label">Message</label>
-                            <textarea class="form-control" id="message" rows="3"
-                                      placeholder="Write your message"></textarea>
+                            <label for="message" class="form-label">Review Message</label>
+                            <textarea class="form-control" id="message" rows="3" placeholder="Write your message" name="review_message" required></textarea>
+
                         </div>
-                    </form>
+
                 </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-success">Send Message</button>
+                    <button type="submit" class="btn btn-success">Send Message</button>
                 </div>
+                </form>
 
             </div>
         </div>
@@ -235,12 +270,10 @@
         </div>
 
     </section>
-
-
 @endsection
-
 <script>
     document.addEventListener("DOMContentLoaded", function () {
+
         let captchaQuestion = document.getElementById("captchaQuestion");
         let captchaInput = document.getElementById("captchaInput");
         let captchaMessage = document.getElementById("captchaMessage");
@@ -276,5 +309,55 @@
                 }
             });
         }
+
+        $('#ReviewForm').on('submit', function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: $(this).attr('action'),
+                method: 'POST',
+                data: new FormData(this),
+                dataType: 'JSON',
+                contentType: false,
+                cache: false,
+                processData: false,
+                beforeSend: function() {
+                    $('.btn-submit').text('Saving...');
+                    $(".btn-submit").prop("disabled", true);
+                },
+                success: function(data) {
+
+                    if (data.status==true) {
+                        $('#roleTable').DataTable().ajax.reload();
+                        toastr.success(data.message);
+                        $('#RolesForm')[0].reset();
+                        $('.btn-close').click();
+                        $('.btn-submit').text('Save');
+                        $(".btn-submit").prop("disabled", false);
+
+                    }
+                    if (data.status==false) {
+                        toastr.error(response.message);
+                        $('.btn-submit').text('Save');
+                        $(".btn-submit").prop("disabled", false);
+                    }
+                },
+
+                complete: function(data) {
+                    $(".btn-submit").html("Save");
+                    $(".btn-submit").prop("disabled", false);
+                },
+
+                error: function() {;
+                    $('.btn-submit').text('Save');
+                    $(".btn-submit").prop("disabled", false);
+                }
+            });
+        });
     });
 </script>
+
+
+
+
+

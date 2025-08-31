@@ -21,55 +21,29 @@ class TestimonialsRepositry implements TestimonialsInterface
     {
 
         try {
-            DB::beginTransaction();
-            $validator = Validator::make($request->all(), [
-                'cat_id' => 'required|string|max:255',
-                'title' => 'required|string|max:255',
-                'price' => 'required|string|max:255',
-                'description' => 'required|string|max:255',
-            ]);
-            if ($validator->fails())
-                return Helper::errorWithData($validator->errors()->first(), $validator->errors());
 
-            if($request->file('product_image')){
-                $this->categoryFileName = $this->handleFiles($request->file('product_image'), $this->categoryFilePath);
-            }
-
-            $role = Product::updateOrCreate(
+            $review = Testimonial::updateOrCreate(
                 [
-                    'id' => $id
+                    'email' => $request->email,
                 ],
                 [
-                    'cat_id' => $request->cat_id,
-                    'title' => $request->title,
-                    'price' => $request->price,
-                    'description' => $request->description,
-                    'thumbnail' => $this->categoryFileName,
-
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'review_message' => $request->review_message,
                 ]
             );
-
-            ($id==0)?$message = __('translation.record_created'): $message =__('translation.record_updated');
-            DB::commit();
-
-
-            return Helper::success($role, $message);
-        } catch (ValidationException $validationException) {
-            DB::rollBack();
-            return Helper::errorWithData($validationException->errors()->first(), $validationException->errors());
+            return Helper::success($review,'Your review has been received. It will be published once approved by our team.');
         } catch (\Exception $e) {
-            DB::rollBack();
             return Helper::errorWithData($e->getMessage(),[]);
         }
     }
 
-
     public function getTestimonials($request)
     {
         try {
-            $data['totalRecords'] = Product::count();
-            $qry= Product::query();
-            $qry=$qry->with('category');
+            $data['totalRecords'] = Testimonial::count();
+            $qry= Testimonial::query();
+
             $qry=$qry->when($request->s_title, function ($query, $title) {
                 return $query->where('name',$title);
             });
@@ -77,19 +51,13 @@ class TestimonialsRepositry implements TestimonialsInterface
                 return $query->where('status',$s_status);
             });
 
+            $qry=clone $qry;
             $qry=$qry->when($request->start, fn($q)=>$q->offset($request->start));
             $qry=$qry->when($request->length, fn($q)=>$q->limit($request->length));
             $data['data'] =$qry->orderByDesc('id')->get();
 
             if (!empty($request->get('s_title')) OR !empty($request->get('s_status')) ) {
 
-                $qry= Product::query();
-                $qry=$qry->when($request->s_title, function ($query, $title) {
-                    return $query->where('name',$title);
-                });
-                $qry=$qry->when($request->s_status, function ($query, $s_status) {
-                    return $query->where('status',$s_status);
-                });
                 $data['totalRecords']=$qry->count();
             }
             return Helper::success($data, $message="Record found");
@@ -104,7 +72,7 @@ class TestimonialsRepositry implements TestimonialsInterface
     public function deleteTestimonials($id)
     {
         try {
-            $role = Product::find($id);
+            $role = Testimonial::find($id);
             $role->delete();
             return Helper::success($role, $message=__('translation.record_deleted'));
         } catch (ValidationException $validationException) {
@@ -127,5 +95,19 @@ class TestimonialsRepositry implements TestimonialsInterface
         }
 
     }
+    public function updateTestimonialStatus($id,$isPublish)
+    {
+        try {
+            $role = Testimonial::find($id);
+            $role->is_published=$isPublish;
+            $role->save();
+            return Helper::success($role,'Record update successfully');
+        } catch (ValidationException $validationException) {
+            DB::rollBack();
+            return Helper::errorWithData($validationException->errors()->first(), $validationException->errors());
+        }
+
+    }
+
 
 }

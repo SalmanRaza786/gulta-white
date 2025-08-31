@@ -32,13 +32,45 @@ class HomeController extends Controller
     }
 
 
-    public function index()
+    public function index(Request $request)
     {
         try {
 
-            $data['totalAttempts']=3;
+
             $data['homeImage']=TextMessage::pluck('home_image')->first();
             $data['testimonials']=Helper::fetchOnlyData($this->testimonials->getAllTestimonials());
+            $data['totalAttempts']=0;
+            if($request->isMethod('post')) {
+
+                    $textMessage = TextMessage::first();
+
+
+
+
+                    if (!$pCode = ProductCode::where('p_codes', $request->p_code)->first()) {
+                        Helper::saveAttemptCode($request->name, $request->phone, $request->p_code, 2, null);
+                        $data['totalAttempts']=AttemptCode::where('p_code',$request->p_code)->count();
+                        $data['error'] = $textMessage ? $textMessage->in_valid_message : '';
+                        return view('web.index')->with(compact('data'));
+                    }
+
+                    if ($pCode->is_verify == 'Verify') {
+                        $data['client'] = AttemptCode::with('pCode.product')->where('p_code', $request->p_code)->first();
+                        $data['totalAttempts']=AttemptCode::where('p_code',$request->p_code)->count();
+                        $data['error'] = $textMessage ? $textMessage->verified_message : 'Your code is already verified by';
+                        return view('web.index')->with(compact('data'));
+                    }
+
+                    Helper::saveAttemptCode($request->name, $request->phone, $request->p_code, 1, $pCode->p_id);
+                    $data['totalAttempts']=AttemptCode::where('p_code',$request->p_code)->count();
+
+                    ProductCode::where('p_codes', $request->p_code)->update(['is_verify' => 1]);
+                    $data['success']= $textMessage?$textMessage->valid_message:'Your code is valid, verify successfully';
+                    $data['client'] = AttemptCode::with('pCode.product')->where('p_code', $request->p_code)->first();
+                    return view('web.index')->with(compact('data'));
+
+            }
+
           return view('web.index')->with(compact('data'));
 
         } catch (\Exception $e) {
