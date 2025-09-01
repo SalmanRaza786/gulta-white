@@ -116,7 +116,7 @@
                                     </div>
                                 </div>
                                 <!-- Submit Button -->
-                                @if($data['totalAttempts'] < 3)
+                                @if($data['totalAttempts'] < 2)
                                 <div class="col-12">
                                     <button class="btn btn-success w-100 mt-2" type="submit"><i class="ri-search-2-line align-bottom me-1"></i> Verify</button>
                                 </div>
@@ -124,7 +124,7 @@
                             </div>
                         </form>
                     </div>
-                    @if($data['totalAttempts'] >= 3)
+                    @if($data['totalAttempts'] >= 2)
                         <div class="col-md-6 col-12">
                             <label class="form-label fw-bold">Captcha Verification</label>
                             <div class="input-group">

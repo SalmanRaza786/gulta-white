@@ -17,18 +17,18 @@ $(document).ready(function(){
                 $('.btn-submit').text('Saving...');
                 $(".btn-submit").prop("disabled", true);
             },
-            success: function(data) {
+            success: function(response) {
 
-                if (data.status==true) {
+                if (response.status==true) {
                     $('#roleTable').DataTable().ajax.reload();
-                    toastr.success(data.message);
+                    toastr.success(response.message);
                     $('#RolesForm')[0].reset();
                     $('.btn-close').click();
                     $('.btn-submit').text('Save');
                     $(".btn-submit").prop("disabled", false);
 
                 }
-                if (data.status==false) {
+                if (response.status==false) {
                     toastr.error(response.message);
                     $('.btn-submit').text('Save');
                     $(".btn-submit").prop("disabled", false);

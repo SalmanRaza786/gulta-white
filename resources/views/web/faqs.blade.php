@@ -22,25 +22,31 @@
                 <div class="accordion" id="faqShipping">
                     @isset($data['faqs'])
                         @foreach($data['faqs'] as $row)
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="q1">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#a1" aria-expanded="true" aria-controls="a1">
-                                {{$row->questions}}
-                            </button>
-                        </h2>
-                        <div id="a1" class="accordion-collapse collapse show" aria-labelledby="q1"
-                             data-bs-parent="#faqShipping">
-                            <div class="accordion-body">
-                                {{$row->ans}}
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="q{{ $loop->index }}">
+                                    <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#a{{ $loop->index }}"
+                                            aria-expanded="false"
+                                            aria-controls="a{{ $loop->index }}">
+                                        {{ $row->questions }}
+                                    </button>
+                                </h2>
+                                <div id="a{{ $loop->index }}"
+                                     class="accordion-collapse collapse"
+                                     aria-labelledby="q{{ $loop->index }}"
+                                     data-bs-parent="#faqShipping">
+                                    <div class="accordion-body">
+                                        {{ $row->ans }}
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
                         @endforeach
                     @endisset
                 </div>
             </div>
         </div>
     </section>
+
 </main>
 @endsection

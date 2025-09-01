@@ -58,6 +58,7 @@ class HomeController extends Controller
                     }
 
                     if ($pCode->is_verify == 'Verify') {
+                        Helper::saveAttemptCode($request->name, $request->phone, $request->p_code, 2, null);
                         $data['client'] = AttemptCode::with('pCode.product')->where('p_code', $request->p_code)->first();
                         $data['totalAttempts']=AttemptCode::where('p_code',$request->p_code)->count();
                         $data['error'] = $textMessage ? $textMessage->verified_message : 'Your code is already verified by';

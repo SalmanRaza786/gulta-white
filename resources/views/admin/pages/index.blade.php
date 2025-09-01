@@ -17,11 +17,11 @@
                         <h4 class="card-title mb-0">Pages List</h4>
 
                     </div>
-                    @canany('admin-user-create')
+
                     <div class="col-auto justify-content-sm-end">
                         <a href="{{route('admin.pages.create')}}" class="btn btn-success"><i class="ri-add-line align-bottom me-1"></i> Add New Page</a>
                     </div>
-                    @endcanany
+
 
                 </div>
 

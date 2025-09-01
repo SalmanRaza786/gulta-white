@@ -54,10 +54,12 @@ class FAQsController extends Controller
 
         try {
 
-            $roleUpdateOrCreate = $this->faq->updateOrCreate($request,$request->id);
-            if ($roleUpdateOrCreate->get('status'))
-                return Helper::ajaxSuccess($roleUpdateOrCreate->get('data'),$roleUpdateOrCreate->get('message'));
-            return Helper::ajaxErrorWithData($roleUpdateOrCreate->get('message'), $roleUpdateOrCreate->get('data'));
+            $res = $this->faq->updateOrCreate($request,$request->id);
+            if (!$res->get('status')){
+                return Helper::error($res->get('message'));
+            }
+            return Helper::ajaxSuccess($res->get('data'),$res->get('message'));
+
         } catch (\Exception $e) {
             return Helper::ajaxError($e->getMessage());
         }

@@ -12,7 +12,7 @@
             <p>We are dedicated to delivering quality and innovation, building trust through our work, and creating lasting value for our clients and community.</p>
 
         </div><!-- End Section Title -->
-
+     @if($data['aboutUs']->count() > 0)
      <div class="container" data-aos="fade-up" data-aos-delay="100">
 
          <div class="row gy-4">
@@ -40,7 +40,7 @@
 
 @isset($data['aboutUs'][0]->pageMedia)
     @foreach($data['aboutUs'][0]->pageMedia as $media)
-       
+
                          <div class="swiper-slide">
                              <img src="{{ URL::asset('storage/uploads/' .$media->file_path)}}" alt="">
                          </div>
@@ -64,6 +64,7 @@
          </div>
 
      </div>
+     @endif
 
     </section>
 
