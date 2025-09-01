@@ -328,17 +328,6 @@ class GeneratorRepositry implements GeneratorInterface
                     $textMessage->verified_message = $request->verified_message;
                     $textMessage->save();
 
-//            $role = TextMessage::updateOrCreate(
-//                [
-//                    'id' => $request->id
-//                ],
-//                [
-//                    'valid_message' => $request->valid_message,
-//                    'in_valid_message' => $request->invalid_message,
-//                    'verified_message' => $request->verified_message,
-//
-//                ]
-//            );
 
              $message =__('translation.record_updated');
             DB::commit();
@@ -352,6 +341,33 @@ class GeneratorRepositry implements GeneratorInterface
             DB::rollBack();
             return Helper::errorWithData($e->getMessage(),[]);
         }
+    }
+
+    public function deletePCode($id)
+    {
+        try {
+            $role = ProductCode::find($id);
+            $role->delete();
+            return Helper::success($role, $message=__('translation.record_deleted'));
+        } catch (ValidationException $validationException) {
+            return Helper::errorWithData($validationException->errors()->first(), $validationException->errors());
+        }
+
+    }
+
+
+    public function updatePCodeEnableStatus($id,$isPublish)
+    {
+        try {
+            $role = ProductCode::find($id);
+            $role->is_enable=$isPublish;
+            $role->save();
+            return Helper::success($role,'Record update successfully');
+        } catch (ValidationException $validationException) {
+
+            return Helper::errorWithData($validationException->errors()->first(), $validationException->errors());
+        }
+
     }
 
 

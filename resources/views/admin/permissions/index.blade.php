@@ -28,21 +28,21 @@
                                     <label class="form-check-label" for="customSwitchsizemd">View</label>
                                 </div>
                             </div>
-                            <div class="col-xxl-2">
-                                <div class="ms-1" dir="ltr">
-                                    <label class="form-check-label" for="customSwitchsizemd">Add</label>
-                                </div>
-                            </div>
-                            <div class="col-xxl-2">
-                                <div class="ms-1" dir="ltr">
-                                    <label class="form-check-label" for="customSwitchsizemd">Edit</label>
-                                </div>
-                            </div>
-                            <div class="col-xxl-2">
-                                <div class="ms-1" dir="ltr">
-                                    <label class="form-check-label" for="customSwitchsizemd">Delete</label>
-                                </div>
-                            </div>
+{{--                            <div class="col-xxl-2">--}}
+{{--                                <div class="ms-1" dir="ltr">--}}
+{{--                                    <label class="form-check-label" for="customSwitchsizemd">Add</label>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-xxl-2">--}}
+{{--                                <div class="ms-1" dir="ltr">--}}
+{{--                                    <label class="form-check-label" for="customSwitchsizemd">Edit</label>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-xxl-2">--}}
+{{--                                <div class="ms-1" dir="ltr">--}}
+{{--                                    <label class="form-check-label" for="customSwitchsizemd">Delete</label>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 {{--                            <div class="col-xxl-2">--}}
 {{--                                <div class="ms-1" dir="ltr">--}}
 {{--                                    <label class="form-check-label" for="customSwitchsizemd">Translate</label>--}}

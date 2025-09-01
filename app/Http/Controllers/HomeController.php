@@ -50,7 +50,7 @@ class HomeController extends Controller
                     $textMessage = TextMessage::first();
 
 
-                    if (!$pCode = ProductCode::where('p_codes', $request->p_code)->first()) {
+                    if (!$pCode = ProductCode::where('p_codes', $request->p_code)->where('is_enable',1)->first()) {
                         Helper::saveAttemptCode($request->name, $request->phone, $request->p_code, 2, null);
                         $data['totalAttempts']=AttemptCode::where('p_code',$request->p_code)->count();
                         $data['error'] = $textMessage ? $textMessage->in_valid_message : '';

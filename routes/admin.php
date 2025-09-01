@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\PagesController;
 use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\Admin\ContactUsController;
 
 
 
@@ -23,53 +24,55 @@ use App\Http\Controllers\Admin\TestimonialController;
 
 
     Route::get('dashboard', [AdminHomeController::class, 'index'])->name('dashboard');
-        Route::get('/product', [ProductController::class, 'index'])->name('products.index');
+        Route::get('/product', [ProductController::class, 'index'])->name('products.index')->middleware(['can:admin-product-view']);
         Route::post('/product-save', [ProductController::class, 'saveProduct'])->name('product.add');
         Route::get('/product-list', [ProductController::class, 'productList']);
         Route::get('/edit-product', [ProductController::class, 'editProduct'])->name('product.edit');
         Route::any('/delete-product', [ProductController::class, 'deleteProduct']);
 
-        Route::get('/p-codes', [ProductController::class, 'pCodes'])->name('products.codes');
+        Route::get('/p-codes', [ProductController::class, 'pCodes'])->name('products.codes')->middleware(['can:admin-product-code-view']);
         Route::post('/p-codes-store', [ProductController::class, 'pCodesCreate'])->name('product.code.create');
         Route::get('/p-codes-list', [ProductController::class, 'pCodesList']);
+        Route::get('/publish-p-code', [ProductController::class, 'publishPCode'])->name('publish.p.code');
+        Route::any('/delete-p-code', [ProductController::class, 'deletePCode'])->name('p.code.delete');
 
-        Route::get('/attempt-codes', [ProductController::class, 'attemptCodes'])->name('attempt.codes');
+        Route::get('/attempt-codes', [ProductController::class, 'attemptCodes'])->name('attempt.codes')->middleware(['can:admin-code-attempts-view']);
         Route::get('/attempt-code-list', [ProductController::class, 'attemptCodeList']);
         Route::any('/code-print', [ProductController::class, 'codePrint'])->name('codes.print');
         Route::any('/print-code-batch/{batch}', [ProductController::class, 'printCodeBatch'])->name('codes.print.batch');
 
-        Route::get('/messages',[ProductController::class,'messageIndex'])->name('message.index');
+        Route::get('/messages',[ProductController::class,'messageIndex'])->name('message.index')->middleware(['can:admin-message-view']);
         Route::get('/message-list',[ProductController::class,'messageList']);
         Route::get('/edit-text-message',[ProductController::class,'editTextMessage']);
         Route::any('/update-message',[ProductController::class,'updateTextMessage'])->name('text.message.update');
 
 
         //FAQS
-        Route::get('/faqs', [FAQsController::class, 'index'])->name('faqs.index');
+        Route::get('/faqs', [FAQsController::class, 'index'])->name('faqs.index')->middleware(['can:admin-faq-view']);
         Route::get('/faqs-list', [FAQsController::class, 'faqsList'])->name('faqs.list');
         Route::any('/delete-faqs', [FAQsController::class, 'deleteFaqs'])->name('faqs.delete');
         Route::post('store-faqs', [FAQsController::class, 'updateOrCreateRecord'])->name('faqs.store');
 
 
         //roles
-        Route::get('roles', [RoleController::class, 'index'])->name('roles.index');
+        Route::get('roles', [RoleController::class, 'index'])->name('roles.index')->middleware(['can:admin-roles-view']);
         Route::any('get-roles', [RoleController::class, 'getRoles'])->name('roles.get');
         Route::get('edit-role', [RoleController::class, 'editRole'])->name('roles.edit');
         Route::post('add-role', [RoleController::class, 'updateOrCreateRecord'])->name('roles.add');
         Route::any('/delete-role', [RoleController::class, 'deleteRole'])->name('roles.delete');
 
         //users
-        Route::any('/user', [UserController::class, 'index'])->name('user.index')->middleware(['can:admin-user-view']);
-        Route::any('/user-list', [UserController::class, 'userList'])->name('user.list')->middleware(['can:admin-user-view']);
-        Route::any('/save-update-user', [UserController::class, 'userCreateOrUpdate'])->name('user.store')->middleware(['can:admin-user-create']);
-        Route::any('/edit-user/{id}', [UserController::class, 'edit'])->name('user.edit')->middleware(['can:admin-user-edit']);
-        Route::any('/delete-user/{id}', [UserController::class, 'destroy'])->name('user.delete')->middleware(['can:admin-user-delete']);
+        Route::any('/user', [UserController::class, 'index'])->name('user.index')->middleware(['can:admin-users-view']);
+        Route::any('/user-list', [UserController::class, 'userList'])->name('user.list');
+        Route::any('/save-update-user', [UserController::class, 'userCreateOrUpdate'])->name('user.store');
+        Route::any('/edit-user/{id}', [UserController::class, 'edit'])->name('user.edit');
+        Route::any('/delete-user/{id}', [UserController::class, 'destroy'])->name('user.delete');
 
         //permissions
         Route::any('/get-role-has-permissions/{role_id}', [PermissionController::class, 'getRoleHasPermissions'])->name('roles.permissions');
         Route::post('assign-permissions', [PermissionController::class, 'assignPermissions'])->name('permissions.assign');
 
-        Route::get('/pages', [PagesController::class, 'index'])->name('pages.index');
+        Route::get('/pages', [PagesController::class, 'index'])->name('pages.index')->middleware(['can:admin-pages-view']);
         Route::get('/create-pages', [PagesController::class, 'create'])->name('pages.create');
         Route::post('/store-pages', [PagesController::class, 'storePages'])->name('pages.store');
         Route::get('/pages-list', [PagesController::class, 'pagesList'])->name('pages.list');
@@ -77,10 +80,14 @@ use App\Http\Controllers\Admin\TestimonialController;
         Route::get('/edit-page', [PagesController::class, 'editPage'])->name('page.edit');
         Route::any('/delete-media', [PagesController::class, 'deleteMedia'])->name('pages.deleteMedia');
 
-        Route::get('/reviews', [TestimonialController::class, 'index'])->name('reviews.index');
+        Route::get('/reviews', [TestimonialController::class, 'index'])->name('reviews.index')->middleware(['can:admin-reviews-view']);
         Route::get('/review-list', [TestimonialController::class, 'reviewsList'])->name('review.list');
         Route::get('/publish-review', [TestimonialController::class, 'publishReview'])->name('publish.review');
         Route::any('/delete-review', [TestimonialController::class, 'deleteReview'])->name('review.delete');
+
+
+        Route::get('/contact-us', [ContactUsController::class, 'index'])->name('contact.us')->middleware(['can:admin-contact-view']);
+        Route::get('/contact-us-list', [ContactUsController::class, 'contactUsList'])->name('contact.us.list');
 
 
     });

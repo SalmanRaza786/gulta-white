@@ -17,11 +17,11 @@
                         <h4 class="card-title mb-0">@lang('translation.user-list')</h4>
 
                     </div>
-                    @canany('admin-user-create')
+
                     <div class="col-auto justify-content-sm-end">
                         <button type="button" class="btn btn-success add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal"><i class="ri-add-line align-bottom me-1"></i> @lang('translation.btn_add_user')</button>
                     </div>
-                    @endcanany
+
 
                 </div>
 
@@ -136,8 +136,8 @@
                         render: function(data, type, row, meta) {
                             const rowId = data.id;
 
-                            return `@canany('admin-user-edit')<a href="#" class="btn-edit" data="${rowId}" data-bs-toggle="modal" data-bs-target="#showModal"><i class="ri-pencil-fill text-primary fs-4"></i></a>@endcanany
-                                    @canany('admin-user-delete')<a href="#" class="btn-delete"  data="${rowId}"  data-bs-toggle="modal" data-bs-target="#deleteRecordModal"><i class="ri-delete-bin-fill text-danger fs-4"></i></a>@endcanany`;
+                            return `<a href="#" class="btn-edit" data="${rowId}" data-bs-toggle="modal" data-bs-target="#showModal"><i class="ri-pencil-fill text-primary fs-4"></i></a>
+                                    <a href="#" class="btn-delete"  data="${rowId}"  data-bs-toggle="modal" data-bs-target="#deleteRecordModal"><i class="ri-delete-bin-fill text-danger fs-4"></i></a>`;
 
 
                         }

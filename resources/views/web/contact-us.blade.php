@@ -78,24 +78,24 @@
 
                                 <div class="col-md-6">
                                     <label for="name-field" class="pb-2">Your Name</label>
-                                    <input type="text" name="name" id="name-field" class="form-control" required="">
+                                    <input type="text" name="name" id="name-field" class="form-control" required="" placeholder="Name">
                                 </div>
 
                                 <div class="col-md-6">
                                     <label for="email-field" class="pb-2">Your Email</label>
-                                    <input type="email" class="form-control" name="email" id="email-field" required="">
+                                    <input type="email" class="form-control" name="email" id="email-field" required="" placeholder="Email">
                                 </div>
 
                                 <div class="col-md-12">
-                                    <label for="subject-field" class="pb-2">Subject</label>
+                                    <label for="subject-field" class="pb-2">Pharma Name</label>
                                     <input type="text" class="form-control" name="subject" id="subject-field"
-                                           required="">
+                                           required="" placeholder="Pharma Name">
                                 </div>
 
                                 <div class="col-md-12">
                                     <label for="message-field" class="pb-2">Message</label>
                                     <textarea class="form-control" name="message" rows="10" id="message-field"
-                                              required=""></textarea>
+                                              required="" placeholder="Message"></textarea>
                                 </div>
 
                                 <div class="col-md-12 text-center">

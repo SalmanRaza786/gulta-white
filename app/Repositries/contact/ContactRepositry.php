@@ -41,11 +41,11 @@ class ContactRepositry implements ContactInterface
     }
 
 
-    public function getFaqsList($request)
+    public function getContactUsList($request)
     {
         try {
-            $data['totalRecords'] = Faq::count();
-            $qry= Faq::query();
+            $data['totalRecords'] = ContactUs::count();
+            $qry= ContactUs::query();
 
 
             $qry=$qry->when($request->s_name, function ($query, $name) {

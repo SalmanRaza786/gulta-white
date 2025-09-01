@@ -20,6 +20,9 @@ interface GeneratorInterface
 
     public function createTextMessage($request);
 
+    public function deletePCode($id);
+    public function updatePCodeEnableStatus($id,$isPublish);
+
 
 
 }

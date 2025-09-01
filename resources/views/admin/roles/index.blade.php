@@ -130,11 +130,8 @@
                     {
                         targets: 2,
                         render: function(data, type, row, meta) {
-                            if (data == 1) {
-                                return '<span class="badge badge-soft-success text-uppercase">Active</span>';
-                            } else  {
-                                return '<span class="badge badge-soft-danger text-uppercase">In-Active</span>';
-                            }
+                             return '<span class="badge badge-soft-success text-uppercase">Active</span>';
+
                         }
                     },
                     {

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Helpers\Helper;
 use App\Models\Product;
 use App\Models\ProductCode;
+use App\Models\Testimonial;
 use App\Repositries\generator\GeneratorInterface;
 use App\Repositries\roles\RoleInterface;
 use Illuminate\Http\Request;
@@ -217,6 +218,36 @@ class ProductController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error',$e->getMessage());
 
+        }
+    }
+
+    public function publishPCode(Request $request)
+    {
+        try {
+            $id=($request->id);
+            if(!ProductCode::find($id)){
+                return Helper::error('Invalid review id');
+            }
+            $res = $this->generator->updatePCodeEnableStatus($id,$request->isPublish);
+            if(!$res->get('status')){
+                return Helper::error($res->get('message'));
+            }
+            return Helper::ajaxSuccess([],$res->get('message'));
+        } catch (\Exception $e) {
+            return Helper::ajaxError($e->getMessage());
+        }
+    }
+    public function deletePCode(Request $request)
+    {
+        try {
+            $id=($request->id);
+            if(!ProductCode::find($id)){
+                return Helper::error('Invalid Product code id');
+            }
+              $res = $this->generator->deletePCode($id);
+            return Helper::ajaxSuccess($res->get('data'),$res->get('message'));
+        } catch (\Exception $e) {
+            return Helper::ajaxError($e->getMessage());
         }
     }
 

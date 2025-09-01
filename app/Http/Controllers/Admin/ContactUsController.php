@@ -22,7 +22,7 @@ class ContactUsController extends Controller
     {
         try {
 
-            return view('admin.reviews.index');
+            return view('admin.contact-us.index');
         } catch (\Exception $e) {
             return redirect()->back()->with('error',$e->getMessage());
 
@@ -54,5 +54,19 @@ class ContactUsController extends Controller
         } catch (\Exception $e) {
             return Helper::ajaxError($e->getMessage());
         }
+    }
+
+    //contactUsList
+    public function contactUsList(Request $request)
+    {
+        try {
+
+            $res = $this->contact->getContactUsList($request);
+            return Helper::ajaxDatatable($res['data']['data'], $res['data']['totalRecords'], $request);
+        }
+        catch(\Exception $e) {
+            return Helper::ajaxError($e->getMessage());
+        }
+
     }
 }

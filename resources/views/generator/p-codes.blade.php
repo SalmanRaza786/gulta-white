@@ -30,7 +30,9 @@
                         <tr class="text-uppercase">
                             <th class="sort" data-sort="id">Product</th>
                             <th class="sort" data-sort="customer_name">Code</th>
-                            <th class="sort" data-sort="customer_name">Status</th>
+                            <th class="sort" data-sort="customer_name">Verification Status</th>
+                            <th class="sort" data-sort="customer_name">Enable Status</th>
+                            <th class="sort" data-sort="customer_name">Action</th>
                         </tr>
 
                         </thead>
@@ -47,6 +49,7 @@
 
 
 @section('script')
+    <script src="{{ URL::asset('build/js/custom-js/p-codes/pCodes.js') }}"></script>
     <script>
         $(document).ready(function () {
 
@@ -72,8 +75,56 @@
                     {data: 'product.name'},
                     {data: 'p_codes'},
                     {data: 'is_verify'},
+                    {data: null},
 
                 ],
+                columnDefs: [
+
+
+                    {
+                        targets: 3,
+                        render: function(data, type, row, meta) {
+                            if(row.is_enable==1) {
+                                return '<span class="badge badge-soft-success text-uppercase">Enable</span>';
+                            }else{
+                                return '<span class="badge badge-soft-danger text-uppercase">Disable</span>';
+                            }
+
+                        }
+                    },
+                    {
+                        targets: 2,
+                        render: function(data, type, row, meta) {
+                            if(row.is_verify=='Verify') {
+                                return '<span class="badge badge-soft-success text-uppercase">' + row.is_verify + '</span>';
+                            }else{
+                                return '<span class="badge badge-soft-danger text-uppercase">' + row.is_verify + '</span>';
+                            }
+
+                        }
+                    },
+
+                    {
+                        targets:4,
+                        render: function(data, type, row, meta) {
+                            const rowId = row.id;
+                            return '<td>'+
+                                '<div class="dropdown fs-4">'+
+                                '<a href="#" role="button" id="dropdownMenuLink1" data-bs-toggle="dropdown" aria-expanded="false">'+
+                                '<i class="ri-more-2-fill"></i>'+
+                                '</a>'+
+                                '<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink1">'+
+                                '<li><a class="btn-delete cursor-pointer ms-3"  data="'+rowId+'"  title="Delete" data-bs-toggle="modal" data-bs-target="#deleteRecordModal">Delete</a></li>'+
+                                '<li><a class="btn-publish cursor-pointer ms-3" data-publish="1"  data="'+rowId+'"  title="Mark As Publish" data-bs-toggle="modal" data-bs-target="#markAsPublishModal">Mark As Enable</li>'+
+                                '<li><a class="btn-publish cursor-pointer ms-3" data-publish="2"  data="'+rowId+'"  title="Mark As Un Publish" data-bs-toggle="modal" data-bs-target="#markAsPublishModal">Mark As Disable</a></li>'+
+                                '</ul>'+
+                                '</div>'+
+                                '</td>';
+
+
+                        }
+                    },
+                ]
 
             });
 

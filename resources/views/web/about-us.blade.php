@@ -13,21 +13,60 @@
 
         </div><!-- End Section Title -->
 
-        <div class="container">
+     <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-            <div class="row gy-4">
-                <div class="col-lg-6 position-relative align-self-start" data-aos="fade-up" data-aos-delay="100">
-                    <img src="{{ asset('storage/uploads/'.$data['aboutUs'][0]->pageMedia[0]->file_path) }}" class="img-fluid" alt="">
-                    <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox pulsating-play-btn"></a>
-                </div>
-                <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="200">
-                    <h3>{{$data['aboutUs'][0]->title}}</h3>
-                    <p class="fst-italic">{!! $data['aboutUs'][0]->description !!}</p>
-                </div>
-            </div>
+         <div class="row gy-4">
 
-        </div>
+             <div class="col-lg-8">
+                 <div class="portfolio-details-slider swiper init-swiper">
+
+                     <script type="application/json" class="swiper-config">
+                         {
+                           "loop": true,
+                           "speed": 600,
+                           "autoplay": {
+                             "delay": 5000
+                           },
+                           "slidesPerView": "auto",
+                           "pagination": {
+                             "el": ".swiper-pagination",
+                             "type": "bullets",
+                             "clickable": true
+                           }
+                         }
+                     </script>
+
+                     <div class="swiper-wrapper align-items-center">
+
+@isset($data['aboutUs'][0]->pageMedia)
+    @foreach($data['aboutUs'][0]->pageMedia as $media)
+       
+                         <div class="swiper-slide">
+                             <img src="{{ URL::asset('storage/uploads/' .$media->file_path)}}" alt="">
+                         </div>
+                             @endforeach
+                                 @endisset
+
+
+                     </div>
+                     <div class="swiper-pagination"></div>
+                 </div>
+             </div>
+
+             <div class="col-lg-4">
+
+                 <div class="portfolio-description" data-aos="fade-up" data-aos-delay="300">
+                     <h2>{{$data['aboutUs'][0]->title}}</h2>
+                     <p>{!! $data['aboutUs'][0]->description !!}</p>
+                 </div>
+             </div>
+
+         </div>
+
+     </div>
 
     </section>
+
+
 
 @endsection
