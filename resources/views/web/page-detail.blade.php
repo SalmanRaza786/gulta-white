@@ -41,22 +41,13 @@
                         </script>
 
                         <div class="swiper-wrapper align-items-center">
-
+                            @isset($data['pageDetail']->pageMedia)
+                                @foreach($data['pageDetail']->pageMedia as $media)
                             <div class="swiper-slide">
-                                <img src="{{ URL::asset('build/web/assets/img/gallery/app-1.jpg')}}" alt="">
+                                <img src="{{ URL::asset('storage/uploads/' .$media->file_path)}}" alt="">
                             </div>
-
-                            <div class="swiper-slide">
-                                <img src="{{ URL::asset('build/web/assets/img/gallery/product-1.jpg')}}" alt="">
-                            </div>
-
-                            <div class="swiper-slide">
-                                <img src="{{ URL::asset('build/web/assets/img/gallery/branding-1.jpg')}}" alt="">
-                            </div>
-
-                            <div class="swiper-slide">
-                                <img src="{{ URL::asset('build/web/assets/img/gallery/books-1.jpg')}}" alt="">
-                            </div>
+                                @endforeach
+                            @endisset
 
                         </div>
                         <div class="swiper-pagination"></div>
