@@ -148,6 +148,7 @@
                     @endif
                 </div>
 
+{{--                <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="100">--}}
                 <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="100">
                     @if(isset($data['client']))
                         <img src="{{ URL::asset('storage/uploads/' . $data['client']->pCode->product->image) }}"
@@ -157,9 +158,14 @@
                              class="img-fluid animated"
                              alt="">
                     @else
-                        <img src="{{ URL::asset('build/web/assets/img/hero-img.png') }}"
-                             class="img-fluid animated"
-                             alt="">
+{{--                        <img src="{{ URL::asset('build/web/assets/img/hero-img.png') }}"--}}
+{{--                             class="img-fluid animated"--}}
+{{--                             alt="">--}}
+                        <video class="img-fluid rounded shadow-sm w-100 h-auto" autoplay muted loop playsinline>
+                            <source src="{{ URL::asset('storage/uploads/home-image/sample.mp4') }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+
                     @endif
                 </div>
 
