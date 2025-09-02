@@ -91,7 +91,7 @@ class TestimonialController extends Controller
             if(!Testimonial::find($id)){
                 return Helper::error('Invalid faq id');
             }
-          return  $res = $this->testimonials->deleteTestimonials($id);
+            $res = $this->testimonials->deleteTestimonials($id);
             return Helper::ajaxSuccess($res->get('data'),$res->get('message'));
         } catch (\Exception $e) {
             return Helper::ajaxError($e->getMessage());

@@ -9,5 +9,8 @@ interface ContactInterface
     public function updateOrCreate($request,$id);
     public function getAllFaqs();
 
+    public function deleteContact($id);
+    public function updateContactStatus($id,$isRead);
+
 
 }

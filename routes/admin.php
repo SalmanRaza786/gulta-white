@@ -88,6 +88,8 @@ use App\Http\Controllers\Admin\ContactUsController;
 
         Route::get('/contact-us', [ContactUsController::class, 'index'])->name('contact.us')->middleware(['can:admin-contact-view']);
         Route::get('/contact-us-list', [ContactUsController::class, 'contactUsList'])->name('contact.us.list');
+        Route::get('/contact-read', [ContactUsController::class, 'readContact'])->name('read.contact.us');
+        Route::any('/delete-contact', [ContactUsController::class, 'deleteContact'])->name('contact.us.delete');
 
 
     });

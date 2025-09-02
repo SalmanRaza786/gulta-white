@@ -29,6 +29,7 @@
                             <th class="sort" data-sort="customer_name">Phone</th>
                             <th class="sort" data-sort="customer_name">Message</th>
                             <th class="sort" data-sort="customer_name">Status</th>
+                            <th class="sort" data-sort="customer_name">Action</th>
 
                         </tr>
 
@@ -47,7 +48,7 @@
 
 
 @section('script')
-    <script src="{{ URL::asset('build/js/custom-js/reviews/reviews.js') }}"></script>
+    <script src="{{ URL::asset('build/js/custom-js/contact/contactUs.js') }}"></script>
 
     <script>
         $(document).ready(function(){
@@ -76,6 +77,7 @@
                     { data: 'subject' },
                     { data: 'message' },
                     { data: null },
+                    { data: null },
 
                 ],
                 columnDefs: [
@@ -91,6 +93,26 @@
                             }
                             return '<td>'+
                                 '<span class="badge badge-soft-'+isPublishClass+' p-2">'+isRead+'</span>'+
+                                '</td>';
+
+
+                        }
+                    },
+                    {
+                        targets:5,
+                        render: function(data, type, row, meta) {
+                            const rowId = row.id;
+                            return '<td>'+
+                                '<div class="dropdown fs-4">'+
+                                '<a href="#" role="button" id="dropdownMenuLink1" data-bs-toggle="dropdown" aria-expanded="false">'+
+                                '<i class="ri-more-2-fill"></i>'+
+                                '</a>'+
+                                '<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink1">'+
+                                '<li><a class="btn-delete cursor-pointer ms-3"  data="'+rowId+'"  title="Delete" data-bs-toggle="modal" data-bs-target="#deleteRecordModal">Delete</a></li>'+
+                                '<li><a class="btn-publish cursor-pointer ms-3" data-publish="1"  data="'+rowId+'"  title="Mark As Publish" data-bs-toggle="modal" data-bs-target="#markAsPublishModal">Mark As Read</li>'+
+                                '<li><a class="btn-publish cursor-pointer ms-3" data-publish="2"  data="'+rowId+'"  title="Mark As Un Publish" data-bs-toggle="modal" data-bs-target="#markAsPublishModal">Mark As Read</a></li>'+
+                                '</ul>'+
+                                '</div>'+
                                 '</td>';
 
 

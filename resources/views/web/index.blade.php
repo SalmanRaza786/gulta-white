@@ -39,24 +39,24 @@
                     <p>Find codes, create trackable codes and enrich your products. Carefully crafted after analyzing the needs of different industries.</p>
                     @isset($data['error'])
                         <div class="alert alert-danger">
-                            {{$data['error']}}
+                          <h2>{{$data['error']}}</h2>
                         </div>
                     @endisset
                     @isset($data['success'])
                         <div class="alert alert-success">
-                            {{$data['success']}}
+                          <h2>{{$data['success']}}</h2>
                         </div>
                     @endisset
 
                     @if (session('error'))
                         <div class="alert alert-danger">
-                            {{ session('error') }}
+                           <h2>{{ session('error') }}</h2>
                         </div>
                     @endif
 
                     @if (session('success'))
                         <div class="alert alert-success">
-                            {{ session('success') }}
+                          <h2>{{ session('success') }}</h2>
                         </div>
                     @endif
                     @isset($data['client'])

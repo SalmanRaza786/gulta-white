@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\Helper;
+use App\Models\ContactUs;
 use App\Repositries\contact\ContactInterface;
 use App\Repositries\testimonials\TestimonialsInterface;
 use Illuminate\Http\Request;
@@ -21,7 +22,6 @@ class ContactUsController extends Controller
     public function index()
     {
         try {
-
             return view('admin.contact-us.index');
         } catch (\Exception $e) {
             return redirect()->back()->with('error',$e->getMessage());
@@ -68,5 +68,35 @@ class ContactUsController extends Controller
             return Helper::ajaxError($e->getMessage());
         }
 
+    }
+
+    public function readContact(Request $request)
+    {
+        try {
+            $id=($request->id);
+            if(!ContactUs::find($id)){
+                return Helper::error('Invalid review id');
+            }
+            $res = $this->contact->updateContactStatus($id,$request->isPublish);
+            if(!$res->get('status')){
+                return Helper::error($res->get('message'));
+            }
+            return Helper::ajaxSuccess([],$res->get('message'));
+        } catch (\Exception $e) {
+            return Helper::ajaxError($e->getMessage());
+        }
+    }
+    public function deleteContact(Request $request)
+    {
+        try {
+            $id=($request->id);
+            if(!ContactUs::find($id)){
+                return Helper::error('Invalid faq id');
+            }
+            $res = $this->contact->deleteContact($id);
+            return Helper::ajaxSuccess($res->get('data'),$res->get('message'));
+        } catch (\Exception $e) {
+            return Helper::ajaxError($e->getMessage());
+        }
     }
 }

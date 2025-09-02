@@ -94,4 +94,30 @@ class ContactRepositry implements ContactInterface
 
     }
 
+    public function updateContactStatus($id,$isRead)
+    {
+        try {
+            $role = ContactUs::find($id);
+            $role->is_read=$isRead;
+            $role->save();
+            return Helper::success($role,'Record update successfully');
+        } catch (ValidationException $validationException) {
+            DB::rollBack();
+            return Helper::errorWithData($validationException->errors()->first(), $validationException->errors());
+        }
+
+    }
+    public function deleteContact($id)
+    {
+        try {
+            $role = ContactUs::find($id);
+            $role->delete();
+            return Helper::success($role, $message=__('translation.record_deleted'));
+        } catch (ValidationException $validationException) {
+            DB::rollBack();
+            return Helper::errorWithData($validationException->errors()->first(), $validationException->errors());
+        }
+
+    }
+
 }

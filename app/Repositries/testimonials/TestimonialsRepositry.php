@@ -70,18 +70,7 @@ class TestimonialsRepositry implements TestimonialsInterface
         }
 
     }
-    public function deleteTestimonials($id)
-    {
-        try {
-            $role = Testimonial::find($id);
-            $role->delete();
-            return Helper::success($role, $message=__('translation.record_deleted'));
-        } catch (ValidationException $validationException) {
-            DB::rollBack();
-            return Helper::errorWithData($validationException->errors()->first(), $validationException->errors());
-        }
 
-    }
 
     public function getAllTestimonials($isPublish=null)
     {
@@ -103,6 +92,18 @@ class TestimonialsRepositry implements TestimonialsInterface
             $role->is_published=$isPublish;
             $role->save();
             return Helper::success($role,'Record update successfully');
+        } catch (ValidationException $validationException) {
+            DB::rollBack();
+            return Helper::errorWithData($validationException->errors()->first(), $validationException->errors());
+        }
+
+    }
+    public function deleteTestimonials($id)
+    {
+        try {
+            $role = Testimonial::find($id);
+            $role->delete();
+            return Helper::success($role, $message=__('translation.record_deleted'));
         } catch (ValidationException $validationException) {
             DB::rollBack();
             return Helper::errorWithData($validationException->errors()->first(), $validationException->errors());

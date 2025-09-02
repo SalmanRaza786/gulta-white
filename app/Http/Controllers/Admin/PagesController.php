@@ -53,7 +53,12 @@ class PagesController extends Controller
                 'title' => 'required',
                 'page_type' => 'required',
                 'description' => 'required',
-            ]);
+                'images.*'    => 'required|image|mimes:jpeg,png,jpg,gif|max:2048|dimensions:width=1024,height=768',
+            ],
+                [
+                    'images.*.dimensions' => 'Images dimensions must be 1024x768.',
+                ]
+            );
             if ($validator->fails()) {
                 return Helper::errorWithData($validator->errors()->first(), $validator->errors());
             }
