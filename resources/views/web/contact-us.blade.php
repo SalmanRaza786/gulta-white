@@ -4,6 +4,25 @@
 @extends('layouts.web-master-layouts')
 @section('title') Contact Us @endsection
 @section('content')
+    <style>
+        /* Make intl-tel-input match Bootstrap input */
+        .iti {
+            width: 100%; /* full width */
+        }
+        .iti input {
+            width: 100% !important;
+            height: calc(2.25rem + 2px); /* match bootstrap form-control height */
+            padding: 0.375rem 0.75rem 0.375rem 3rem; /* leave space for flag */
+            border-radius: 0.375rem;
+            border: 1px solid #ced4da;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+        /* Adjust flag dropdown alignment */
+        .iti__flag-container {
+            left: 10px;
+        }
+    </style>
 
  <section id="contact" class="contact section">
 
@@ -87,16 +106,29 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <label for="subject-field" class="pb-2">Pharma Name</label>
-                                    <input type="text" class="form-control" name="subject" id="subject-field"
-                                           required="" placeholder="Pharma Name">
+                                    <label for="phone" class="pb-2">Contact</label>
+                                    <input type="tel" id="phone" name="phone" class="form-control" placeholder="Contact" required>
                                 </div>
+
+{{--                                <div class="col-md-12">--}}
+{{--                                    <label for="subject-field" class="pb-2">Pharma Name</label>--}}
+{{--                                    <input type="text" class="form-control" name="subject" id="subject-field"--}}
+{{--                                           required="" placeholder="Pharma Name">--}}
+{{--                                </div>--}}
+
+{{--                                <div class="col-md-12">--}}
+{{--                                    <label for="message-field" class="pb-2">Message</label>--}}
+{{--                                    <textarea name="message" id="message-field" cols="10" rows="3" class="form-control" placeholder="Message"></textarea>--}}
+{{--                                </div>--}}
 
                                 <div class="col-md-12">
                                     <label for="message-field" class="pb-2">Message</label>
-                                    <textarea class="form-control" name="message" rows="10" id="message-field"
-                                              required="" placeholder="Message"></textarea>
+                                    <textarea name="message" id="message-field" cols="10" rows="3"
+                                              class="form-control" placeholder="Message"></textarea>
+                                    <small id="message-error" class="text-danger d-none">Message cannot exceed 250 characters.</small>
+                                    <small id="char-count" class="text-muted">0 / 250</small>
                                 </div>
+
 
                                 <div class="col-md-12 text-center">
                                     <div class="loading">Loading</div>
@@ -116,4 +148,65 @@
 
         </section>
 @endsection
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    const messageField = document.getElementById("message-field");
+    const errorMsg = document.getElementById("message-error");
+    const charCount = document.getElementById("char-count");
+    const maxChars = 250;
+
+    function validateMessage() {
+        let text = messageField.value;
+
+        charCount.textContent = `${text.length} / ${maxChars}`;
+
+        if (text.length > maxChars) {
+            errorMsg.classList.remove("d-none");
+            // keep the text as is (don't trim)
+        } else {
+            errorMsg.classList.add("d-none");
+        }
+    }
+
+    // Validate on input & paste
+    messageField.addEventListener("input", validateMessage);
+    messageField.addEventListener("paste", () => {
+        setTimeout(validateMessage, 10); // run after paste completes
+    });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var input = document.querySelector("#phone");
+
+        var iti = window.intlTelInput(input, {
+            initialCountry: "pk",   // set Pakistan as default
+            separateDialCode: true, // show country code separately
+            nationalMode: false,    // force full international format
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"
+        });
+
+        // Optional: validate before submit
+        document.querySelector("form").addEventListener("submit", function (e) {
+            if (!iti.isValidNumber()) {
+                e.preventDefault();
+                alert("Please enter a valid mobile number");
+            } else {
+                // Replace input value with full international format (+92333463416)
+                input.value = iti.getNumber();
+            }
+        });
+    });
+</script>
+<script>
+    var input = document.querySelector("#phone");
+    window.intlTelInput(input, {
+        initialCountry: "pk", // set default country
+        separateDialCode: true,
+    });
+</script>
+
+
 

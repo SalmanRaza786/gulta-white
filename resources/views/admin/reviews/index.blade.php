@@ -26,6 +26,7 @@
                         <tr class="text-uppercase">
                             <th class="sort" data-sort="id">Name</th>
                             <th class="sort" data-sort="customer_name">Email</th>
+                            <th class="sort" data-sort="customer_name">Pharma Name</th>
                             <th class="sort" data-sort="customer_name">Review Message</th>
                             <th class="sort" data-sort="customer_name">Status</th>
                             <th class="sort" data-sort="date">Action</th>
@@ -72,6 +73,7 @@
                 columns: [
                     { data: 'name' },
                     { data: 'email' },
+                    { data: 'pharma_name' },
                     { data: 'review_message' },
                     { data: 'is_published' },
                     { data: null, orderable: false },
@@ -80,7 +82,7 @@
                 columnDefs: [
 
                     {
-                        targets:3,
+                        targets:4,
                         render: function(data, type, row, meta) {
                             var isPublish='Un Publish';
                             var isPublishClass='danger';
@@ -96,7 +98,7 @@
                         }
                     },
                     {
-                        targets:4,
+                        targets:5,
                         render: function(data, type, row, meta) {
                             const rowId = row.id;
                             return '<td>'+

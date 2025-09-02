@@ -43,7 +43,7 @@ class HomeController extends Controller
         try {
 
             $data['homeImage']=TextMessage::pluck('home_image')->first();
-            $data['testimonials']=Helper::fetchOnlyData($this->testimonials->getAllTestimonials());
+            $data['testimonials']=Helper::fetchOnlyData($this->testimonials->getAllTestimonials(1));
             $data['totalAttempts']=0;
             if($request->isMethod('post')) {
 

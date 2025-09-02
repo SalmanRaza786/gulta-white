@@ -29,7 +29,7 @@ class ContactRepositry implements ContactInterface
                 [
                     'name' => $request->name,
                     'email' => $request->email,
-                    'subject' => $request->subject,
+                    'subject' => $request->phone,
                     'message' => $request->message,
                 ]
             );

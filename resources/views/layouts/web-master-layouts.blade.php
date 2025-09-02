@@ -37,6 +37,7 @@
 <main class="main">
 @yield('body')
 @yield('content')
+    @yield('scripts')
 
 
 

@@ -102,12 +102,21 @@
                             <div class="row g-3">
                                 <div class="col-md-4 col-12">
                                     <div>
-                                        <input type="search" id="job-title" class="form-control" placeholder="Your Name" name="name" required>
+{{--                                        <input type="search" id="job-title" class="form-control" placeholder="Your Name" name="name" required>--}}
+
+                                        <input type="text" id="name" class="form-control"
+                                               placeholder="Your Name" name="name"
+                                               pattern="[A-Za-z\s]+"
+                                               title="Only alphabets are allowed" required>
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-12">
                                     <div>
-                                        <input type="search" id="job-title" class="form-control" placeholder="Your Contact Number" name="phone" required>
+{{--                                        <input type="search" id="job-title" class="form-control" placeholder="Your Contact Number" name="phone" required>--}}
+
+                                        <input type="tel" id="phone" class="form-control"
+                                               placeholder="Your Contact Number" name="phone" required>
+
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-12">
@@ -134,17 +143,26 @@
                             <div id="captchaMessage" class="text-danger small mt-1" style="display:none;"></div>
                         </div>
                         <div class="mt-3" id="contactUsSection" style="display:none;">
-                            <a href="{{ route('user.contact.us') }}" class="btn btn-success w-100">Contact Us</a>
+                            <a href="{{ route('user.contact.us') }}" class="btn btn-success w-100">Submit </a>
                         </div>
                     @endif
                 </div>
+
                 <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="100">
-                    @isset($data['homeImage'])
-                    <img src="{{ URL::asset('storage/uploads/'.'/'.$data['homeImage'])}}" class="img-fluid animated" alt="">
+                    @if(isset($data['client']))
+                        <img src="{{ URL::asset('storage/uploads/' . $data['client']->pCode->product->image) }}"
+                             class="img-fluid animated">
+                    @elseif(isset($data['homeImage']))
+                        <img src="{{ URL::asset('storage/uploads/' . $data['homeImage']) }}"
+                             class="img-fluid animated"
+                             alt="">
                     @else
-                        <img src="{{ URL::asset('build/web/assets/img/hero-img.png')}}" class="img-fluid animated" alt="">
-                    @endisset
+                        <img src="{{ URL::asset('build/web/assets/img/hero-img.png') }}"
+                             class="img-fluid animated"
+                             alt="">
+                    @endif
                 </div>
+
             </div>
         </div>
     </section>
@@ -233,6 +251,10 @@
                             <label for="email" class="form-label">Email</label>
                             <input type="email" class="form-control" id="email" placeholder="Enter your email" name="email" required>
                         </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Pharma Name</label>
+                        <input type="text" class="form-control" id="email" placeholder="Enter your pharma name" name="pharma_name" required>
+                    </div>
 
 
 
@@ -271,6 +293,9 @@
 
     </section>
 @endsection
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
 
@@ -356,6 +381,50 @@
         });
     });
 </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Name field: allow only alphabets and spaces
+        document.getElementById("name").addEventListener("input", function () {
+            this.value = this.value.replace(/[^A-Za-z\s]/g, "");
+        });
+
+        // Phone field: allow only digits, optional leading +
+        document.getElementById("phone").addEventListener("input", function () {
+            this.value = this.value.replace(/[^0-9+]/g, "");
+
+            // Prevent multiple '+' signs and keep only at start
+            if (this.value.indexOf("+") > 0) {
+                this.value = this.value.replace(/\+/g, "");
+            }
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var input = document.querySelector("#phone");
+
+        var iti = window.intlTelInput(input, {
+            initialCountry: "pk",   // set Pakistan as default
+            separateDialCode: true, // show country code separately
+            nationalMode: false,    // force full international format
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"
+        });
+
+        // Optional: validate before submit
+        document.querySelector("form").addEventListener("submit", function (e) {
+            if (!iti.isValidNumber()) {
+                e.preventDefault();
+                alert("Please enter a valid mobile number");
+            } else {
+                // Replace input value with full international format (+92333463416)
+                input.value = iti.getNumber();
+            }
+        });
+    });
+</script>
+
+
 
 
 

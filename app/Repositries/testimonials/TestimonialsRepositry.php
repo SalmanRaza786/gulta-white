@@ -30,6 +30,7 @@ class TestimonialsRepositry implements TestimonialsInterface
                     'name' => $request->name,
                     'email' => $request->email,
                     'review_message' => $request->review_message,
+                    'pharma_name' => $request->pharma_name,
                 ]
             );
             return Helper::success($review,'Your review has been received. It will be published once approved by our team.');
@@ -87,7 +88,7 @@ class TestimonialsRepositry implements TestimonialsInterface
         try {
 
             $qry= Testimonial::query();
-            ($isPublish)?$qry->where('is_publish',$isPublish):'';
+            ($isPublish)?$qry->where('is_published',$isPublish):'';
             $data =$qry->get();
             return Helper::success($data, $message="Record found");
         }  catch (\Exception $e) {

@@ -26,8 +26,9 @@
                         <tr class="text-uppercase">
                             <th class="sort" data-sort="id">Name</th>
                             <th class="sort" data-sort="customer_name">Email</th>
-                            <th class="sort" data-sort="customer_name">Pharma Name</th>
+                            <th class="sort" data-sort="customer_name">Phone</th>
                             <th class="sort" data-sort="customer_name">Message</th>
+                            <th class="sort" data-sort="customer_name">Status</th>
 
                         </tr>
 
@@ -74,8 +75,30 @@
                     { data: 'email' },
                     { data: 'subject' },
                     { data: 'message' },
+                    { data: null },
 
                 ],
+                columnDefs: [
+
+                    {
+                        targets:4,
+                        render: function(data, type, row, meta) {
+                            var isRead='Un Read';
+                            var isPublishClass='danger';
+                            if(row.is_read==1){
+                                isRead='Read'
+                                isPublishClass='success';
+                            }
+                            return '<td>'+
+                                '<span class="badge badge-soft-'+isPublishClass+' p-2">'+isRead+'</span>'+
+                                '</td>';
+
+
+                        }
+                    },
+
+
+                ]
 
 
             });
