@@ -20,7 +20,9 @@ use DataTables;
 class GeneratorRepositry implements GeneratorInterface
 {
     protected $pImagePath = 'p-images/';
+    protected $homeImagePath = 'home-image/';
     protected $pImageName = null;
+    protected $homeImageName = null;
     use HandleFiles;
     public function updateOrCreate($request,$id)
     {
@@ -271,6 +273,19 @@ class GeneratorRepositry implements GeneratorInterface
     public function getMessageList($request)
     {
         try {
+
+            $qry= TextMessage::query();
+            $data =$qry->orderByDesc('id')->first();
+            return Helper::success($data, $message="Record found");
+
+        }  catch (\Exception $e) {
+            return Helper::errorWithData($e->getMessage(),[]);
+        }
+
+    }
+    public function getMessageListOld($request)
+    {
+        try {
             $data['totalRecords'] = TextMessage::count();
             $qry= TextMessage::query();
 
@@ -316,16 +331,25 @@ class GeneratorRepositry implements GeneratorInterface
             $validator = Validator::make($request->all(), [
                 'valid_message' => 'required',
                 'invalid_message' => 'required',
+                'verified_message' => 'required',
 
             ]);
-            if ($validator->fails())
+            if ($validator->fails()) {
                 return Helper::errorWithData($validator->errors()->first(), $validator->errors());
+            }
+
+            if ($file = $request->file('home_image')) {
+                $this->homeImageName = $this->handleFiles($file, $this->homeImagePath);
+            }
 
 
-                    $textMessage=TextMessage::first();
+                    if(!$textMessage=TextMessage::first()){
+                        $textMessage=new TextMessage();
+                    }
                     $textMessage->valid_message =$request->valid_message;
                     $textMessage->in_valid_message = $request->invalid_message;
                     $textMessage->verified_message = $request->verified_message;
+            ($this->homeImageName!=null)?$textMessage->home_image = $this->homeImageName:'';
                     $textMessage->save();
 
 

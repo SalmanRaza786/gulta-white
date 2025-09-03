@@ -1,111 +1,132 @@
 @extends('layouts.master')
-@section('title') Message Text @endsection
+@section('title')
+    @lang('translation.app_settings')
+@endsection
+@section('css')
 
+@endsection
 @section('content')
-    @component('components.breadcrumb')
-        @slot('li_1') Dashboard @endslot
-        @slot('routeUrl') {{url('/')}} @endslot
-        @slot('title') Message Text @endslot
-    @endcomponent
-    @include('components.common-error')
+        @component('components.breadcrumb')
+            @slot('li_1') Dashboard @endslot
+            @slot('routeUrl') {{url('/')}} @endslot
+            @slot('title') Message Text @endslot
+        @endcomponent
+        @include('components.common-error')
+
+
     <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header d-flex ">
-                    <div class="col">
-                        <h4 class="card-title mb-0">Message Text List</h4>
+        <div class="col-xxl-12 mt-5">
+            <form method="post" class=" g-3 needs-validation" action="{{route('admin.text.message.update')}}" enctype="multipart/form-data" autocomplete="off" id="TextMessageForm">
+
+                @csrf
+                <div class="card mt-xxl-n5">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs-custom rounded card-header-tabs border-bottom-0" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link active" data-bs-toggle="tab" href="#app_settings" role="tab"
+                                   aria-selected="true">
+                                    <i class="fas fa-home"></i> Message Setting
+                                </a>
+                            </li>
+
+                        </ul>
                     </div>
+
+                    <div class="card-body p-4">
+                        <div class="tab-content">
+                         <div class="tab-pane active show" id="app_settings" role="tabpanel">
+
+
+                                    <div class="row mb-3">
+                                        <div class="col-lg-3">
+                                            <label for="app_title"
+                                                   class="form-label">Valid Message</label>
+                                        </div>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control"
+                                                   value="{{isset($data['appSetting'])? $data['appSetting']->valid_message:''}}"
+                                                   id="app_title" name="valid_message"
+                                                   placeholder="Valid Message">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-lg-3">
+                                            <label for="app_title"
+                                                   class="form-label">InValid Message</label>
+                                        </div>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control"
+                                                   value="{{isset($data['appSetting'])? $data['appSetting']->in_valid_message:''}}"
+                                                   id="app_title" name="invalid_message"
+                                                   placeholder="InValid Message">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-lg-3">
+                                            <label for="app_title"
+                                                   class="form-label">Verified  Message</label>
+                                        </div>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control"
+                                                   value="{{ isset($data['appSetting'])? $data['appSetting']->verified_message:''}}"
+                                                   id="app_title" name="verified_message"
+                                                   placeholder="Verified  Message">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <div class="col-lg-3">
+                                            <label for="nameInput"
+                                                   class="form-label mt-5">Home Image</label>
+                                        </div>
+                                        <div class="col-lg-9">
+
+                                            <div class="profile-user position-relative d-inline-block mx-auto  mb-2">
+
+                                                <img
+                                                    src="{{ isset($data['appSetting']) && $data['appSetting']->home_image
+            ? asset('storage/uploads/' . $data['appSetting']->home_image)
+            : asset('default.png') }}"
+                                                    class="rounded-circle avatar-xl img-thumbnail user-profile-image"
+                                                    alt="user-profile-image">
+
+
+
+                                                <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
+                                                    <input id="profile-img-file-input" name="home_image" type="file"
+                                                           class="profile-img-file-input">
+                                                    <label for="profile-img-file-input"
+                                                           class="profile-photo-edit avatar-xs">
+                                                    <span class="avatar-title rounded-circle bg-light text-body">
+                                                        <i class="ri-camera-fill"></i>
+                                                    </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                        </div>
+                    </div>
+
                 </div>
+                <div class="text-end">
 
-
-                <div class="card-body pt-0">
-
-                    <table class="table  align-middle" id="roleTable">
-                        <thead class="text-muted table-light">
-                        <tr class="text-uppercase">
-
-                            <th class="sort" data-sort="customer_name">Valid Message</th>
-                            <th class="sort" data-sort="customer_name">In Valid Message</th>
-                            <th class="sort" data-sort="customer_name">Verified Message</th>
-                            <th class="sort" data-sort="customer_name">Action</th>
-                        </tr>
-                        </thead>
-                    </table>
-
+                    <button type="submit" class="btn btn-primary btn-submit">Save Changes</button>
                 </div>
-            </div>
+            </form>
         </div>
-
     </div>
-    @include('generator.generator-modals')
-    @include('admin.components.comon-modals.common-modal')
-
 @endsection
-
 @section('script')
-    <script>
-        $(document).ready(function () {
 
-            var table = $('#roleTable').DataTable({
-                processing: true,
-                serverSide: true,
-                searching: false,
-                info: true,
-                bFilter: false,
-                ordering: false,
-                bLengthChange: false,
-                order: [[0, "desc"]],
-                ajax: {
-                    url: "message-list",
+     <script src="{{ URL::asset('build/js/custom-js/product/product.js') }}"></script>
 
-                    data: function (d) {
-                        d.s_name = $('input[name=s_name]').val()
-                    },
-
-                },
-
-                columns: [
-                    {data: 'valid_message'},
-                    {data: 'in_valid_message'},
-                    {data: 'verified_message'},
-                    {data: null, orderable: false},
-                ],
-
-                columnDefs: [
-
-                    {
-                        targets: 3,
-                        render: function (data, type, row, meta) {
-                            const rowId = row.id;
-
-
-                            return '<td>' +
-                                '<div class="dropdown fs-4">' +
-                                '<a href="#" role="button" id="dropdownMenuLink1" data-bs-toggle="dropdown" aria-expanded="false">' +
-                                '<i class="ri-more-2-fill"></i>' +
-                                '</a>' +
-                                '<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink1">' +
-                                '<li><a href="#" class="btn-edit-text ms-3" data="' + rowId + '" data-bs-toggle="modal" data-bs-target="#textMessage" title="Edit"><i class="ri-pencil-fill text-muted fs-4"></i></a></li>' +
-
-                                '</ul>' +
-                                '</div>' +
-                                '</td>';
-
-
-                        }
-                    },
-
-                ]
-            });
-
-            table.on('xhr', function () {
-                var json = table.ajax.json();
-                $('#totalRecords').text(json.recordsTotal);
-            });
-
-        });
-    </script>
-    <script src="{{ URL::asset('build/js/custom-js/product/product.js') }}"></script>
 @endsection
+
+
 
 

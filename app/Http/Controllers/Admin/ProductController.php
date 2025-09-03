@@ -171,11 +171,11 @@ class ProductController extends Controller
     }
 
     //messageIndex
-    public function messageIndex()
+    public function messageIndex(Request $request)
     {
         try {
-
-            return view('generator.message-index');
+            $data['appSetting']=Helper::fetchOnlyData($this->generator->getMessageList($request));
+            return view('generator.message-index')->with(compact('data'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error',$e->getMessage());
 
@@ -213,6 +213,9 @@ class ProductController extends Controller
         try {
             $request->all();
             $res=$this->generator->createTextMessage($request);
+            if(!$res->get('status')){
+                return Helper::error($res->get('message'));
+            }
             return Helper::ajaxSuccess($res->get('data'),$res->get('message'));
 
         } catch (\Exception $e) {

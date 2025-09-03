@@ -158,13 +158,13 @@
                              class="img-fluid animated"
                              alt="">
                     @else
-{{--                        <img src="{{ URL::asset('build/web/assets/img/hero-img.png') }}"--}}
-{{--                             class="img-fluid animated"--}}
-{{--                             alt="">--}}
-                        <video class="img-fluid rounded shadow-sm w-100 h-auto" autoplay muted loop playsinline>
-                            <source src="{{ URL::asset('storage/uploads/home-image/sample.mp4') }}" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
+                        <img src="{{ URL::asset('build/web/assets/img/hero-img.png') }}"
+                             class="img-fluid animated"
+                             alt="">
+{{--                        <video class="img-fluid rounded shadow-sm w-100 h-auto" autoplay muted loop playsinline>--}}
+{{--                            <source src="{{ URL::asset('storage/uploads/home-image/sample.mp4') }}" type="video/mp4">--}}
+{{--                            Your browser does not support the video tag.--}}
+{{--                        </video>--}}
 
                     @endif
                 </div>

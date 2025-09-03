@@ -225,31 +225,26 @@ $(document).ready(function(){
                 $('.btn-submit').text('Saving...');
                 $(".btn-submit").prop("disabled", true);
             },
-            success: function(data) {
+            success: function(response) {
 
-                if (data.status==true) {
+                if (response.status) {
                     $('#roleTable').DataTable().ajax.reload();
-                    toastr.success(data.message);
-                    $('#TextMessageForm')[0].reset();
-                    $('.btn-close').click();
-                    $('.btn-submit').text('Save');
-                    $(".btn-submit").prop("disabled", false);
+                    toastr.success(response.message);
 
                 }
-                if (data.status==false) {
+                if (!response.status) {
                     toastr.error(response.message);
-                    $('.btn-submit').text('Save');
-                    $(".btn-submit").prop("disabled", false);
+
                 }
             },
 
             complete: function(data) {
-                $(".btn-submit").html("Save");
+                $(".btn-submit").html("Save Changes");
                 $(".btn-submit").prop("disabled", false);
             },
 
-            error: function() {;
-                $('.btn-submit').text('Save');
+            error: function() {
+                $('.btn-submit').text('Save Changes');
                 $(".btn-submit").prop("disabled", false);
             }
         });
