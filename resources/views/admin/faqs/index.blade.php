@@ -25,7 +25,7 @@
 
 
                 <div class="card-body pt-0">
-                    <table class="table table-nowrap align-middle" id="roleTable">
+                    <table class="table align-middle" id="roleTable">
                         <thead class="text-muted table-light">
 
                         <tr class="text-uppercase">
