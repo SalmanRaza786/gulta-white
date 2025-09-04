@@ -26,6 +26,7 @@ use App\Http\Controllers\Admin\ContactUsController;
     Route::get('dashboard', [AdminHomeController::class, 'index'])->name('dashboard');
         Route::get('/product', [ProductController::class, 'index'])->name('products.index')->middleware(['can:admin-product-view']);
         Route::post('/product-save', [ProductController::class, 'saveProduct'])->name('product.add');
+        Route::post('/product-code-gift-save', [ProductController::class, 'productCodeGift'])->name('product.code.gift');
         Route::get('/product-list', [ProductController::class, 'productList']);
         Route::get('/edit-product', [ProductController::class, 'editProduct'])->name('product.edit');
         Route::any('/delete-product', [ProductController::class, 'deleteProduct']);

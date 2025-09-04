@@ -46,6 +46,20 @@ class ProductController extends Controller
             return Helper::ajaxError($e->getMessage());
         }
     }
+    //productCodeGift
+    public function productCodeGift(Request $request)
+    {
+
+        try {
+             $request->all();
+            $roleUpdateOrCreate = $this->generator->updateOrCreateGift($request,$request->gift_id);
+            if ($roleUpdateOrCreate->get('status'))
+                return Helper::ajaxSuccess($roleUpdateOrCreate->get('data'),$roleUpdateOrCreate->get('message'));
+            return Helper::ajaxErrorWithData($roleUpdateOrCreate->get('message'), $roleUpdateOrCreate->get('data'));
+        } catch (\Exception $e) {
+            return Helper::ajaxError($e->getMessage());
+        }
+    }
 
     public function productList(Request $request)
     {
@@ -220,7 +234,6 @@ class ProductController extends Controller
 
         } catch (\Exception $e) {
             return redirect()->back()->with('error',$e->getMessage());
-
         }
     }
 

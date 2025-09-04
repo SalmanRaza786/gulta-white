@@ -47,6 +47,7 @@
                         <thead class="text-muted table-light">
 
                         <tr class="text-uppercase">
+                            <th class="sort" data-sort="id">Date</th>
                             <th class="sort" data-sort="id">Name</th>
                             <th class="sort" data-sort="customer_name">Phone</th>
                             <th class="sort" data-sort="customer_name">Code</th>
@@ -90,6 +91,7 @@
                 },
 
                 columns: [
+                    {data: 'created_at'},
                     {data: 'name'},
                     {data: 'phone'},
                     {data: 'p_code'},

@@ -32,6 +32,7 @@
                             <th class="sort" data-sort="customer_name">Code</th>
                             <th class="sort" data-sort="customer_name">Verification Status</th>
                             <th class="sort" data-sort="customer_name">Enable Status</th>
+                            <th class="sort" data-sort="customer_name">Gift</th>
                             <th class="sort" data-sort="customer_name">Action</th>
                         </tr>
 
@@ -64,17 +65,17 @@
                 order: [[0, "desc"]],
                 ajax: {
                     url: "p-codes-list",
-
                     data: function (d) {
                         d.s_name = $('input[name=s_name]').val()
                     },
-
                 },
 
                 columns: [
                     {data: 'product.name'},
                     {data: 'p_codes'},
-                    {data: 'is_verify'},
+                    {data: null},
+                    {data: null},
+                    {data: 'gift'},
                     {data: null},
 
                 ],
@@ -105,7 +106,7 @@
                     },
 
                     {
-                        targets:4,
+                        targets:5,
                         render: function(data, type, row, meta) {
                             const rowId = row.id;
                             return '<td>'+
@@ -114,6 +115,7 @@
                                 '<i class="ri-more-2-fill"></i>'+
                                 '</a>'+
                                 '<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink1">'+
+                                '<li><a class="btn-add-gift cursor-pointer ms-3"  data="'+rowId+'" data-gift='+row.gift+' title="Add Gift" data-bs-toggle="modal" data-bs-target="#giftModal">Add Gift</a></li>'+
                                 '<li><a class="btn-delete cursor-pointer ms-3"  data="'+rowId+'"  title="Delete" data-bs-toggle="modal" data-bs-target="#deleteRecordModal">Delete</a></li>'+
                                 '<li><a class="btn-publish cursor-pointer ms-3" data-publish="1"  data="'+rowId+'"  title="Mark As Publish" data-bs-toggle="modal" data-bs-target="#markAsPublishModal">Mark As Enable</li>'+
                                 '<li><a class="btn-publish cursor-pointer ms-3" data-publish="2"  data="'+rowId+'"  title="Mark As Un Publish" data-bs-toggle="modal" data-bs-target="#markAsPublishModal">Mark As Disable</a></li>'+

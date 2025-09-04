@@ -59,7 +59,9 @@
                           <h2>{{ session('success') }}</h2>
                         </div>
                     @endif
-                    @isset($data['client'])
+
+
+                @isset($data['client'])
                         <div class="card shadow-sm border-0">
                             <div class="card-header  text-white">
                                 <h5 class="mb-0">Product Verification</h5>
@@ -91,6 +93,24 @@
                                         </tr>
                                         </tbody>
                                     </table>
+                                    @if($data['client']->pCode->gift)
+                                    <div class="alert border-dashed alert-danger" role="alert">
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://img.icons8.com/fluency/96/gift.png"
+                                                 alt="Gift Icon" style="width:80px;height:80px;" />
+                                            <div class="ms-2">
+                                                <h5 class="fs-14 text-danger fw-semibold">Congratulation?</h5>
+                                                <p class="text-black mb-1">{{$data['client']->pCode->gift}}
+                                                     <br />
+
+                                                </p>
+                                                <small>You’ve won a gift. Please contact the administrator to claim your prize.</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                        @endif
+
+
                                 </div>
                             </div>
                         </div>
@@ -125,27 +145,27 @@
                                     </div>
                                 </div>
                                 <!-- Submit Button -->
-                                @if($data['totalAttempts'] < 2)
+{{--                                @if($data['totalAttempts'] < 2)--}}
                                 <div class="col-12">
                                     <button class="btn btn-success w-100 mt-2" type="submit"><i class="ri-search-2-line align-bottom me-1"></i> Verify</button>
                                 </div>
-                                @endif
+{{--                                @endif--}}
                             </div>
                         </form>
                     </div>
-                    @if($data['totalAttempts'] >= 2)
-                        <div class="col-md-6 col-12">
-                            <label class="form-label fw-bold">Captcha Verification</label>
-                            <div class="input-group">
-                                <span id="captchaQuestion" class="input-group-text bg-dark text-white fw-bold"></span>
-                                <input type="number" id="captchaInput" class="form-control" placeholder="Enter Answer">
-                            </div>
-                            <div id="captchaMessage" class="text-danger small mt-1" style="display:none;"></div>
-                        </div>
-                        <div class="mt-3" id="contactUsSection" style="display:none;">
-                            <a href="{{ route('user.contact.us') }}" class="btn btn-success w-100">Submit </a>
-                        </div>
-                    @endif
+{{--                    @if($data['totalAttempts'] >= 2)--}}
+{{--                        <div class="col-md-6 col-12">--}}
+{{--                            <label class="form-label fw-bold">Captcha Verification</label>--}}
+{{--                            <div class="input-group">--}}
+{{--                                <span id="captchaQuestion" class="input-group-text bg-dark text-white fw-bold"></span>--}}
+{{--                                <input type="number" id="captchaInput" class="form-control" placeholder="Enter Answer">--}}
+{{--                            </div>--}}
+{{--                            <div id="captchaMessage" class="text-danger small mt-1" style="display:none;"></div>--}}
+{{--                        </div>--}}
+{{--                        <div class="mt-3" id="contactUsSection" style="display:none;">--}}
+{{--                            <a href="{{ route('user.contact.us') }}" class="btn btn-success w-100">Submit </a>--}}
+{{--                        </div>--}}
+{{--                    @endif--}}
                 </div>
 
 {{--                <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="100">--}}
@@ -153,6 +173,10 @@
                     @if(isset($data['client']))
                         <img src="{{ URL::asset('storage/uploads/' . $data['client']->pCode->product->image) }}"
                              class="img-fluid animated">
+                    @elseif(isset($data['error']))
+                        <img src="{{ URL::asset('storage/uploads/' . $data['invalidImage']) }}"
+                             class="img-fluid animated"
+                             alt="">
                     @elseif(isset($data['homeImage']))
                         <img src="{{ URL::asset('storage/uploads/' . $data['homeImage']) }}"
                              class="img-fluid animated"
@@ -172,6 +196,8 @@
             </div>
         </div>
     </section>
+
+
 
     <section id="testimonials" class="testimonials section light-background">
 
@@ -220,14 +246,11 @@
                             </p>
                             <img src="{{ URL::asset('build/web/assets/img/testimonials/dummy.png')}}" class="testimonial-img" alt="">
                             <h3>{{$row->name}}</h3>
-{{--                            <h4>Ceo &amp; Founder</h4>--}}
+                            <h4>{{$row->pharma_name}}</h4>
                         </div>
                     </div>
                         @endforeach
                     @endisset
-
-
-
                 </div>
                 <div class="swiper-pagination"></div>
             </div>
@@ -266,7 +289,10 @@
 
                         <div class="mb-3">
                             <label for="message" class="form-label">Review Message</label>
-                            <textarea class="form-control" id="message" rows="3" placeholder="Write your message" name="review_message" required></textarea>
+                            <textarea name="review_message" id="message-field" cols="10" rows="3"
+                                      class="form-control" placeholder="Write your message" required></textarea>
+                            <small id="message-error" class="text-danger d-none">Message cannot exceed 250 characters.</small>
+                            <small id="char-count" class="text-muted">0 / 250</small>
 
                         </div>
 
@@ -274,7 +300,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success">Send Message</button>
+                    <button type="submit" class="btn btn-success btn-send-review">Send Message</button>
                 </div>
                 </form>
 
@@ -426,6 +452,33 @@
                 // Replace input value with full international format (+92333463416)
                 input.value = iti.getNumber();
             }
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const messageField = document.getElementById("message-field");
+        const errorMsg = document.getElementById("message-error");
+        const charCount = document.getElementById("char-count");
+        const maxChars = 250;
+
+        function validateMessage() {
+            let text = messageField.value;
+
+            charCount.textContent = `${text.length} / ${maxChars}`;
+
+            if (text.length > maxChars) {
+                errorMsg.classList.remove("d-none");
+                // keep the text as is (don't trim)
+            } else {
+                errorMsg.classList.add("d-none");
+            }
+        }
+
+        // Validate on input & paste
+        messageField.addEventListener("input", validateMessage);
+        messageField.addEventListener("paste", () => {
+            setTimeout(validateMessage, 10); // run after paste completes
         });
     });
 </script>

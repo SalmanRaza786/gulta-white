@@ -107,8 +107,36 @@
                                     </div>
 
 
+                             <div class="row mb-3">
+                                 <div class="col-lg-3">
+                                     <label for="invalid-img-file-input" class="form-label mt-5">Invalid Code Image</label>
+                                 </div>
+                                 <div class="col-lg-9">
+                                     <div class="profile-user position-relative d-inline-block mx-auto mb-2">
 
-                                </div>
+                                         <img
+                                             src="{{ isset($data['appSetting']) && $data['appSetting']->invalid_code_image
+                    ? asset('storage/uploads/' . $data['appSetting']->invalid_code_image)
+                    : asset('default.png') }}"
+                                             class="rounded-circle avatar-xl img-thumbnail invalid-profile-image"
+                                             alt="invalid-profile-image">
+
+                                         <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
+                                             <input id="invalid-img-file-input" name="invalid_image" type="file" class="invalid-img-file-input">
+                                             <label for="invalid-img-file-input" class="profile-photo-edit avatar-xs">
+                    <span class="avatar-title rounded-circle bg-light text-body">
+                        <i class="ri-camera-fill"></i>
+                    </span>
+                                             </label>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+
+
+
+
+                         </div>
                         </div>
                     </div>
 
@@ -124,6 +152,26 @@
 @section('script')
 
      <script src="{{ URL::asset('build/js/custom-js/product/product.js') }}"></script>
+     <script>
+         // Home Image Preview
+         document.getElementById('profile-img-file-input').addEventListener('change', function (event) {
+             let reader = new FileReader();
+             reader.onload = function () {
+                 document.querySelector('.user-profile-image').setAttribute('src', reader.result);
+             }
+             reader.readAsDataURL(event.target.files[0]);
+         });
+
+         // Invalid Code Image Preview
+         document.getElementById('invalid-img-file-input').addEventListener('change', function (event) {
+             let reader = new FileReader();
+             reader.onload = function () {
+                 document.querySelector('.invalid-profile-image').setAttribute('src', reader.result);
+             }
+             reader.readAsDataURL(event.target.files[0]);
+         });
+
+     </script>
 
 @endsection
 

@@ -10,6 +10,7 @@ interface GeneratorInterface
     public function deleteProduct($id);
     public function findProductById($id);
     public function updateOrCreate($request,$id);
+    public function updateOrCreateGift($request,$id);
     public function createPCodes($request);
     public function attemptCodeList($request);
     public function getAllCodes($request);

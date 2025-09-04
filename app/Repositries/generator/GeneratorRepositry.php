@@ -22,6 +22,7 @@ class GeneratorRepositry implements GeneratorInterface
     protected $pImagePath = 'p-images/';
     protected $homeImagePath = 'home-image/';
     protected $pImageName = null;
+    protected $invalidCodeImageName = null;
     protected $homeImageName = null;
     use HandleFiles;
     public function updateOrCreate($request,$id)
@@ -342,6 +343,10 @@ class GeneratorRepositry implements GeneratorInterface
                 $this->homeImageName = $this->handleFiles($file, $this->homeImagePath);
             }
 
+            //invalid_image
+            if ($invalidFile = $request->file('invalid_image')) {
+                $this->invalidCodeImageName = $this->handleFiles($invalidFile, $this->homeImagePath);
+            }
 
                     if(!$textMessage=TextMessage::first()){
                         $textMessage=new TextMessage();
@@ -349,7 +354,8 @@ class GeneratorRepositry implements GeneratorInterface
                     $textMessage->valid_message =$request->valid_message;
                     $textMessage->in_valid_message = $request->invalid_message;
                     $textMessage->verified_message = $request->verified_message;
-            ($this->homeImageName!=null)?$textMessage->home_image = $this->homeImageName:'';
+                    ($this->homeImageName!=null)?$textMessage->home_image = $this->homeImageName:'';
+                    ($this->invalidCodeImageName!=null)?$textMessage->invalid_code_image = $this->invalidCodeImageName:'';
                     $textMessage->save();
 
 
@@ -392,6 +398,33 @@ class GeneratorRepositry implements GeneratorInterface
             return Helper::errorWithData($validationException->errors()->first(), $validationException->errors());
         }
 
+    }
+
+    public function updateOrCreateGift($request,$id)
+    {
+
+        try {
+
+            $validator = Validator::make($request->all(), [
+                'gift' => 'required',
+            ]);
+            if ($validator->fails())
+                return Helper::errorWithData($validator->errors()->first(), $validator->errors());
+            $role = ProductCode::updateOrCreate(
+                [
+                    'id' => $id
+                ],
+                [
+                    'gift' => $request->gift,
+                ]
+            );
+
+            ($id==0)?$message = __('translation.record_created'): $message =__('translation.record_updated');
+            return Helper::success($role, $message);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return Helper::errorWithData($e->getMessage(),[]);
+        }
     }
 
 

@@ -27,4 +27,9 @@ class AttemptCode extends Model
         return $getVal;
     }
 
+
+    protected $casts = [
+        'created_at' => 'datetime:d M Y ',
+    ];
+
 }

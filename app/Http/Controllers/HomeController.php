@@ -43,6 +43,7 @@ class HomeController extends Controller
         try {
 
             $data['homeImage']=TextMessage::pluck('home_image')->first();
+            $data['invalidImage']=TextMessage::pluck('invalid_code_image')->first();
             $data['testimonials']=Helper::fetchOnlyData($this->testimonials->getAllTestimonials(1));
             $data['totalAttempts']=0;
             if($request->isMethod('post')) {
@@ -57,13 +58,13 @@ class HomeController extends Controller
                         return view('web.index')->with(compact('data'));
                     }
 
-                    if ($pCode->is_verify == 'Verify') {
-                        Helper::saveAttemptCode($request->name, $request->phone, $request->p_code, 2, null);
-                        $data['client'] = AttemptCode::with('pCode.product')->where('p_code', $request->p_code)->first();
-                        $data['totalAttempts']=AttemptCode::where('p_code',$request->p_code)->count();
-                        $data['error'] = $textMessage ? $textMessage->verified_message : 'Your code is already verified by';
-                        return view('web.index')->with(compact('data'));
-                    }
+//                    if ($pCode->is_verify == 'Verify') {
+//                        Helper::saveAttemptCode($request->name, $request->phone, $request->p_code, 2, null);
+//                        $data['client'] = AttemptCode::with('pCode.product')->where('p_code', $request->p_code)->first();
+//                        $data['totalAttempts']=AttemptCode::where('p_code',$request->p_code)->count();
+//                        $data['error'] = $textMessage ? $textMessage->verified_message : 'Your code is already verified by';
+//                        return view('web.index')->with(compact('data'));
+//                    }
 
                     Helper::saveAttemptCode($request->name, $request->phone, $request->p_code, 1, $pCode->p_id);
                     $data['totalAttempts']=AttemptCode::where('p_code',$request->p_code)->count();

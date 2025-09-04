@@ -254,6 +254,59 @@ $(document).ready(function(){
 
         $('#roleTable').DataTable().ajax.reload();
     });
+
+
+    $('#roleTable').on('click', '.btn-add-gift', function() {
+        var id = $(this).attr('data');
+        var gift = $(this).attr('data-gift');
+
+        if (gift === null || gift === undefined || gift === "null") {
+            gift = '';
+        }
+
+        $('input[name=gift]').val(gift);
+        $('input[name=gift_id]').val(id);
+    });
+
+
+    $('#GiftForm').on('submit', function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: $(this).attr('action'),
+            method: 'POST',
+            data: new FormData(this),
+            dataType: 'JSON',
+            contentType: false,
+            cache: false,
+            processData: false,
+            beforeSend: function() {
+                $('.btn-submit').text('Saving...');
+                $(".btn-submit").prop("disabled", true);
+            },
+            success: function(response) {
+                if (response.status) {
+                    $('#roleTable').DataTable().ajax.reload();
+                    toastr.success(response.message);
+                    $('#GiftForm')[0].reset();
+                    $('.btn-close').click();
+                }
+                if (!response.status) {
+                    toastr.error(response.message);
+                }
+            },
+
+            complete: function(data) {
+                $(".btn-submit").html("Save");
+                $(".btn-submit").prop("disabled", false);
+            },
+
+            error: function() {;
+                $('.btn-submit').text('Save');
+                $(".btn-submit").prop("disabled", false);
+            }
+        });
+    });
 });
 
 

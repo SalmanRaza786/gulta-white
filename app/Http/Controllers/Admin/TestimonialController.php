@@ -38,7 +38,7 @@ class TestimonialController extends Controller
             $validator = Validator::make($request->all(), [
                 'name' => 'required',
                 'email' => 'required',
-                'review_message' => 'required',
+                'review_message' => 'required|string|max:250',
 
             ]);
             if ($validator->fails()){

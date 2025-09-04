@@ -9,7 +9,7 @@ class ProductCode extends Model
 {
 
     use HasFactory;
-    protected $fillable=['p_id','p_codes','is_verify','batch_no'];
+    protected $fillable=['p_id','p_codes','is_verify','batch_no','gift'];
 
     public function product()
     {

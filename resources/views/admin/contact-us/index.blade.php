@@ -1,6 +1,6 @@
 
 @extends('layouts.master')
-@section('title') Contact US  @endsection
+@section('title') Contact US @endsection
 
 @section('content')
     @component('components.breadcrumb')
@@ -110,7 +110,7 @@
                                 '<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink1">'+
                                 '<li><a class="btn-delete cursor-pointer ms-3"  data="'+rowId+'"  title="Delete" data-bs-toggle="modal" data-bs-target="#deleteRecordModal">Delete</a></li>'+
                                 '<li><a class="btn-publish cursor-pointer ms-3" data-publish="1"  data="'+rowId+'"  title="Mark As Publish" data-bs-toggle="modal" data-bs-target="#markAsPublishModal">Mark As Read</li>'+
-                                '<li><a class="btn-publish cursor-pointer ms-3" data-publish="2"  data="'+rowId+'"  title="Mark As Un Publish" data-bs-toggle="modal" data-bs-target="#markAsPublishModal">Mark As Read</a></li>'+
+                                '<li><a class="btn-publish cursor-pointer ms-3" data-publish="2"  data="'+rowId+'"  title="Mark As Un Publish" data-bs-toggle="modal" data-bs-target="#markAsPublishModal">Mark As UnRead</a></li>'+
                                 '</ul>'+
                                 '</div>'+
                                 '</td>';
