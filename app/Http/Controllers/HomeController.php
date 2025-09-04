@@ -58,13 +58,14 @@ class HomeController extends Controller
                         return view('web.index')->with(compact('data'));
                     }
 
-//                    if ($pCode->is_verify == 'Verify') {
-//                        Helper::saveAttemptCode($request->name, $request->phone, $request->p_code, 2, null);
+                    if ($pCode->is_verify == 'Verify') {
+                        Helper::saveAttemptCode($request->name, $request->phone, $request->p_code, 2, null);
 //                        $data['client'] = AttemptCode::with('pCode.product')->where('p_code', $request->p_code)->first();
-//                        $data['totalAttempts']=AttemptCode::where('p_code',$request->p_code)->count();
+                        $data['totalAttempts']=AttemptCode::where('p_code',$request->p_code)->count();
 //                        $data['error'] = $textMessage ? $textMessage->verified_message : 'Your code is already verified by';
-//                        return view('web.index')->with(compact('data'));
-//                    }
+                        $data['error'] = $textMessage ? $textMessage->in_valid_message : '';
+                        return view('web.index')->with(compact('data'));
+                    }
 
                     Helper::saveAttemptCode($request->name, $request->phone, $request->p_code, 1, $pCode->p_id);
                     $data['totalAttempts']=AttemptCode::where('p_code',$request->p_code)->count();
