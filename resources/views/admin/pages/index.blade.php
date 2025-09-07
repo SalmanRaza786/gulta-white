@@ -31,30 +31,30 @@
                         <div class="row g-3">
                             <div class="col-xxl-7 col-sm-6">
                                 <div class="search-box">
-                                    <input type="text" class="form-control search" placeholder=" {{__('translation.search')}}" name="s_name">
+                                    <input type="text" class="form-control search" placeholder=" {{__('translation.search')}}" name="s_name" id="s_name">
                                     <i class="ri-search-line search-icon"></i>
                                 </div>
                             </div>
                             <!--end col-->
-                            <div class="col-xxl-3 col-sm-4">
-                                <div>
-                                    <select class="form-control"  name="s_status">
-                                        <option value="">Status</option>
-                                        <option value="" selected>{{__('translation.all')}}</option>
-                                        <option value="1">Active</option>
-                                        <option value="2">In-Active</option>
-                                    </select>
-                                </div>
-                            </div>
+{{--                            <div class="col-xxl-3 col-sm-4">--}}
+{{--                                <div>--}}
+{{--                                    <select class="form-control"  name="s_status">--}}
+{{--                                        <option value="">Status</option>--}}
+{{--                                        <option value="" selected>{{__('translation.all')}}</option>--}}
+{{--                                        <option value="1">Active</option>--}}
+{{--                                        <option value="2">In-Active</option>--}}
+{{--                                    </select>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                             <!--end col-->
 
-                            <div class="col-xxl-2 col-sm-4">
-                                <div>
-                                    <button type="button" class="btn btn-primary w-100" id="filter"> <i class="ri-equalizer-fill me-1 align-bottom"></i>
-                                        {{__('translation.filter')}}
-                                    </button>
-                                </div>
-                            </div>
+{{--                            <div class="col-xxl-2 col-sm-4">--}}
+{{--                                <div>--}}
+{{--                                    <button type="button" class="btn btn-primary w-100" id="filter"> <i class="ri-equalizer-fill me-1 align-bottom"></i>--}}
+{{--                                        {{__('translation.filter')}}--}}
+{{--                                    </button>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                             <!--end col-->
                         </div>
                         <!--end row-->
@@ -102,8 +102,8 @@
                 ajax: {
                     url: route('admin.pages.list'),
                     data: function (d) {
-                        d.name = $('input[name=s_name]').val(),
-                            d.status = $('select[name=s_status]').val()
+                        d.s_name = $('input[name=s_name]').val()
+
 
                     }
                 },
@@ -125,7 +125,7 @@
             <a href="${url}?id=${rowId}">
                 <i class="ri-pencil-fill text-primary fs-4"></i>
             </a>
-            <a href="#" class="btn-delete" data="${rowId}" data-bs-toggle="modal" data-bs-target="#deleteRecordModal">
+            <a href="#" class="btn-delete" data-id="${rowId}" data-bs-toggle="modal" data-bs-target="#deleteRecordModal">
                 <i class="ri-delete-bin-fill text-danger fs-4"></i>
             </a>
         `;

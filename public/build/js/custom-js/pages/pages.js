@@ -39,15 +39,10 @@ $(document).ready(function(){
             }
         });
     });
-
-
-
     $('#roleTable').on('click', '.btn-delete', function() {
         var id = $(this).attr('data-id');
         $('.confirm-delete').val(id);
     });
-
-
     $('.confirm-delete').click(function() {
         var id = $(this).val();
         $.ajax({
@@ -67,9 +62,6 @@ $(document).ready(function(){
             }
         });
     });
-
-
-
     // Remove Existing Images (AJAX with jQuery)
     $(document).on('click', '.remove-existing', function () {
         var imageId = $(this).data('id');
@@ -95,7 +87,15 @@ $(document).ready(function(){
 
 
 
+    var typingTimer;
+    var typingDelay = 500;
 
+    $('#s_name').on('keyup', function () {
+        clearTimeout(typingTimer);  // Clear the previous timer
+        typingTimer = setTimeout(function () {
+            $('#roleTable').DataTable().ajax.reload();
+        }, typingDelay);
+    });
 });
 
 

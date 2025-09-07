@@ -12,6 +12,17 @@
             <p>We are dedicated to delivering quality and innovation, building trust through our work, and creating lasting value for our clients and community.</p>
 
         </div><!-- End Section Title -->
+     @if (session('error'))
+         <div class="alert alert-danger">
+             <h2>{{ session('error') }}</h2>
+         </div>
+     @endif
+
+     @if (session('success'))
+         <div class="alert alert-success">
+             <h2>{{ session('success') }}</h2>
+         </div>
+     @endif
      @if($data['aboutUs']->count() > 0)
      <div class="container" data-aos="fade-up" data-aos-delay="100">
 

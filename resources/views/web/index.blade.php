@@ -241,12 +241,13 @@
                         <div class="testimonial-item">
                             <p>
                                 <i class="bi bi-quote quote-icon-left"></i>
-                                <span>{{$row->review_message}}</span>
+                                <span>{{$row->review_message}}</span> &nbsp;
+                                <small> <b>{{$row->pharma_name}}</b></small>
                                 <i class="bi bi-quote quote-icon-right"></i>
                             </p>
                             <img src="{{ URL::asset('build/web/assets/img/testimonials/dummy.png')}}" class="testimonial-img" alt="">
                             <h3>{{$row->name}}</h3>
-                            <h4>{{$row->pharma_name}}</h4>
+{{--                            <h4>{{$row->pharma_name}}</h4>--}}
                         </div>
                     </div>
                         @endforeach
@@ -257,56 +258,7 @@
 
         </div>
     </section>
-    <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
 
-                <div class="modal-header bg-success text-white">
-                    <h5 class="modal-title text-white" id="contactModalLabel">Add Your Review</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                </div>
-                <form method="post" action="{{route('user.review.store')}}" id="ReviewForm">
-                    @csrf
-                <div class="modal-body">
-
-
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="name" placeholder="Enter your name" name="name" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="Enter your email" name="email" required>
-                        </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Pharma Name</label>
-                        <input type="text" class="form-control" id="email" placeholder="Enter your pharma name" name="pharma_name" required>
-                    </div>
-
-
-
-                        <div class="mb-3">
-                            <label for="message" class="form-label">Review Message</label>
-                            <textarea name="review_message" id="message-field" cols="10" rows="3"
-                                      class="form-control" placeholder="Write your message" required></textarea>
-                            <small id="message-error" class="text-danger d-none">Message cannot exceed 250 characters.</small>
-                            <small id="char-count" class="text-muted">0 / 250</small>
-
-                        </div>
-
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success btn-send-review">Send Message</button>
-                </div>
-                </form>
-
-            </div>
-        </div>
-    </div>
     <section id="call-to-action" class="call-to-action section accent-background">
 
         <div class="container">

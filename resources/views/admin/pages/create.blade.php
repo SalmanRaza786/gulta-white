@@ -55,7 +55,7 @@
                         <!-- Upload New Images -->
                         <div class="mb-3">
                             <label for="images" class="form-label">Upload Images</label>
-                            <input type="file" name="images[]" id="images" class="form-control" multiple>
+                            <input type="file" name="images[]" id="images" class="form-control" multiple {{ ($data['pageId'] ==0)? 'required':''}} >
                             <small class="text-muted">You can select multiple images at once (standard size 1024*768) .</small>
                         </div>
 

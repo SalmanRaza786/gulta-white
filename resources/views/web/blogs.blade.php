@@ -17,13 +17,25 @@
 
             <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
 
+                @if (session('error'))
+                    <div class="alert alert-danger">
+                        <h2>{{ session('error') }}</h2>
+                    </div>
+                @endif
 
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        <h2>{{ session('success') }}</h2>
+                    </div>
+                @endif
                 <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
                     @isset($data['blogs'])
                         @foreach($data['blogs'] as $row)
 
                             <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+                                @isset($row->pageMedia[0])
                                 <img src="{{ URL::asset('storage/uploads/' .$row->pageMedia[0]->file_path) }}" class="img-fluid" alt="">
+                                @endisset
                                 <div class="portfolio-info">
                                     <h4>{{$row->title}}</h4>
                                     @isset($row->pageMedia)
@@ -38,6 +50,7 @@
 
                                 </div>
                             </div>
+
                         @endforeach
                     @endisset
 

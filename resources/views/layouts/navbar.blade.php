@@ -13,7 +13,7 @@
                 <li><a href="{{route('user.about.us')}}">About Us</a></li>
                 <li><a href="{{route('user.faq')}}">FAQs</a></li>
                 <li><a href="{{route('user.contact.us')}}">Contact US</a></li>
-                <li><a href="#testimonials">Review</a></li>
+                <li><a class="cursor-pointer" data-bs-target="#contactModal" data-bs-toggle="modal">Review</a></li>
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>

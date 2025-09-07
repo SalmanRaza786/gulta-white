@@ -20,42 +20,42 @@
                         <button type="button" class="btn btn-success add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal"><i class="ri-add-line align-bottom me-1"></i> @lang('translation.btn_add_role')</button>
                     </div>
 
-                </div><!-- end card header -->
-                <div class="card-body border border-dashed border-end-0 border-start-0">
-
-                    <form>
-                        <div class="row g-3">
-                            <div class="col-xxl-7 col-sm-6">
-                                <div class="search-box">
-                                    <input type="text" class="form-control search" placeholder=" {{__('translation.search')}}" name="s_title">
-                                    <i class="ri-search-line search-icon"></i>
-                                </div>
-                            </div>
-                            <!--end col-->
-                            <div class="col-xxl-3 col-sm-4">
-                                <div>
-                                    <select class="form-control"  name="s_status">
-                                        <option value="">Status</option>
-                                        <option value="" selected>{{__('translation.all')}}</option>
-                                        <option value="1">Active</option>
-                                        <option value="2">In-Active</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <!--end col-->
-
-                            <div class="col-xxl-2 col-sm-4">
-                                <div>
-                                    <button type="button" class="btn btn-primary w-100" id="filter"> <i class="ri-equalizer-fill me-1 align-bottom"></i>
-                                        {{__('translation.filter')}}
-                                    </button>
-                                </div>
-                            </div>
-                            <!--end col-->
-                        </div>
-                        <!--end row-->
-                    </form>
                 </div>
+{{--                <div class="card-body border border-dashed border-end-0 border-start-0">--}}
+
+{{--                    <form>--}}
+{{--                        <div class="row g-3">--}}
+{{--                            <div class="col-xxl-7 col-sm-6">--}}
+{{--                                <div class="search-box">--}}
+{{--                                    <input type="text" class="form-control search" placeholder=" {{__('translation.search')}}" name="s_title">--}}
+{{--                                    <i class="ri-search-line search-icon"></i>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <!--end col-->--}}
+{{--                            <div class="col-xxl-3 col-sm-4">--}}
+{{--                                <div>--}}
+{{--                                    <select class="form-control"  name="s_status">--}}
+{{--                                        <option value="">Status</option>--}}
+{{--                                        <option value="" selected>{{__('translation.all')}}</option>--}}
+{{--                                        <option value="1">Active</option>--}}
+{{--                                        <option value="2">In-Active</option>--}}
+{{--                                    </select>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <!--end col-->--}}
+
+{{--                            <div class="col-xxl-2 col-sm-4">--}}
+{{--                                <div>--}}
+{{--                                    <button type="button" class="btn btn-primary w-100" id="filter"> <i class="ri-equalizer-fill me-1 align-bottom"></i>--}}
+{{--                                        {{__('translation.filter')}}--}}
+{{--                                    </button>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <!--end col-->--}}
+{{--                        </div>--}}
+{{--                        <!--end row-->--}}
+{{--                    </form>--}}
+{{--                </div>--}}
 
                 <div class="card-body pt-0">
                         <table class="table table-nowrap align-middle" id="roleTable">

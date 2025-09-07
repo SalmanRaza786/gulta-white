@@ -15,7 +15,17 @@
         <div class="container">
 
             <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+                @if (session('error'))
+                    <div class="alert alert-danger">
+                        <h2>{{ session('error') }}</h2>
+                    </div>
+                @endif
 
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        <h2>{{ session('success') }}</h2>
+                    </div>
+                @endif
 
                 <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
                     @isset($data['gallery'])

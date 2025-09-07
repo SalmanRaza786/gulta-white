@@ -59,12 +59,11 @@ class PagesRepositry implements PagesInterface
         try {
             $data['totalRecords'] = PagesContent::count();
             $qry= PagesContent::query();
-            $qry=$qry->when($request->s_title, function ($query, $title) {
-                return $query->where('name',$title);
+
+            $qry=$qry->when($request->s_name, function ($query, $title) {
+                return $query->where('title',$title)->orWhere('description',$title)->orWhere('page_type',$title);
             });
-            $qry=$qry->when($request->s_status, function ($query, $s_status) {
-                return $query->where('status',$s_status);
-            });
+
 
             $qry=$qry->when($request->start, fn($q)=>$q->offset($request->start));
             $qry=$qry->when($request->length, fn($q)=>$q->limit($request->length));

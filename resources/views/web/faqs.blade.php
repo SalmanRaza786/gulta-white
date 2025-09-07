@@ -20,6 +20,17 @@
         <div class="container">
             <div class="mb-4" data-aos="fade-up">
                 <div class="accordion" id="faqShipping">
+                    @if (session('error'))
+                        <div class="alert alert-danger">
+                            <h2>{{ session('error') }}</h2>
+                        </div>
+                    @endif
+
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            <h2>{{ session('success') }}</h2>
+                        </div>
+                    @endif
                     @isset($data['faqs'])
                         @foreach($data['faqs'] as $row)
                             <div class="accordion-item">

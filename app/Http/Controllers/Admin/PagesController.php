@@ -36,7 +36,8 @@ class PagesController extends Controller
     {
 
         try {
-            return view('admin.pages.create');
+            $data['pageId']=0;
+            return view('admin.pages.create')->with(compact('data'));
         } catch (\Exception $e) {
             return $e->getMessage();
 
@@ -120,6 +121,7 @@ class PagesController extends Controller
             if(!PagesContent::find($id)){
                 return Helper::error('Invalid page id');
             }
+            $data['pageId']=$id;
             $data['editPage'] =Helper::fetchOnlyData($this->pages->findPageById($id));
             return view('admin.pages.create')->with(compact('data'));
 
