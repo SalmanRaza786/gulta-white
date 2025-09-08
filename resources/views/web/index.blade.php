@@ -99,7 +99,7 @@
                                             <img src="https://img.icons8.com/fluency/96/gift.png"
                                                  alt="Gift Icon" style="width:80px;height:80px;" />
                                             <div class="ms-2">
-                                                <h5 class="fs-14 text-danger fw-semibold">Congratulation?</h5>
+                                                <h5 class="fs-14 text-danger fw-semibold">Congratulation</h5>
                                                 <p class="text-black mb-1">{{$data['client']->pCode->gift}}
                                                      <br />
 
@@ -231,28 +231,25 @@
                       }
                     }
                 </script>
-
                 <div class="swiper-wrapper">
-
-
                     @isset($data['testimonials'])
                         @foreach($data['testimonials'] as $row)
-                    <div class="swiper-slide">
-                        <div class="testimonial-item">
-                            <p>
-                                <i class="bi bi-quote quote-icon-left"></i>
-                                <span>{{$row->review_message}}</span> &nbsp;
-                                <small> <b>{{$row->pharma_name}}</b></small>
-                                <i class="bi bi-quote quote-icon-right"></i>
-                            </p>
-                            <img src="{{ URL::asset('build/web/assets/img/testimonials/dummy.png')}}" class="testimonial-img" alt="">
-                            <h3>{{$row->name}}</h3>
-{{--                            <h4>{{$row->pharma_name}}</h4>--}}
-                        </div>
-                    </div>
+                            <div class="swiper-slide">
+                                <div class="testimonial-item">
+                                    <p>
+                                        <i class="bi bi-quote quote-icon-left"></i>
+                                        <span>{{$row->review_message}}</span>
+                                        <i class="bi bi-quote quote-icon-right"></i>
+                                    </p>
+                                    <img src="{{ URL::asset('build/web/assets/img/testimonials/dummy.png')}}" class="testimonial-img" alt="">
+                                    <h3>{{$row->name}}</h3>
+                                    <h4 class="pharma-name">{{$row->pharma_name}}</h4>
+                                </div>
+                            </div>
                         @endforeach
                     @endisset
                 </div>
+
                 <div class="swiper-pagination"></div>
             </div>
 
