@@ -243,7 +243,8 @@ class GeneratorRepositry implements GeneratorInterface
             ($request->product_id)?$qry->where('p_id',$request->product_id):'';
             ($request->from_date)?$qry->whereDate('created_at','>=',$request->from_date):'';
             ($request->to_date)?$qry->whereDate('created_at','<=',$request->to_date):'';
-            $data =$qry->get();
+           
+              $data = $qry->orderBy('p_codes', 'asc')->get();
             return Helper::success($data, $message="Record found");
 
         } catch (ValidationException $validationException) {

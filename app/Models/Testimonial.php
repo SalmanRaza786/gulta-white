@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Testimonial extends Model
 {
     use HasFactory;
-    protected $fillable=['name','email','review_message','pharma_name'];
+    protected $fillable = ['name', 'email', 'review_message', 'image'];
 }

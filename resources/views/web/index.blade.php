@@ -203,8 +203,8 @@
 
         <!-- Section Title -->
         <div class="container section-title position-relative" data-aos="fade-up">
-            <span>Testimonials</span>
-            <h2>Testimonials</h2>
+            <span>Customer Reviews</span>
+            <h2>Customer Reviews</h2>
             <p>Our clients’ feedback inspires us every day. Here are some of their stories.</p>
             <!-- Right Side Button -->
 
@@ -241,9 +241,8 @@
                                         <span>{{$row->review_message}}</span>
                                         <i class="bi bi-quote quote-icon-right"></i>
                                     </p>
-                                    <img src="{{ URL::asset('build/web/assets/img/testimonials/dummy.png')}}" class="testimonial-img" alt="">
+                                    <img src="{{ $row->image ? asset('storage/reviews/' . $row->image) : URL::asset('build/web/assets/img/testimonials/dummy.png') }}" class="testimonial-img" alt="{{$row->name}}">
                                     <h3>{{$row->name}}</h3>
-                                    <h4 class="pharma-name">{{$row->pharma_name}}</h4>
                                 </div>
                             </div>
                         @endforeach
@@ -328,35 +327,31 @@
                 cache: false,
                 processData: false,
                 beforeSend: function() {
-                    $('.btn-submit').text('Saving...');
-                    $(".btn-submit").prop("disabled", true);
+                    $('.btn-send-review').text('Sending...');
+                    $('.btn-send-review').prop('disabled', true);
                 },
                 success: function(data) {
-
-                    if (data.status==true) {
-                        $('#roleTable').DataTable().ajax.reload();
+                    if (data.status == true) {
                         toastr.success(data.message);
-                        $('#RolesForm')[0].reset();
-                        $('.btn-close').click();
-                        $('.btn-submit').text('Save');
-                        $(".btn-submit").prop("disabled", false);
-
+                        $('#ReviewForm')[0].reset();
+                        $('#contactModal').modal('hide');
+                        $('.btn-send-review').text('Send Message');
+                        $('.btn-send-review').prop('disabled', false);
                     }
-                    if (data.status==false) {
-                        toastr.error(response.message);
-                        $('.btn-submit').text('Save');
-                        $(".btn-submit").prop("disabled", false);
+                    if (data.status == false) {
+                        toastr.error(data.message);
+                        $('.btn-send-review').text('Send Message');
+                        $('.btn-send-review').prop('disabled', false);
                     }
                 },
-
-                complete: function(data) {
-                    $(".btn-submit").html("Save");
-                    $(".btn-submit").prop("disabled", false);
+                complete: function() {
+                    $('.btn-send-review').text('Send Message');
+                    $('.btn-send-review').prop('disabled', false);
                 },
-
-                error: function() {;
-                    $('.btn-submit').text('Save');
-                    $(".btn-submit").prop("disabled", false);
+                error: function() {
+                    toastr.error('Something went wrong. Please try again.');
+                    $('.btn-send-review').text('Send Message');
+                    $('.btn-send-review').prop('disabled', false);
                 }
             });
         });

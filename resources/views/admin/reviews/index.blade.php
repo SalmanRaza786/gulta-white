@@ -26,7 +26,7 @@
                         <tr class="text-uppercase">
                             <th class="sort" data-sort="id">Name</th>
                             <th class="sort" data-sort="customer_name">Email</th>
-                            <th class="sort" data-sort="customer_name">Pharma Name</th>
+                            <th class="sort" data-sort="customer_name">Image</th>
                             <th class="sort" data-sort="customer_name">Review Message</th>
                             <th class="sort" data-sort="customer_name">Status</th>
                             <th class="sort" data-sort="date">Action</th>
@@ -73,14 +73,22 @@
                 columns: [
                     { data: 'name' },
                     { data: 'email' },
-                    { data: 'pharma_name' },
+                    { data: 'image' },
                     { data: 'review_message' },
                     { data: 'is_published' },
                     { data: null, orderable: false },
                 ],
 
                 columnDefs: [
-
+                    {
+                        targets: 2,
+                        render: function(data, type, row, meta) {
+                            var imgSrc = data
+                                ? '/storage/reviews/' + data
+                                : '/build/web/assets/img/testimonials/dummy.png';
+                            return '<img src="' + imgSrc + '" style="width:50px;height:50px;object-fit:cover;border-radius:50%;" alt="review-img">';
+                        }
+                    },
                     {
                         targets:4,
                         render: function(data, type, row, meta) {

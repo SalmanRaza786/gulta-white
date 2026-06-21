@@ -6,7 +6,7 @@ use App\Http\Helpers\Helper;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Testimonial;
-use App\Traits\HandleFiles;
+use App\Traits\ImageUploadTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -16,26 +16,34 @@ use DataTables;
 
 class TestimonialsRepositry implements TestimonialsInterface
 {
+    use ImageUploadTrait;
 
-    public function updateOrCreate($request,$id)
+    public function updateOrCreate($request, $id)
     {
-
         try {
+            $imageName = null;
+            if ($request->hasFile('image')) {
+                $imageName = $this->uploadImage($request->file('image'), 'reviews');
+            }
+
+            $data = [
+                'name'           => $request->name,
+                'email'          => $request->email,
+                'review_message' => $request->review_message,
+            ];
+
+            if ($imageName) {
+                $data['image'] = $imageName;
+            }
 
             $review = Testimonial::updateOrCreate(
-                [
-                    'email' => $request->email,
-                ],
-                [
-                    'name' => $request->name,
-                    'email' => $request->email,
-                    'review_message' => $request->review_message,
-                    'pharma_name' => $request->pharma_name,
-                ]
+                ['email' => $request->email],
+                $data
             );
-            return Helper::success($review,'Your review has been received. It will be published once approved by our team.');
+
+            return Helper::success($review, 'Your review has been received. It will be published once approved by our team.');
         } catch (\Exception $e) {
-            return Helper::errorWithData($e->getMessage(),[]);
+            return Helper::errorWithData($e->getMessage(), []);
         }
     }
 

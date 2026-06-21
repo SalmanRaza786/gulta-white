@@ -32,25 +32,23 @@ class TestimonialController extends Controller
 
     public function updateOrCreateRecord(Request $request)
     {
-
         try {
-             $request->all();
             $validator = Validator::make($request->all(), [
-                'name' => 'required',
-                'email' => 'required',
+                'name'           => 'required',
+                'email'          => 'required|email',
                 'review_message' => 'required|string|max:250',
-
+                'image'          => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             ]);
-            if ($validator->fails()){
-                return redirect()->back()->with('error',$validator->errors()->first());
+
+            if ($validator->fails()) {
+                return Helper::ajaxError($validator->errors()->first());
             }
 
-            $res = $this->testimonials->updateOrCreate($request,0);
-            if (!$res->get('status')){
-                return redirect()->back()->with('error',$res->get('message'));
-
+            $res = $this->testimonials->updateOrCreate($request, 0);
+            if (!$res->get('status')) {
+                return Helper::ajaxError($res->get('message'));
             }
-            return redirect()->back()->with('success',$res->get('message'));
+            return Helper::ajaxSuccess($res->get('data'), $res->get('message'));
         } catch (\Exception $e) {
             return Helper::ajaxError($e->getMessage());
         }

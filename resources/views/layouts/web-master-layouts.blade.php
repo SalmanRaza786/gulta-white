@@ -48,7 +48,7 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                 </div>
-                <form method="post" action="{{route('user.review.store')}}" id="ReviewForm">
+                <form method="post" action="{{route('user.review.store')}}" id="ReviewForm" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
 
@@ -62,9 +62,10 @@
                             <label for="email" class="form-label">Email</label>
                             <input type="email" class="form-control" id="email" placeholder="Enter your email" name="email" required>
                         </div>
+
                         <div class="mb-3">
-                            <label for="email" class="form-label">Pharma Name</label>
-                            <input type="text" class="form-control" id="email" placeholder="Enter your pharma name" name="pharma_name" required>
+                            <label for="review_image" class="form-label">Profile Picture <small class="text-muted">(Optional)</small></label>
+                            <input type="file" class="form-control" id="review_image" name="image" accept="image/*">
                         </div>
 
 
@@ -99,10 +100,11 @@
                         <span class="sitename">{{env('APP_NAME')}}</span>
                     </a>
                     <div class="footer-contact pt-3">
-                        <p>A108 Adam Street</p>
-                        <p>New York, NY 535022</p>
-                        <p class="mt-3"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
-                        <p><strong>Email:</strong> <span>info@example.com</span></p>
+                        <p>Manufactured By:</p>
+                        <p>Zonex Pharma (Pvt) Ltd.</p>
+                        <p>121-Sundar Industrial Estate.</p>
+
+                        <p>Raiwind Road Lahore</p>
                     </div>
                 </div>
 
